@@ -1,14 +1,14 @@
-# IP Access Policy — TinyNPU200
+﻿# IP Access Policy â€” TinyNPU_ADAS_PurePL
 
 **Author:** Hariharan Ganesh
 **Email:** hariharanganesh67@gmail.com
-**Copyright:** Copyright © 2026 Hariharan Ganesh. All rights reserved.
+**Copyright:** Copyright (c) 2026 Hariharan Ganesh. All rights reserved.
 
 ---
 
 ## Overview
 
-The **TinyNPU200** is an original FPGA Neural Processing Unit IP core developed by Hariharan Ganesh. This repository is publicly visible for documentation, academic visibility, and evaluation purposes.
+The **TinyNPU_ADAS_PurePL** is an original FPGA Neural Processing Unit IP core developed by Hariharan Ganesh. This repository is publicly visible for documentation, academic visibility, and evaluation purposes.
 
 The actual RTL/IP source files are **not released under an open-source license**. Use of the IP requires explicit written authorization from the author.
 
@@ -40,11 +40,11 @@ The following require explicit written permission:
 
 ## How to Request Access
 
-### Option 1 — GitHub Issue (Recommended)
+### Option 1 â€” GitHub Issue (Recommended)
 
 [Submit an IP Access Request](../../issues/new?template=ip-access-request.md)
 
-### Option 2 — Email
+### Option 2 â€” Email
 
 Send a request to: **hariharanganesh67@gmail.com**
 
@@ -83,17 +83,17 @@ or distribution method
 
 Users who receive authorization must:
 
-1. **Retain attribution** — all authorized works must credit the original author
-2. **Not redistribute** — the IP must not be shared with others without written permission
-3. **Not claim ownership** — the IP remains the intellectual property of Hariharan Ganesh
-4. **Specify usage** — use must stay within the authorized scope
-5. **Cite appropriately** — academic publications must include appropriate citation
+1. **Retain attribution** â€” all authorized works must credit the original author
+2. **Not redistribute** â€” the IP must not be shared with others without written permission
+3. **Not claim ownership** â€” the IP remains the intellectual property of Hariharan Ganesh
+4. **Specify usage** â€” use must stay within the authorized scope
+5. **Cite appropriately** â€” academic publications must include appropriate citation
 
 ### Required Attribution
 
-TinyNPU200 IP Core — Original work by Hariharan Ganesh (2026)
+TinyNPU_ADAS_PurePL IP Core â€” Original work by Hariharan Ganesh (2026)
 Contact: hariharanganesh67@gmail.com
-Repository: https://github.com/HariharanGanesh/TinyNPU200
+Repository: https://github.com/HariharanGanesh/TinyNPU_ADAS_PurePL
 
 ---
 
@@ -101,10 +101,10 @@ Repository: https://github.com/HariharanGanesh/TinyNPU200
 
 | Type | Description | Authorization Required |
 |---|---|---|
-| **Academic** | University/college project | Yes — per-project |
-| **Research** | Academic research and papers | Yes — per-project |
-| **Evaluation** | Technical evaluation only | Yes — limited scope |
-| **Commercial** | Commercial product or service | Yes — separate agreement |
+| **Academic** | University/college project | Yes â€” per-project |
+| **Research** | Academic research and papers | Yes â€” per-project |
+| **Evaluation** | Technical evaluation only | Yes â€” limited scope |
+| **Commercial** | Commercial product or service | Yes â€” separate agreement |
 
 ---
 
@@ -122,4 +122,4 @@ Repository: https://github.com/HariharanGanesh/TinyNPU200
 Email: hariharanganesh67@gmail.com
 GitHub: https://github.com/HariharanGanesh
 
-*Copyright © 2026 Hariharan Ganesh. All rights reserved.*
+*Copyright (c) 2026 Hariharan Ganesh. All rights reserved.*

@@ -1,6 +1,6 @@
-# TERMS OF USE — TinyNPU200 IP Core
+﻿# TERMS OF USE â€” TinyNPU_ADAS_PurePL IP Core
 
-Copyright © 2026 Hariharan Ganesh. All rights reserved.
+Copyright (c) 2026 Hariharan Ganesh. All rights reserved.
 
 > **This is NOT an open-source license.**
 > Viewing this public repository does not grant any rights to use, copy, modify, redistribute, or commercially exploit the protected IP/RTL.
@@ -9,10 +9,10 @@ Copyright © 2026 Hariharan Ganesh. All rights reserved.
 
 ## 1. Ownership and Copyright
 
-The TinyNPU200 IP core, including all RTL source files, hardware architecture, simulation infrastructure, documentation, and associated materials contained in or referenced by this repository, is the **original work of Hariharan Ganesh**.
+The TinyNPU_ADAS_PurePL IP Core, including all RTL source files, hardware architecture, simulation infrastructure, documentation, and associated materials contained in or referenced by this repository, is the **original work of Hariharan Ganesh**.
 
 ```
-Copyright © 2026 Hariharan Ganesh
+Copyright (c) 2026 Hariharan Ganesh
 All rights reserved.
 ```
 
@@ -69,9 +69,9 @@ To request authorization, see [ACCESS.md](ACCESS.md).
 
 Authorized users must **retain and display** the following attribution in all applicable works:
 
-TinyNPU200 IP Core — Original work by Hariharan Ganesh (2026)
+TinyNPU_ADAS_PurePL IP Core â€” Original work by Hariharan Ganesh (2026)
 Contact: hariharanganesh67@gmail.com
-Repository: https://github.com/HariharanGanesh/TinyNPU200
+Repository: https://github.com/HariharanGanesh/TinyNPU_ADAS_PurePL
 
 Attribution must appear in:
 - Source file headers
@@ -113,4 +113,4 @@ This IP and all associated materials are provided **"as is"** without warranty o
 
 ---
 
-*Copyright © 2026 Hariharan Ganesh. All rights reserved.*
+*Copyright (c) 2026 Hariharan Ganesh. All rights reserved.*

@@ -1,6 +1,6 @@
-# Changelog
+﻿# Changelog
 
-All notable changes to the TinyNPU200 IP Core will be documented in this file.
+All notable changes to the TinyNPU_ADAS_PurePL IP Core will be documented in this file.
 
 ## [v2.0.0] - Phase 2 Major Optimization Update
 ### Improved

@@ -1,13 +1,13 @@
-# Contributing ? TinyNPU200 IP Core
+﻿# Contributing ? TinyNPU_ADAS_PurePL IP Core
 
-> Copyright ? 2026 Hariharan Ganesh. All rights reserved.
+> Copyright (c) 2026 Hariharan Ganesh. All rights reserved.
 > This IP is proprietary. Contributions require author authorization.
 
 ---
 
 ## Important: Contribution Policy
 
-The TinyNPU200 IP core is **proprietary intellectual property**. All contributions,
+The TinyNPU_ADAS_PurePL IP Core is **proprietary intellectual property**. All contributions,
 suggestions, and modifications are subject to review and approval by the author.
 
 **Before contributing, you must have explicit written authorization.**
@@ -100,6 +100,6 @@ Any contribution that modifies RTL must:
 Email: hariharanganesh67@gmail.com
 GitHub: https://github.com/HariharanGanesh
 
-*Copyright ? 2026 Hariharan Ganesh. All rights reserved.*
+*Copyright (c) 2026 Hariharan Ganesh. All rights reserved.*
 
 ---
