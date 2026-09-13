@@ -1,1 +1,0 @@
-open_project npu200jpmax/npu200jpmax.xpr; open_bd_design npu200jpmax/npu200jpmax.srcs/sources_1/bd/npu_system/npu_system.bd; puts [get_property CONFIG.FREQ_HZ [get_bd_pins /clk_wiz_0/clk_out1]]; puts [get_property CONFIG.PCW_FPGA0_PERIPHERAL_FREQMHZ [get_bd_cells /processing_system7_0]]
