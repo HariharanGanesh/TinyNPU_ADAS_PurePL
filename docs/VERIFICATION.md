@@ -297,4 +297,51 @@ SIMULATION PASSED
 
 ---
 
-*Copyright ? 2026 Hariharan Ganesh. All rights reserved.*
+---
+
+## ADAS Safety Subsystem Verification
+
+**Testbench:** `verification/tb/tb_adas_features.sv`
+**Fileset:** `sim_adas_features` (Vivado Behavioral Simulation)
+**Modules Under Test:** `sensor_fusion`, `safety_unit`, `security_unit`
+
+### How to Run (Tcl Console)
+
+```tcl
+# In Vivado GUI, paste into Tcl Console:
+create_fileset -simset sim_adas_features
+set_property top tb_adas_features [get_filesets sim_adas_features]
+current_fileset -simset [get_filesets sim_adas_features]
+# Then: Run Simulation > Run Behavioral Simulation
+```
+
+### Test Results
+
+All stimulus is driven on the negative clock edge (`@(negedge clk)`) to eliminate
+race conditions and produce a realistic 1-cycle propagation delay in the waveform.
+
+| # | Scenario | Verification Point | Result |
+|---|----------|--------------------|--------|
+| 1 | Pedestrian detected, brake armed | `warning_ped=1` AND `brake_authorized=1` within 5 cycles | PASS |
+| 2 | Brake switch disarmed | `brake_authorized=0` despite hazard | PASS |
+| 3 | Critical lane departure (severity=11) | `warning_lane=1` AND `brake_authorized=1` | PASS |
+| 4 | Speed sign overspeed | `warning_sign=1` | PASS |
+| 5 | WDT timeout (no pet for 50+ cycles) | `system_fault=1`, then `brake_authorized=0` | PASS |
+
+**Overall: 5 / 5 PASS**
+
+### Waveform
+
+![ADAS Behavioral Simulation — Vivado xsim](images/adas_simulation_waveform.png)
+
+### Bug Fixed During Verification
+
+A critical hazard-scoring defect was identified and corrected in `sensor_fusion.v`.
+Pedestrian detection now correctly contributes a severity score of **4** (previously 1),
+ensuring brakes are applied immediately upon lone-pedestrian detection, consistent with
+ISO 26262 ASIL-B threat classification. See `docs/results/SYNTHESIS_IMPLEMENTATION_REPORT.md`
+for full details.
+
+---
+
+*Copyright (c) 2026 Hariharan Ganesh. All rights reserved.*

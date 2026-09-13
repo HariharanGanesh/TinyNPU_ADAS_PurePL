@@ -1,4 +1,4 @@
-	imescale 1ns / 1ps
+`timescale 1ns / 1ps
 
 module tb_hdmi_e2e;
 

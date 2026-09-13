@@ -31,8 +31,8 @@ module sensor_fusion (
 
     // Hazard Score Calculation
     wire [2:0] hazard_score;
-    assign hazard_score = (ped_detected & ped_en) + 
-                          (obs_detected & obs_en) + 
+    assign hazard_score = ((ped_detected & ped_en) ? 3'd4 : 3'd0) + 
+                          ((obs_detected & obs_en) ? 3'd3 : 3'd0) + 
                           ((lane_detected & lane_en) ? {1'b0, lane_severity} : 3'd0) +
                           (sign_overspeed ? 3'd1 : 3'd0);
 
