@@ -1,105 +1,84 @@
-﻿# Contributing ? TinyNPU_ADAS_PurePL IP Core
+﻿# Contributing — TinyNPU_ADAS_PurePL
 
-> Copyright (c) 2026 Hariharan Ganesh. All rights reserved.
-> This IP is proprietary. Contributions require author authorization.
-
----
-
-## Important: Contribution Policy
-
-The TinyNPU_ADAS_PurePL IP Core is **proprietary intellectual property**. All contributions,
-suggestions, and modifications are subject to review and approval by the author.
-
-**Before contributing, you must have explicit written authorization.**
-See [ACCESS.md](ACCESS.md) for the access request process.
+> Copyright (c) 2026 Hariharan Ganesh. All rights reserved.  
+> This IP is proprietary. All contributions require author authorization. See [ACCESS.md](ACCESS.md).
 
 ---
 
-## How to Report Bugs
+## Contribution Policy
 
-If you have been granted authorized access and discover a bug:
+**TinyNPU_ADAS_PurePL** is proprietary intellectual property. This is not an open-source project. However, constructive feedback, bug reports, and documentation improvements from authorized users are genuinely welcome.
 
-1. **Check existing issues** to avoid duplicates.
-2. **Open a GitHub Issue** with the label `bug`.
-3. Include:
-   - A clear description of the problem
-   - Steps to reproduce the issue
-   - Expected behavior
-   - Actual behavior
-   - Vivado version and simulator used
-   - Relevant log excerpts or simulation output
-
-**Note:** Only authorized users may submit bug reports that involve the RTL source.
+All contributions that involve RTL source files require **explicit prior written authorization** from the author. See [ACCESS.md](ACCESS.md) for the request process.
 
 ---
 
-## How to Suggest Improvements
+## Reporting Bugs
 
-1. **Open a GitHub Issue** with the label `enhancement`.
-2. Describe:
-   - The proposed improvement
-   - The technical justification
-   - Any potential impact on existing functionality
-   - Whether it requires RTL modification
+If you have authorized access and discover a bug, please open a GitHub Issue with the label `bug`. Include:
 
-All suggestions are evaluated by the author. Accepted suggestions do not
-automatically grant the suggester any rights over the IP.
+| Field | Details |
+|---|---|
+| **Description** | Clear, concise problem statement |
+| **Steps to Reproduce** | Exact simulation or synthesis steps |
+| **Expected Behaviour** | What should happen |
+| **Actual Behaviour** | What actually happened |
+| **Environment** | Vivado version, simulator, OS |
+| **Logs** | Relevant console output, waveform notes |
+
+> Only authorized users may file RTL-level bug reports.
 
 ---
 
-## RTL Contributions
+## Suggesting Improvements
 
-Contributions to the RTL source require:
+Open a GitHub Issue with the label `enhancement`. Describe:
+- The proposed improvement and its technical justification
+- Potential impact on existing functionality
+- Whether RTL modification is required
 
-1. **Prior written authorization** from the author
-2. **Compliance with the project's coding style:**
-   - Verilog-2001 synthesizable RTL
-   - No FPGA-specific primitives in synthesizable files
-   - All generate loop bounds via `localparam` (not `parameter`)
-   - Non-blocking assignments in clocked always blocks
-   - All module parameters documented
-3. **Testbench coverage** for any new functionality
-4. **Verification requirement:** All existing tests must continue passing
-5. **Attribution retention:** Existing copyright notices must not be modified
+Accepted suggestions do not automatically grant the contributor any rights over the IP.
+
+---
+
+## RTL Contribution Requirements
+
+Any authorized RTL contribution must:
+
+1. Follow the **Verilog-2001** coding standard (synthesizable, no simulation-only constructs)
+2. Use **non-blocking assignments** (`<=`) in all clocked `always` blocks
+3. Use **`localparam`** for all loop bounds and constants (not `parameter`)
+4. Include **no FPGA-specific primitives** in synthesizable modules
+5. Add **testbench coverage** for any new logic
+6. Pass **all existing testbenches** without modification
+7. **Retain all copyright notices** and file headers
 
 ---
 
 ## Documentation Contributions
 
-Documentation improvements (spelling, clarity, additional examples) may be
-submitted as GitHub Pull Requests without prior authorization, provided that:
-
+Documentation improvements (clarity, typos, examples) may be submitted as Pull Requests without prior authorization, provided:
 - No RTL source files are modified
-- No existing copyright notices are altered
-- The contribution does not misrepresent the IP's capabilities
-
----
-
-## Verification Expectations
-
-Any contribution that modifies RTL must:
-
-- Pass all 5 existing test cases in `tb_tinynpu_top.sv`
-- Include a `run_all.tcl` simulation demonstrating all tests pass
-- Not alter existing test case expected results without justification
+- No copyright notices are altered
+- The contribution does not misrepresent the IP
 
 ---
 
 ## Code of Conduct
 
-- Be respectful in all communications
-- Do not claim authorship of any part of the original IP
-- Retain all copyright and attribution notices
-- Do not share or distribute the IP without authorization
+- Be professional and respectful in all communications.
+- Do not claim authorship of any part of the original IP.
+- Do not share or redistribute any IP files without explicit written authorization.
+- Retain all copyright and attribution notices.
 
 ---
 
 ## Contact
 
-**Hariharan Ganesh**
-Email: hariharanganesh67@gmail.com
-GitHub: https://github.com/HariharanGanesh
-
-*Copyright (c) 2026 Hariharan Ganesh. All rights reserved.*
+**Hariharan Ganesh**  
+📧 [hariharanganesh67@gmail.com](mailto:hariharanganesh67@gmail.com)  
+🐙 [github.com/HariharanGanesh](https://github.com/HariharanGanesh)
 
 ---
+
+*Copyright (c) 2026 Hariharan Ganesh. All rights reserved.*
