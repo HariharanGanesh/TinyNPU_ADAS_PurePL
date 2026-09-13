@@ -1,48 +1,66 @@
-# =============================================================================
-# TinyNPU200 ? Vivado-Aware .gitignore
-# Copyright ? 2026 Hariharan Ganesh. All rights reserved.
+﻿# =============================================================================
+# TinyNPU200A - Vivado-Aware .gitignore
+# Copyright 2026 Hariharan Ganesh. All rights reserved.
 # =============================================================================
 
 # Vivado Generated Caches & Temporary Directories
 .Xil/
 **/.Xil/
-tinynpu200_ip_packager/tinynpu200_ip_packager.cache/
-tinynpu200_ip_packager/tinynpu200_ip_packager.hw/
-tinynpu200_ip_packager/tinynpu200_ip_packager.ip_user_files/
-tinynpu200_ip_packager/tinynpu200_ip_packager.sim/
+**/*.cache/
+**/*.runs/
+**/*.gen/
+**/*.sim/
+**/*.hw/
+**/*.ip_user_files/
+
+# Xilinx Simulation Artifacts
+**/xsim.dir/
+**/*.wdb
+**/*.pb
+**/*.sdb
+**/*.rlx
+xvlog.log
+xelab.log
+xsim.log
 
 # Vivado Journals & Logs
-*.jou
-*.backup.jou
-*.log
-*.backup.log
-vivado_*.backup.jou
-vivado_*.backup.log
+**/*.jou
+**/*.backup.jou
+**/*.log
+**/*.backup.log
+**/*.str
 
-# Vivado PID / State Files
-*.str
+# Bitstreams and huge archives (board-specific; user must build their own)
+**/*.bit
+**/*.bin
+**/*.mcs
+**/*.zip
+**/*.tar.gz
+**/*.7z
+**/*.rar
 
-# Bitstreams (board-specific; user must build their own)
-*.bit
-*.bin
-*.mcs
-
-# Large Binary Archives (exceed GitHub 100 MB limit)
-*.zip
-*.tar.gz
-*.7z
-*.rar
-
-# Timing & Debug Dumps
+# Timing & Debug Dumps (unless explicitly source controlled)
 synth_warnings.txt
-failed_path.txt
-failed_path2.txt
+failed_path*.txt
 failing_paths.txt
 tight_setup_hold_pins.txt
 dma_pins.txt
 pin_dump.txt
 all_pins_dump.txt
 dfx_runtime.txt
+
+# Temp / Local scratchpad folders
+Temp/
+Unsorted/
+Logs/
+Deploy/
+Build/
+Exports/
+test_impl/
+test_sim/
+sim_test/
+riscv-toolchain/
+Cadence/
 
 # JVM / OS Crash Logs
 hs_err_pid*.log
@@ -57,12 +75,3 @@ Thumbs.db
 .vscode/
 .idea/
 *~
-
-# =============================================================================
-# INTENTIONALLY KEPT (NOT excluded):
-# IP/TinyNPU200/src/*.v    ? RTL source files
-# IP/TinyNPU200/sim/       ? Testbench files
-# IP/TinyNPU200/component.xml
-# tinynpu200_ip_packager/*.xpr
-# *.xdc, run_all.tcl, run_simulation.bat
-# =============================================================================

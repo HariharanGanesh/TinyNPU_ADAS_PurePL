@@ -1,0 +1,70 @@
+{
+   "ActiveEmotionalView":"Default View",
+   "Default View_ScaleFactor":"0.641252",
+   "Default View_TopLeft":"89,338",
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.8.0 2024-04-26 e1825d835c VDI=44 GEI=38 GUI=JA:21.0
+#  -string -flagsOSRD
+preplace port TMDS_RX -pg 1 -lvl 0 -x 0 -y 140 -defaultsOSRD
+preplace port TMDS_TX -pg 1 -lvl 7 -x 2050 -y 70 -defaultsOSRD
+preplace port DDC_RX -pg 1 -lvl 7 -x 2050 -y 150 -defaultsOSRD
+preplace port port-id_sw_brake_arm -pg 1 -lvl 0 -x 0 -y 760 -defaultsOSRD
+preplace port port-id_sysclk -pg 1 -lvl 0 -x 0 -y 580 -defaultsOSRD
+preplace port port-id_ext_reset -pg 1 -lvl 0 -x 0 -y 490 -defaultsOSRD
+preplace port port-id_out_warning_ped -pg 1 -lvl 7 -x 2050 -y 660 -defaultsOSRD
+preplace port port-id_out_warning_lane -pg 1 -lvl 7 -x 2050 -y 690 -defaultsOSRD
+preplace port port-id_out_warning_sign -pg 1 -lvl 7 -x 2050 -y 720 -defaultsOSRD
+preplace port port-id_out_brake_authorized -pg 1 -lvl 7 -x 2050 -y 750 -defaultsOSRD
+preplace port port-id_out_system_fault -pg 1 -lvl 7 -x 2050 -y 780 -defaultsOSRD
+preplace inst tinynpu_0 -pg 1 -lvl 4 -x 1130 -y 620 -defaultsOSRD
+preplace inst dvi2rgb_0 -pg 1 -lvl 2 -x 410 -y 170 -defaultsOSRD
+preplace inst rgb2dvi_0 -pg 1 -lvl 6 -x 1850 -y 70 -defaultsOSRD
+preplace inst vid_in -pg 1 -lvl 3 -x 770 -y 290 -defaultsOSRD
+preplace inst vid_out -pg 1 -lvl 5 -x 1500 -y 370 -defaultsOSRD
+preplace inst vtc -pg 1 -lvl 4 -x 1130 -y 330 -defaultsOSRD
+preplace inst axi_mem_intercon -pg 1 -lvl 3 -x 770 -y 590 -defaultsOSRD
+preplace inst clk_wiz_0 -pg 1 -lvl 1 -x 120 -y 570 -defaultsOSRD
+preplace inst proc_sys_reset_0 -pg 1 -lvl 2 -x 410 -y 550 -defaultsOSRD
+preplace inst riscv_adas_0 -pg 1 -lvl 6 -x 1850 -y 740 -defaultsOSRD
+preplace inst axis_subset_converter_0 -pg 1 -lvl 4 -x 1130 -y 50 -defaultsOSRD
+preplace inst axis_subset_converter_1 -pg 1 -lvl 5 -x 1500 -y 170 -defaultsOSRD
+preplace inst xlconstant_0 -pg 1 -lvl 3 -x 770 -y 790 -defaultsOSRD
+preplace netloc clk_in1_0_1 1 0 1 NJ 580
+preplace netloc clk_wiz_0_clk_out1 1 1 5 240 450 610 420 930 730 1330 720 NJ
+preplace netloc clk_wiz_0_locked 1 1 1 N 590
+preplace netloc dvi2rgb_0_PixelClk 1 2 4 620 150 NJ 150 1310 70 1680J
+preplace netloc dvi2rgb_0_aPixelClkLckd 1 2 3 630 160 940 740 1290J
+preplace netloc proc_sys_reset_0_interconnect_aresetn 1 2 1 580 550n
+preplace netloc ps7_FCLK_CLK1 1 1 1 220 160n
+preplace netloc ps7_FCLK_RESET0_N 1 2 4 620 440 970 750 1340J 740 NJ
+preplace netloc reset_0_1 1 0 2 30 490 210J
+preplace netloc riscv_adas_0_out_brake_authorized1 1 6 1 2010J 750n
+preplace netloc riscv_adas_0_out_system_fault1 1 6 1 NJ 780
+preplace netloc riscv_adas_0_out_warning_lane1 1 6 1 2020J 690n
+preplace netloc riscv_adas_0_out_warning_ped1 1 6 1 2010J 660n
+preplace netloc riscv_adas_0_out_warning_sign1 1 6 1 2030J 720n
+preplace netloc sw_brake_arm_0_1 1 0 6 NJ 760 NJ 760 610J 730 910J 760 NJ 760 NJ
+preplace netloc tinynpu_0_interrupt 1 4 1 N 640
+preplace netloc xlconstant_0_dout 1 3 1 980J 670n
+preplace netloc TMDS_0_1 1 0 2 NJ 140 NJ
+preplace netloc axi_mem_intercon_M00_AXI 1 3 1 910 580n
+preplace netloc axi_mem_intercon_M01_AXI 1 3 1 950 220n
+preplace netloc axis_subset_converter_0_M_AXIS 1 3 2 980 500 1280
+preplace netloc dvi2rgb_0_DDC 1 2 5 590J 130 NJ 130 1290J 80 1660J 150 NJ
+preplace netloc dvi2rgb_0_RGB 1 2 1 580 130n
+preplace netloc rgb2dvi_0_TMDS 1 6 1 NJ 70
+preplace netloc tinynpu_0_m_axi 1 2 3 630 450 960J 510 1280
+preplace netloc tinynpu_0_m_axis 1 4 2 1350 90 1650
+preplace netloc tinynpu_0_m_axis1 1 4 1 1320J 150n
+preplace netloc vid_in_video_out 1 3 1 910 30n
+preplace netloc vid_in_vtiming_out 1 3 1 960 240n
+preplace netloc vid_out_vid_io_out 1 5 1 1670 50n
+preplace netloc vtc_vtiming_out 1 4 1 N 310
+levelinfo -pg 1 0 120 410 770 1130 1500 1850 2050
+pagesize -pg 1 -db -bbox -sgen -140 -30 2250 850
+"
+}
+{
+   "da_axi4_cnt":"1",
+   "da_clkrst_cnt":"2"
+}

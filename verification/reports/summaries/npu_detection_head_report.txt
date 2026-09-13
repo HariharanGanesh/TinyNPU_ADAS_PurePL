@@ -1,0 +1,24 @@
+Module: npu_detection_head (Integration Top Wrapper)
+Description: Integrates streaming_topk, bbox_decoder_dfl, and sparse_candidate_packer into the final ADAS NPU core block.
+Dependencies: streaming_topk.v, bbox_decoder_dfl.v, sparse_candidate_packer.v
+
+POV 10 (Integration): VERIFIED.
+The "Data Travel Path" test injects a parallel vector of 200 INT8 class logits and four 17-bin spatial focal loss distributions. 
+The Top-K hardware successfully isolates the highest confidence candidate (Class 77, Score 99). 
+The 4 parallel DFL decoders compute the absolute bounding box coordinates against the grid stride.
+The sparse_candidate_packer successfully assembles all generated vectors into a single 128-bit ADAS memory record and outputs a valid `bram_wr_en`.
+
+BRAM Output Captured in TB:
+Data: 004d0063002800140016000b00010000
+Decoded:
+[127:112] Class ID = 77 (0x004D) -> MATCH
+[111:96]  Score = 99 (0x0063)    -> MATCH
+[95:80]   Y2 = 40 (0x0028)       -> MATCH (32 + 8)
+[79:64]   X2 = 20 (0x0014)       -> MATCH (16 + 4)
+[63:48]   Y1 = 22 (0x0016)       -> MATCH (32 - 10)
+[47:32]   X1 = 11 (0x000B)       -> MATCH (16 - 5)
+[31:16]   Scale = 1 (0x0001)     -> MATCH
+[15:0]    Flags = 0 (0x0000)     -> MATCH
+
+All structural sub-module connections are verified. 
+Status: VERIFIED (0 Bugs in Integration Path)

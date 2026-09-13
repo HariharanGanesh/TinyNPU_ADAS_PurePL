@@ -1,0 +1,14 @@
+Bug ID: BUG-DFL-001
+Severity: CRITICAL (Syntactical Failure)
+Module: bbox_decoder_dfl.v
+POV: POV 1 (Functional Compilation)
+Test: bbox_decoder_dfl_tb.sv
+Seed: N/A
+Cycle: N/A
+Observed: Syntax error generated during `xvlog` elaboration. `reg` declarations were found inside a procedural `if (enable) begin` block without a named block scope.
+Expected: Clean elaboration and compilation.
+Root Cause: Verilog-2001 strictly prohibits variable declarations mid-block inside unnamed `begin-end` blocks. SystemVerilog allows it if the block is named, but the file is `.v`.
+RTL Location: `bbox_decoder_dfl.v` lines 48-60.
+Fix: Refactored `bbox_decoder_dfl.v` to hoist the variable declarations for `max_val`, `curr`, `sum_e`, `sum_ke`, and `diff` to the top-level module scope before the `always` block.
+Regression: `bbox_decoder_dfl_tb.sv` now compiles flawlessly.
+Status: CLOSED
