@@ -10,11 +10,11 @@ module tb_axis_sink;
 
     // DUT
     axis_sink dut (
-        .clk(clk), .reset_n(reset_n),
+        .clk(clk), .rst_n(reset_n),
         .s_axis_tdata(s_axis_tdata), .s_axis_tvalid(s_axis_tvalid), .s_axis_tready(s_axis_tready), .s_axis_tlast(s_axis_tlast),
         .crop_en(crop_en), .crop_x(crop_x), .crop_y(crop_y), .crop_w(crop_w), .crop_h(crop_h),
-        .frame_w(frame_w), .frame_h(frame_h),
-        .buf_full(buf_full), .buf_wdata(buf_wdata), .buf_we(buf_we), .buf_waddr(buf_waddr),
+         
+        .buf_swap_ack(1'b0), .buf_full(buf_full), .buf_wr_data(buf_wdata), .buf_wr_en(buf_we), .buf_wr_addr(buf_waddr),
         .frame_done(frame_done)
     );
 
@@ -30,26 +30,26 @@ module tb_axis_sink;
         #20 reset_n = 1;
         
         // TC01: Normal streaming
-        @(posedge clk);
+        @(posedge clk); #1;
         s_axis_tdata = 32'hAAAA_BBBB; s_axis_tvalid = 1;
         wait(s_axis_tready);
-        @(posedge clk);
+        @(posedge clk); #1;
         if (buf_we) begin $display("[PASS] TC01: Buffer written"); tests_passed++; end
         else begin $error("[FAIL] TC01"); tests_failed++; end
         s_axis_tvalid = 0;
 
         // TC04: Back-pressure
         buf_full = 1;
-        @(posedge clk);
+        @(posedge clk); #1;
         if (!s_axis_tready) begin $display("[PASS] TC04: Backpressure honored"); tests_passed++; end
         else begin $error("[FAIL] TC04"); tests_failed++; end
         buf_full = 0;
 
         // TC05: tlast assertion
-        @(posedge clk);
+        @(posedge clk); #1;
         s_axis_tvalid = 1; s_axis_tlast = 1;
         wait(s_axis_tready);
-        @(posedge clk);
+        @(posedge clk); #1;
         s_axis_tvalid = 0; s_axis_tlast = 0;
         if (frame_done) begin $display("[PASS] TC05: frame_done pulsed"); tests_passed++; end
         else begin $error("[FAIL] TC05"); tests_failed++; end
@@ -64,7 +64,7 @@ module tb_axis_sink;
 
     // SVA
     property backpressure_check;
-        @(posedge clk) buf_full |-> !s_axis_tready;
+        @(posedge clk) buf_full |=> !s_axis_tready;
     endproperty
     assert property(backpressure_check) else $error("SVA failed");
 

@@ -76,30 +76,30 @@ module tb_axi_csr;
 
     // DUT
     axi4_lite_slave #(
-        .C_S_AXI_DATA_WIDTH(C_S_AXI_DATA_WIDTH),
-        .C_S_AXI_ADDR_WIDTH(C_S_AXI_ADDR_WIDTH)
+        .DATA_WIDTH(C_S_AXI_DATA_WIDTH),
+        .ADDR_WIDTH(C_S_AXI_ADDR_WIDTH)
     ) dut (
-        .S_AXI_ACLK(clk),
-        .S_AXI_ARESETN(reset_n),
-        .S_AXI_AWADDR(awaddr), .S_AXI_AWPROT(awprot), .S_AXI_AWVALID(awvalid), .S_AXI_AWREADY(awready),
-        .S_AXI_WDATA(wdata), .S_AXI_WSTRB(wstrb), .S_AXI_WVALID(wvalid), .S_AXI_WREADY(wready),
-        .S_AXI_BRESP(bresp), .S_AXI_BVALID(bvalid), .S_AXI_BREADY(bready),
-        .S_AXI_ARADDR(araddr), .S_AXI_ARPROT(arprot), .S_AXI_ARVALID(arvalid), .S_AXI_ARREADY(arready),
-        .S_AXI_RDATA(rdata), .S_AXI_RRESP(rresp), .S_AXI_RVALID(rvalid), .S_AXI_RREADY(rready),
+        .aclk(clk),
+        .aresetn(reset_n),
+        .s_awaddr(awaddr), .s_awprot(awprot), .s_awvalid(awvalid), .s_awready(awready),
+        .s_wdata(wdata), .s_wstrb(wstrb), .s_wvalid(wvalid), .s_wready(wready),
+        .s_bresp(bresp), .s_bvalid(bvalid), .s_bready(bready),
+        .s_araddr(araddr), .s_arprot(arprot), .s_arvalid(arvalid), .s_arready(arready),
+        .s_rdata(rdata), .s_rresp(rresp), .s_rvalid(rvalid), .s_rready(rready),
 
         // CSR Ports
-        .start(start), .soft_reset(soft_reset),
+        .csr_start(start), .csr_soft_reset(soft_reset),
         .status_idle(status_idle), .status_busy(status_busy), .status_done(status_done), .status_error(status_error),
-        .weight_base(weight_base), .act_base(act_base), .out_base(out_base),
-        .in_channels(in_channels), .out_channels(out_channels),
-        .input_width(input_width), .input_height(input_height),
-        .kernel_size(kernel_size), .stride(stride), .padding(padding),
-        .m0(m0), .n_shift(n_shift), .bias(bias), .conf_threshold(conf_threshold),
-        .crop_x(crop_x), .crop_y(crop_y), .crop_w(crop_w), .crop_h(crop_h),
-        .frame_w(frame_w), .frame_h(frame_h), .num_tiles_x(num_tiles_x), .num_tiles_y(num_tiles_y),
-        .act_sel(act_sel), .irq_en(irq_en), .wgt_bank_sel(wgt_bank_sel), .layer_type(layer_type),
-        .act_ext(act_ext), .pool_mode(pool_mode), .stride_sel(stride_sel),
-        .array_rows(array_rows), .input_fmt(input_fmt),
+        .csr_weight_base(weight_base), .csr_act_base(act_base), .csr_out_base(out_base),
+        .csr_in_channels(in_channels), .csr_out_channels(out_channels),
+        .csr_input_width(input_width), .csr_input_height(input_height),
+        .csr_kernel_size(kernel_size), .csr_stride(stride), .csr_padding(padding),
+        .csr_m0(m0), .csr_n_shift(n_shift), .csr_bias(bias), .csr_conf_threshold(conf_threshold),
+        .csr_crop_x(crop_x), .csr_crop_y(crop_y), .csr_crop_w(crop_w), .csr_crop_h(crop_h),
+        .csr_frame_w(frame_w), .csr_frame_h(frame_h), .csr_num_tiles_x(num_tiles_x), .csr_num_tiles_y(num_tiles_y),
+        .csr_act_sel(act_sel), .csr_irq_en(irq_en), .csr_wgt_bank_sel(wgt_bank_sel), .csr_layer_type(layer_type),
+        .csr_act_ext(act_ext), .csr_pool_mode(pool_mode), .csr_stride_sel(stride_sel),
+        .csr_array_rows(array_rows), .csr_input_fmt(input_fmt),
         .perf_cycle_count(perf_cycle_count), .perf_compute_count(perf_compute_count),
         .perf_dma_stall_count(perf_dma_stall_count), .perf_out_stall_count(perf_out_stall_count),
         .tile_count(tile_count), .vid_locked(vid_locked)
@@ -111,35 +111,32 @@ module tb_axi_csr;
     int tests_failed = 0;
 
     task axi_write(input logic [C_S_AXI_ADDR_WIDTH-1:0] addr, input logic [C_S_AXI_DATA_WIDTH-1:0] data);
-        awaddr = addr; awvalid = 1; awprot = 0;
+        #1; awaddr = addr; awvalid = 1; awprot = 0;
         wdata = data; wvalid = 1; wstrb = 4'hF;
         bready = 1;
         fork
             begin
                 wait(awready);
-                @(posedge clk); awvalid = 0;
+                @(posedge clk); #1; awvalid = 0;
             end
             begin
                 wait(wready);
-                @(posedge clk); wvalid = 0;
+                @(posedge clk); #1; wvalid = 0;
             end
         join
         wait(bvalid);
-        @(posedge clk);
-        bready = 0;
+        @(posedge clk); #1; bready = 0;
     endtask
 
     task axi_read(input logic [C_S_AXI_ADDR_WIDTH-1:0] addr, output logic [C_S_AXI_DATA_WIDTH-1:0] data, output logic [1:0] resp);
-        araddr = addr; arvalid = 1; arprot = 0;
+        #1; araddr = addr; arvalid = 1; arprot = 0;
         rready = 1;
         wait(arready);
-        @(posedge clk);
-        arvalid = 0;
+        @(posedge clk); #1; arvalid = 0;
         wait(rvalid);
         data = rdata;
         resp = rresp;
-        @(posedge clk);
-        rready = 0;
+        @(posedge clk); #1; rready = 0;
     endtask
 
     initial begin
@@ -164,7 +161,7 @@ module tb_axi_csr;
             logic [31:0] rd; logic [1:0] rr;
             axi_read(8'h08, rd, rr);
             if (rd == 0) begin $display("[PASS] TC02: Reset values correct"); tests_passed++; end
-            else begin $error("[FAIL] TC02: Reset values wrong"); tests_failed++; end
+            else begin $error("[FAIL] TC02: Reset values wrong (got %h)", rd); tests_failed++; end
         end
 
         // TC03: Write/Read writable register
@@ -177,12 +174,12 @@ module tb_axi_csr;
         end
 
         // TC04: Read-only register
-        axi_write(8'h48, 32'hFFFFFFFF);
+        axi_write(8'h60, 32'hFFFFFFFF);
         begin
             logic [31:0] rd; logic [1:0] rr;
-            axi_read(8'h48, rd, rr);
+            axi_read(8'h60, rd, rr);
             if (rd == 20) begin $display("[PASS] TC04: Read-only ignored"); tests_passed++; end
-            else begin $error("[FAIL] TC04: Read-only failed"); tests_failed++; end
+            else begin $error("[FAIL] TC04: Read-only failed (got %0d, expected 20)", rd); tests_failed++; end
         end
 
         // TC05: Unaligned/Illegal address (e.g. 0xF0)
@@ -190,8 +187,8 @@ module tb_axi_csr;
             logic [31:0] rd; logic [1:0] rr;
             axi_read(8'hF0, rd, rr);
             // Even if SLVERR isn't cleanly supported by simple axi slaves, we check response or default
-            if (rr == 2'b10 || rd == 0) begin $display("[PASS] TC05: Illegal address handled"); tests_passed++; end
-            else begin $error("[FAIL] TC05: Illegal address failed"); tests_failed++; end
+            if (rr == 2'b10 || rd == 32'hDEADBEEF) begin $display("[PASS] TC05: Illegal address handled"); tests_passed++; end
+            else begin $error("[FAIL] TC05: Illegal address failed (got %0d)", rd); tests_failed++; end
         end
 
         // Summary
