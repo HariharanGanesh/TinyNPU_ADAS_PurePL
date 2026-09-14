@@ -1,6 +1,6 @@
 // =============================================================================
 // Module: processing_element.v
-// Project: NPU300PM — TinyNPU200 PMAX Edition
+// Project: NPU300PM â€” TinyNPU200 PMAX Edition
 // Description:
 //   Weight-stationary Processing Element for the NPU300PM 26x8 systolic array.
 //
@@ -14,10 +14,10 @@
 //     multiplying. The DSP48E1 B-port is exactly 18 bits wide. A 18x18
 //     multiply is GUARANTEED to be absorbed into a single DSP48E1 primitive.
 //     This converts the PE from a 16-bit LUT multiply to a true hardware
-//     DSP48E1 MAC operation — physically faster, lower power.
+//     DSP48E1 MAC operation â€” physically faster, lower power.
 //
 //   Pipeline (3 stages):
-//     Stage 1: 18x18 DSP48E1 multiply → 36-bit result registered
+//     Stage 1: 18x18 DSP48E1 multiply â†’ 36-bit result registered
 //     Stage 2: Truncate and sign-extend to ACCUM_WIDTH registered
 //     Stage 3: ACCUM_WIDTH accumulate with psum_in
 //
@@ -43,7 +43,7 @@ module processing_element #(
 
     output reg  signed [DATA_WIDTH-1:0]   act_out,
     output reg                            act_valid_out,
-    output reg  signed [ACCUM_WIDTH-1:0]  psum_out
+    (* use_dsp = "no" *) output reg  signed [ACCUM_WIDTH-1:0]  psum_out
 );
 
     localparam PE_LATENCY = 3;
@@ -54,18 +54,18 @@ module processing_element #(
     reg signed [DATA_WIDTH-1:0] weight_reg;
 
     // =========================================================================
-    // DSP48E1 Inference — Sign-extend to 18 bits to guarantee DSP48 mapping.
+    // DSP48E1 Inference â€” Sign-extend to 18 bits to guarantee DSP48 mapping.
     // The Xilinx DSP48E1 B-port is 18 bits. Any multiply where both inputs
     // are <= 18 bits is guaranteed to be absorbed into ONE DSP48E1 primitive.
     // =========================================================================
     wire signed [17:0] weight_dsp = {{(18-DATA_WIDTH){weight_reg[DATA_WIDTH-1]}}, weight_reg};
     wire signed [17:0] act_dsp    = {{(18-DATA_WIDTH){act_in[DATA_WIDTH-1]}},    act_in};
 
-    // Stage 1: DSP48E1 multiply — 18x18 -> 36-bit product
+    // Stage 1: DSP48E1 multiply â€” 18x18 -> 36-bit product
     (* use_dsp = "yes" *) reg signed [35:0] mul_s1;
 
     // Stage 2: Truncated & sign-extended product
-    reg signed [ACCUM_WIDTH-1:0] mul_s2;
+    (* use_dsp = "no" *) reg signed [ACCUM_WIDTH-1:0] mul_s2;
 
     // Valid pipeline
     reg act_valid_d1;
