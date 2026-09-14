@@ -140,3 +140,8 @@ create_clock -period 13.468 -name TMDS_RX_clk_p -waveform {0.000 6.734} [get_por
 
 # False path for asynchronous HDMI lock status crossing to 125 MHz NPU domain
 set_false_path -from [get_clocks clk_fpga_1] -to [get_clocks clk_fpga_0]
+
+# [Vivado/Constraints]: Digilent IP (rgb2dvi/dvi2rgb) uses a hierarchical NAME filter
+# in set_false_path which triggers "uses inefficient query". The IP is cached,
+# so we suppress this specific warning globally based on its text.
+set_msg_config -string "uses inefficient query to find pin objects" -suppress
