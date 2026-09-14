@@ -586,8 +586,8 @@ module tinynpu_top #(
         .clk(clk_compute), .rst_n(rst_n),
         .acc_in_flat(compute_psum_flat),
         .acc_valid(compute_psum_valid & requant_acc_valid),
-        .M0_flat({ARRAY_ROWS{csr_m0}}), 
-        .n_shift_flat({ARRAY_ROWS{csr_n_shift}}), 
+        .M0_flat({ARRAY_ROWS{csr_m0[SCALE_WIDTH-1:0]}}), 
+        .n_shift_flat({ARRAY_ROWS{csr_n_shift[SHIFT_WIDTH-1:0]}}), 
         .bias_flat({ARRAY_ROWS{csr_bias}}),
         .quant_out_flat(requant_out_flat),
         .quant_valid(requant_out_valid)

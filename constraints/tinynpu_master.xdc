@@ -145,3 +145,7 @@ set_false_path -from [get_clocks clk_fpga_1] -to [get_clocks clk_fpga_0]
 # in set_false_path which triggers "uses inefficient query". The IP is cached,
 # so we suppress this specific warning globally based on its text.
 set_msg_config -string "uses inefficient query to find pin objects" -suppress
+
+# [Synth 8-4445]: Suppress missing dummy_weights.hex warning during synthesis.
+# The weight buffer is dynamically loaded via DMA; initial contents don't matter.
+set_msg_config -id {Synth 8-4445} -suppress
