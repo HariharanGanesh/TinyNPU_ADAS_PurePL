@@ -16,16 +16,27 @@ This guide provides step-by-step instructions on how to clone, build, and run th
 
 ---
 
-## 🚀 Step 1: Clone the Repository
+## 🚀 Step 1: Download Required Files from GitHub
 
-Open your terminal or command prompt and clone the project to your local machine:
+You can download the project files from GitHub using either Git or by downloading the ZIP archive directly.
 
+### Option A: Using Git (Recommended)
+If you have Git installed, open your command prompt or PowerShell and run:
 ```bash
 git clone https://github.com/HariharanGanesh/TinyNPU_ADAS_PurePL.git
 cd TinyNPU_ADAS_PurePL
 ```
 
-*Note: It is highly recommended to clone the repository to a short path on your Windows machine (e.g., `D:\TinyNPU`) to avoid Vivado's 260-character path limit errors during synthesis.*
+### Option B: Download ZIP Archive
+If you do not have Git installed on your Windows PC:
+1. Go to the GitHub repository page in your web browser.
+2. Click the green **"<> Code"** button.
+3. Select **"Download ZIP"**.
+4. Once downloaded, right-click the `.zip` file and select **Extract All...**.
+
+> [!WARNING]
+> **CRITICAL FOR WINDOWS USERS:** Windows has a strict 260-character path limit which will cause Vivado synthesis to fail if the project is nested too deeply. 
+> Whether you use Git or the ZIP file, you **MUST** place/extract the folder in a very short directory path (e.g., `C:\TinyNPU` or `D:\Projects\NPU`). Do not extract it to your Downloads or Desktop folder.
 
 ---
 

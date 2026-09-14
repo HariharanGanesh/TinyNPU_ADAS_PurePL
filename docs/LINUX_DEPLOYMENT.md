@@ -51,13 +51,28 @@ sudo usermod -a -G dialout $USER
 
 ---
 
-## 🚀 4. Clone and Build
+## 🚀 4. Download Files and Build
 
-Clone the repository to your preferred workspace:
+You can download the project files from GitHub using either Git or a direct ZIP download.
 
+### Option A: Using Git (Recommended)
+Open your terminal and clone the repository to your preferred workspace:
 ```bash
 git clone https://github.com/HariharanGanesh/TinyNPU_ADAS_PurePL.git
 cd TinyNPU_ADAS_PurePL
+```
+
+### Option B: Using ZIP Download
+If you do not have Git installed, you can download and extract the repository archive using `wget` and `unzip`:
+```bash
+# Download the ZIP file from GitHub
+wget https://github.com/HariharanGanesh/TinyNPU_ADAS_PurePL/archive/refs/heads/main.zip -O TinyNPU_ADAS_PurePL.zip
+
+# Extract the files
+unzip TinyNPU_ADAS_PurePL.zip
+
+# Navigate into the extracted directory
+cd TinyNPU_ADAS_PurePL-main
 ```
 
 ### Option A: GUI Mode
