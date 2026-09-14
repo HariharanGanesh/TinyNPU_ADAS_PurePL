@@ -44,7 +44,7 @@
     <Option Name="SimulatorGccVersionRiviera" Val="9.3.0"/>
     <Option Name="SimulatorGccVersionActiveHdl" Val="9.3.0"/>
     <Option Name="BoardPart" Val=""/>
-    <Option Name="ActiveSimSet" Val="sim_1"/>
+    <Option Name="ActiveSimSet" Val="sim_hdmi_e2e"/>
     <Option Name="DefaultLib" Val="xil_defaultlib"/>
     <Option Name="ProjectType" Val="Default"/>
     <Option Name="IPRepoPath" Val="$PPRDIR/../IP/NPU300PM"/>
@@ -60,20 +60,20 @@
     <Option Name="IPUserFilesDir" Val="$PIPUSERFILESDIR"/>
     <Option Name="IPStaticSourceDir" Val="$PIPUSERFILESDIR/ipstatic"/>
     <Option Name="EnableBDX" Val="FALSE"/>
-    <Option Name="WTXSimLaunchSim" Val="0"/>
+    <Option Name="WTXSimLaunchSim" Val="10"/>
     <Option Name="WTModelSimLaunchSim" Val="0"/>
     <Option Name="WTQuestaLaunchSim" Val="0"/>
     <Option Name="WTIesLaunchSim" Val="0"/>
     <Option Name="WTVcsLaunchSim" Val="0"/>
     <Option Name="WTRivieraLaunchSim" Val="0"/>
     <Option Name="WTActivehdlLaunchSim" Val="0"/>
-    <Option Name="WTXSimExportSim" Val="0"/>
-    <Option Name="WTModelSimExportSim" Val="0"/>
-    <Option Name="WTQuestaExportSim" Val="0"/>
+    <Option Name="WTXSimExportSim" Val="1"/>
+    <Option Name="WTModelSimExportSim" Val="1"/>
+    <Option Name="WTQuestaExportSim" Val="1"/>
     <Option Name="WTIesExportSim" Val="0"/>
     <Option Name="WTVcsExportSim" Val="0"/>
-    <Option Name="WTRivieraExportSim" Val="0"/>
-    <Option Name="WTActivehdlExportSim" Val="0"/>
+    <Option Name="WTRivieraExportSim" Val="1"/>
+    <Option Name="WTActivehdlExportSim" Val="1"/>
     <Option Name="GenerateIPUpgradeLog" Val="TRUE"/>
     <Option Name="XSimRadix" Val="hex"/>
     <Option Name="XSimTimeUnit" Val="ns"/>
@@ -132,6 +132,24 @@
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
+        <CompFileExtendedInfo CompFileName="npu_system.bd" FileRelPathName="ip/npu_system_axi_mem_intercon_imp_auto_pc_0/npu_system_axi_mem_intercon_imp_auto_pc_0.xci">
+          <Proxy FileSetName="npu_system_axi_mem_intercon_imp_auto_pc_0"/>
+        </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="npu_system.bd" FileRelPathName="ip/npu_system_axi_mem_intercon_imp_m00_regslice_0/npu_system_axi_mem_intercon_imp_m00_regslice_0.xci">
+          <Proxy FileSetName="npu_system_axi_mem_intercon_imp_m00_regslice_0"/>
+        </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="npu_system.bd" FileRelPathName="ip/npu_system_axi_mem_intercon_imp_s00_regslice_0/npu_system_axi_mem_intercon_imp_s00_regslice_0.xci">
+          <Proxy FileSetName="npu_system_axi_mem_intercon_imp_s00_regslice_0"/>
+        </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="npu_system.bd" FileRelPathName="ip/npu_system_axi_mem_intercon_imp_xbar_0/npu_system_axi_mem_intercon_imp_xbar_0.xci">
+          <Proxy FileSetName="npu_system_axi_mem_intercon_imp_xbar_0"/>
+        </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="npu_system.bd" FileRelPathName="ip/npu_system_axis_subset_converter_0_0/npu_system_axis_subset_converter_0_0.xci">
+          <Proxy FileSetName="npu_system_axis_subset_converter_0_0"/>
+        </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="npu_system.bd" FileRelPathName="ip/npu_system_axis_subset_converter_1_0/npu_system_axis_subset_converter_1_0.xci">
+          <Proxy FileSetName="npu_system_axis_subset_converter_1_0"/>
+        </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="npu_system.bd" FileRelPathName="ip/npu_system_clk_wiz_0_0/npu_system_clk_wiz_0_0.xci">
           <Proxy FileSetName="npu_system_clk_wiz_0_0"/>
         </CompFileExtendedInfo>
@@ -146,6 +164,9 @@
         </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="npu_system.bd" FileRelPathName="ip/npu_system_riscv_adas_0_1/npu_system_riscv_adas_0_1.xci">
           <Proxy FileSetName="npu_system_riscv_adas_0_1"/>
+        </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="npu_system.bd" FileRelPathName="ip/npu_system_tinynpu_0_0/npu_system_tinynpu_0_0.xci">
+          <Proxy FileSetName="npu_system_tinynpu_0_0"/>
         </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="npu_system.bd" FileRelPathName="ip/npu_system_vid_in_0/npu_system_vid_in_0.xci">
           <Proxy FileSetName="npu_system_vid_in_0"/>
@@ -178,6 +199,12 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
+      <File Path="$PPRDIR/../IP/TinyNPU200/src/dummy_weights.hex">
+        <FileInfo SFType="MIF">
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
         <Option Name="TopModule" Val="npu_system_wrapper"/>
@@ -185,7 +212,7 @@
     </FileSet>
     <FileSet Name="constrs_1" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1" RelGenDir="$PGENDIR/constrs_1">
       <Filter Type="Constrs"/>
-      <File Path="$PPRDIR/../pynq_z2_customized.xdc">
+      <File Path="$PPRDIR/../constraints/pynq_z2_customized.xdc">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
@@ -230,6 +257,615 @@
         <Option Name="TopAutoSet" Val="TRUE"/>
       </Config>
     </FileSet>
+    <FileSet Name="sim_hdmi_e2e" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/sim_hdmi_e2e" RelGenDir="$PGENDIR/sim_hdmi_e2e">
+      <Filter Type="Srcs"/>
+      <File Path="$PPRDIR/../verification/tb/tb_adas_features.sv">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/synth/npu_system_dvi2rgb_0_0.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_rgb2dvi_0_0/synth/npu_system_rgb2dvi_0_0.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../verification/tb/tb_hdmi_e2e.sv">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_rgb2dvi_0_0/src/rgb2dvi.xdc">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_rgb2dvi_0_0/src/rgb2dvi_ooc.xdc">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_rgb2dvi_0_0/src/rgb2dvi_clocks.xdc">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_rgb2dvi_0_0/sim/npu_system_rgb2dvi_0_0.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/ila_refclk.xci">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/sim/ila_refclk.v">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/ltlib_v1_0_3_ver.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/ltlib_v1_0_3_lib_fn.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/xsdbs_v1_0_5_i2x.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/xsdbs_v1_0_5_in.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/xsdbm_v3_0_4_i2x.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/xsdbm_v3_0_4_in.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/xsdbm_v3_0_4_icn.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/xsdbm_v3_0_4_bs.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/xsdbm_v3_0_4_bs_ext.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/xsdbm_v3_0_4_bs_core.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/xsdbm_v3_0_4_bs_core_ext.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/xsdbm_v3_0_4_bs_ports.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/xsdbm_v3_0_4_bsid_ports.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/xsdbm_v3_0_4_bsid_vec_ports.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/xsdbm_v3_0_4_bs_vec.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/xsdbm_v3_0_4_bs_core_vec.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/xsdbm_v3_0_4_sl_prt_map.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/xsdbm_v3_0_4_id_map.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/xsdbm_v3_0_4_id_vec_map.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/ila_v6_2_18_ila_ver.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/ila_v6_2_18_ila_in.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/ila_v6_2_18_ila_param.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/ila_v6_2_18_ila_lparam.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/hdl/verilog/ila_v6_2_18_ila_lib_fn.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/ila_v6_2/constraints/ila.xdc">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/ila_refclk_ooc.xdc">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_refclk/synth/ila_refclk.v">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/ila_pixclk.xci">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/sim/ila_pixclk.v">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/ltlib_v1_0_3_ver.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/ltlib_v1_0_3_lib_fn.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/xsdbs_v1_0_5_i2x.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/xsdbs_v1_0_5_in.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/xsdbm_v3_0_4_i2x.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/xsdbm_v3_0_4_in.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/xsdbm_v3_0_4_icn.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/xsdbm_v3_0_4_bs.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/xsdbm_v3_0_4_bs_ext.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/xsdbm_v3_0_4_bs_core.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/xsdbm_v3_0_4_bs_core_ext.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/xsdbm_v3_0_4_bs_ports.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/xsdbm_v3_0_4_bsid_ports.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/xsdbm_v3_0_4_bsid_vec_ports.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/xsdbm_v3_0_4_bs_vec.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/xsdbm_v3_0_4_bs_core_vec.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/xsdbm_v3_0_4_sl_prt_map.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/xsdbm_v3_0_4_id_map.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/xsdbm_v3_0_4_id_vec_map.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/ila_v6_2_18_ila_ver.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/ila_v6_2_18_ila_in.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/ila_v6_2_18_ila_param.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/ila_v6_2_18_ila_lparam.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/hdl/verilog/ila_v6_2_18_ila_lib_fn.vh">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/ila_v6_2/constraints/ila.xdc">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/ila_pixclk_ooc.xdc">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_pixclk/synth/ila_pixclk.v">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/ila_timing_workaround.xdc">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/dvi2rgb.xdc">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/dvi2rgb_ooc.xdc">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/dgl_1080p_cea.data">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/dgl_1280_1024_cea.data">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/src/dgl_720p_cea.data">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PGENDIR/sources_1/bd/npu_system/ip/npu_system_dvi2rgb_0_0/sim/npu_system_dvi2rgb_0_0.vhd">
+        <FileInfo>
+          <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <Config>
+        <Option Name="DesignMode" Val="RTL"/>
+        <Option Name="TopModule" Val="tb_adas_features"/>
+        <Option Name="TopLib" Val="xil_defaultlib"/>
+        <Option Name="TransportPathDelay" Val="0"/>
+        <Option Name="TransportIntDelay" Val="0"/>
+        <Option Name="SelectedSimModel" Val="rtl"/>
+        <Option Name="PamDesignTestbench" Val=""/>
+        <Option Name="PamDutBypassFile" Val="xil_dut_bypass"/>
+        <Option Name="PamSignalDriverFile" Val="xil_bypass_driver"/>
+        <Option Name="PamPseudoTop" Val="pseudo_tb"/>
+        <Option Name="SrcSet" Val="sources_1"/>
+        <Option Name="CosimPdi" Val=""/>
+        <Option Name="CosimPlatform" Val=""/>
+        <Option Name="CosimElf" Val=""/>
+        <Option Name="Dmv" Val=""/>
+        <Option Name="xsim.simulate.runtime" Val="50ms"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="sim_adas_features" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/sim_adas_features" RelGenDir="$PGENDIR/sim_adas_features">
+      <Filter Type="Srcs"/>
+      <Config>
+        <Option Name="DesignMode" Val="RTL"/>
+        <Option Name="TopModule" Val="riscv_adas_subsystem"/>
+        <Option Name="TopLib" Val="xil_defaultlib"/>
+        <Option Name="TopRTLFile" Val="$PPRDIR/../IP/RISCV_ADAS_Controller/src/riscv_adas_subsystem.v"/>
+        <Option Name="TopAutoSet" Val="TRUE"/>
+        <Option Name="TransportPathDelay" Val="0"/>
+        <Option Name="TransportIntDelay" Val="0"/>
+        <Option Name="SelectedSimModel" Val="rtl"/>
+        <Option Name="PamDesignTestbench" Val=""/>
+        <Option Name="PamDutBypassFile" Val="xil_dut_bypass"/>
+        <Option Name="PamSignalDriverFile" Val="xil_bypass_driver"/>
+        <Option Name="PamPseudoTop" Val="pseudo_tb"/>
+        <Option Name="SrcSet" Val="sources_1"/>
+        <Option Name="CosimPdi" Val=""/>
+        <Option Name="CosimPlatform" Val=""/>
+        <Option Name="CosimElf" Val=""/>
+        <Option Name="Dmv" Val=""/>
+        <Option Name="xsim.simulate.runtime" Val="50ms"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="npu_system_tinynpu_0_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/npu_system_tinynpu_0_0" RelGenDir="$PGENDIR/npu_system_tinynpu_0_0">
+      <Config>
+        <Option Name="TopModule" Val="npu_system_tinynpu_0_0"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="npu_system_dvi2rgb_0_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/npu_system_dvi2rgb_0_0" RelGenDir="$PGENDIR/npu_system_dvi2rgb_0_0">
+      <Config>
+        <Option Name="TopModule" Val="npu_system_dvi2rgb_0_0"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
     <FileSet Name="npu_system_rgb2dvi_0_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/npu_system_rgb2dvi_0_0" RelGenDir="$PGENDIR/npu_system_rgb2dvi_0_0">
       <Config>
         <Option Name="TopModule" Val="npu_system_rgb2dvi_0_0"/>
@@ -242,12 +878,6 @@
         <Option Name="UseBlackboxStub" Val="1"/>
       </Config>
     </FileSet>
-    <FileSet Name="npu_system_dvi2rgb_0_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/npu_system_dvi2rgb_0_0" RelGenDir="$PGENDIR/npu_system_dvi2rgb_0_0">
-      <Config>
-        <Option Name="TopModule" Val="npu_system_dvi2rgb_0_0"/>
-        <Option Name="UseBlackboxStub" Val="1"/>
-      </Config>
-    </FileSet>
     <FileSet Name="npu_system_vid_out_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/npu_system_vid_out_0" RelGenDir="$PGENDIR/npu_system_vid_out_0">
       <Config>
         <Option Name="TopModule" Val="npu_system_vid_out_0"/>
@@ -257,6 +887,30 @@
     <FileSet Name="npu_system_vtc_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/npu_system_vtc_0" RelGenDir="$PGENDIR/npu_system_vtc_0">
       <Config>
         <Option Name="TopModule" Val="npu_system_vtc_0"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="npu_system_axi_mem_intercon_imp_xbar_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/npu_system_axi_mem_intercon_imp_xbar_0" RelGenDir="$PGENDIR/npu_system_axi_mem_intercon_imp_xbar_0">
+      <Config>
+        <Option Name="TopModule" Val="npu_system_axi_mem_intercon_imp_xbar_0"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="npu_system_axi_mem_intercon_imp_s00_regslice_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/npu_system_axi_mem_intercon_imp_s00_regslice_0" RelGenDir="$PGENDIR/npu_system_axi_mem_intercon_imp_s00_regslice_0">
+      <Config>
+        <Option Name="TopModule" Val="npu_system_axi_mem_intercon_imp_s00_regslice_0"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="npu_system_axi_mem_intercon_imp_auto_pc_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/npu_system_axi_mem_intercon_imp_auto_pc_0" RelGenDir="$PGENDIR/npu_system_axi_mem_intercon_imp_auto_pc_0">
+      <Config>
+        <Option Name="TopModule" Val="npu_system_axi_mem_intercon_imp_auto_pc_0"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="npu_system_axi_mem_intercon_imp_m00_regslice_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/npu_system_axi_mem_intercon_imp_m00_regslice_0" RelGenDir="$PGENDIR/npu_system_axi_mem_intercon_imp_m00_regslice_0">
+      <Config>
+        <Option Name="TopModule" Val="npu_system_axi_mem_intercon_imp_m00_regslice_0"/>
         <Option Name="UseBlackboxStub" Val="1"/>
       </Config>
     </FileSet>
@@ -275,6 +929,18 @@
     <FileSet Name="npu_system_riscv_adas_0_1" Type="BlockSrcs" RelSrcDir="$PSRCDIR/npu_system_riscv_adas_0_1" RelGenDir="$PGENDIR/npu_system_riscv_adas_0_1">
       <Config>
         <Option Name="TopModule" Val="npu_system_riscv_adas_0_1"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="npu_system_axis_subset_converter_0_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/npu_system_axis_subset_converter_0_0" RelGenDir="$PGENDIR/npu_system_axis_subset_converter_0_0">
+      <Config>
+        <Option Name="TopModule" Val="npu_system_axis_subset_converter_0_0"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="npu_system_axis_subset_converter_1_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/npu_system_axis_subset_converter_1_0" RelGenDir="$PGENDIR/npu_system_axis_subset_converter_1_0">
+      <Config>
+        <Option Name="TopModule" Val="npu_system_axis_subset_converter_1_0"/>
         <Option Name="UseBlackboxStub" Val="1"/>
       </Config>
     </FileSet>
@@ -311,6 +977,26 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
+    <Run Id="npu_system_tinynpu_0_0_synth_1" Type="Ft3:Synth" SrcSet="npu_system_tinynpu_0_0" Part="xc7z020clg400-1" ConstrsSet="npu_system_tinynpu_0_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/npu_system_tinynpu_0_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_tinynpu_0_0_synth_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_tinynpu_0_0_synth_1" ParallelReportGen="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2025"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2025"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="npu_system_dvi2rgb_0_0_synth_1" Type="Ft3:Synth" SrcSet="npu_system_dvi2rgb_0_0" Part="xc7z020clg400-1" ConstrsSet="npu_system_dvi2rgb_0_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/npu_system_dvi2rgb_0_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_dvi2rgb_0_0_synth_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_dvi2rgb_0_0_synth_1" ParallelReportGen="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2025"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2025"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
     <Run Id="npu_system_rgb2dvi_0_0_synth_1" Type="Ft3:Synth" SrcSet="npu_system_rgb2dvi_0_0" Part="xc7z020clg400-1" ConstrsSet="npu_system_rgb2dvi_0_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/npu_system_rgb2dvi_0_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_rgb2dvi_0_0_synth_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_rgb2dvi_0_0_synth_1" ParallelReportGen="true">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2025"/>
@@ -331,16 +1017,6 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
-    <Run Id="npu_system_dvi2rgb_0_0_synth_1" Type="Ft3:Synth" SrcSet="npu_system_dvi2rgb_0_0" Part="xc7z020clg400-1" ConstrsSet="npu_system_dvi2rgb_0_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/npu_system_dvi2rgb_0_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_dvi2rgb_0_0_synth_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_dvi2rgb_0_0_synth_1" ParallelReportGen="true">
-      <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2025"/>
-        <Step Id="synth_design"/>
-      </Strategy>
-      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
-      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2025"/>
-      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
-      <RQSFiles/>
-    </Run>
     <Run Id="npu_system_vid_out_0_synth_1" Type="Ft3:Synth" SrcSet="npu_system_vid_out_0" Part="xc7z020clg400-1" ConstrsSet="npu_system_vid_out_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/npu_system_vid_out_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_vid_out_0_synth_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_vid_out_0_synth_1" ParallelReportGen="true">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2025"/>
@@ -352,6 +1028,46 @@
       <RQSFiles/>
     </Run>
     <Run Id="npu_system_vtc_0_synth_1" Type="Ft3:Synth" SrcSet="npu_system_vtc_0" Part="xc7z020clg400-1" ConstrsSet="npu_system_vtc_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/npu_system_vtc_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_vtc_0_synth_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_vtc_0_synth_1" ParallelReportGen="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2025"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2025"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="npu_system_axi_mem_intercon_imp_xbar_0_synth_1" Type="Ft3:Synth" SrcSet="npu_system_axi_mem_intercon_imp_xbar_0" Part="xc7z020clg400-1" ConstrsSet="npu_system_axi_mem_intercon_imp_xbar_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/npu_system_axi_mem_intercon_imp_xbar_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_axi_mem_intercon_imp_xbar_0_synth_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_axi_mem_intercon_imp_xbar_0_synth_1" ParallelReportGen="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2025"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2025"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="npu_system_axi_mem_intercon_imp_s00_regslice_0_synth_1" Type="Ft3:Synth" SrcSet="npu_system_axi_mem_intercon_imp_s00_regslice_0" Part="xc7z020clg400-1" ConstrsSet="npu_system_axi_mem_intercon_imp_s00_regslice_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/npu_system_axi_mem_intercon_imp_s00_regslice_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_axi_mem_intercon_imp_s00_regslice_0_synth_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_axi_mem_intercon_imp_s00_regslice_0_synth_1" ParallelReportGen="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2025"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2025"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="npu_system_axi_mem_intercon_imp_auto_pc_0_synth_1" Type="Ft3:Synth" SrcSet="npu_system_axi_mem_intercon_imp_auto_pc_0" Part="xc7z020clg400-1" ConstrsSet="npu_system_axi_mem_intercon_imp_auto_pc_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/npu_system_axi_mem_intercon_imp_auto_pc_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_axi_mem_intercon_imp_auto_pc_0_synth_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_axi_mem_intercon_imp_auto_pc_0_synth_1" ParallelReportGen="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2025"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2025"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="npu_system_axi_mem_intercon_imp_m00_regslice_0_synth_1" Type="Ft3:Synth" SrcSet="npu_system_axi_mem_intercon_imp_m00_regslice_0" Part="xc7z020clg400-1" ConstrsSet="npu_system_axi_mem_intercon_imp_m00_regslice_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/npu_system_axi_mem_intercon_imp_m00_regslice_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_axi_mem_intercon_imp_m00_regslice_0_synth_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_axi_mem_intercon_imp_m00_regslice_0_synth_1" ParallelReportGen="true">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2025"/>
         <Step Id="synth_design"/>
@@ -391,7 +1107,27 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
-    <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="constrs_1" Description="Uses multiple algorithms for optimization, placement, and routing to get potentially better results." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/impl_1" SynthRun="synth_1" IncludeInArchive="true" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/impl_1" LaunchOptions="-jobs 6 " AutoRQSDir="$PSRCDIR/utils_1/imports/impl_1" ParallelReportGen="true">
+    <Run Id="npu_system_axis_subset_converter_0_0_synth_1" Type="Ft3:Synth" SrcSet="npu_system_axis_subset_converter_0_0" Part="xc7z020clg400-1" ConstrsSet="npu_system_axis_subset_converter_0_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/npu_system_axis_subset_converter_0_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_axis_subset_converter_0_0_synth_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_axis_subset_converter_0_0_synth_1" ParallelReportGen="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2025"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2025"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="npu_system_axis_subset_converter_1_0_synth_1" Type="Ft3:Synth" SrcSet="npu_system_axis_subset_converter_1_0" Part="xc7z020clg400-1" ConstrsSet="npu_system_axis_subset_converter_1_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/npu_system_axis_subset_converter_1_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_axis_subset_converter_1_0_synth_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_axis_subset_converter_1_0_synth_1" ParallelReportGen="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2025"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2025"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="constrs_1" Description="Uses multiple algorithms for optimization, placement, and routing to get potentially better results." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/impl_1" SynthRun="synth_1" IncludeInArchive="true" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/impl_1" LaunchOptions="-jobs 12 " AutoRQSDir="$PSRCDIR/utils_1/imports/impl_1" ParallelReportGen="true">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Performance_Explore" Flow="Vivado Implementation 2025"/>
         <Step Id="init_design"/>
@@ -413,6 +1149,40 @@
         <Step Id="write_bitstream"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2025"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="npu_system_tinynpu_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="npu_system_tinynpu_0_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="npu_system_tinynpu_0_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_tinynpu_0_0_impl_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_tinynpu_0_0_impl_1" ParallelReportGen="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2025"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2025"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="npu_system_dvi2rgb_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="npu_system_dvi2rgb_0_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="npu_system_dvi2rgb_0_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_dvi2rgb_0_0_impl_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_dvi2rgb_0_0_impl_1" ParallelReportGen="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2025"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
       <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2025"/>
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
@@ -451,23 +1221,6 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
-    <Run Id="npu_system_dvi2rgb_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="npu_system_dvi2rgb_0_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="npu_system_dvi2rgb_0_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_dvi2rgb_0_0_impl_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_dvi2rgb_0_0_impl_1" ParallelReportGen="true">
-      <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2025"/>
-        <Step Id="init_design"/>
-        <Step Id="opt_design"/>
-        <Step Id="power_opt_design"/>
-        <Step Id="place_design"/>
-        <Step Id="post_place_power_opt_design"/>
-        <Step Id="phys_opt_design"/>
-        <Step Id="route_design"/>
-        <Step Id="post_route_phys_opt_design"/>
-        <Step Id="write_bitstream"/>
-      </Strategy>
-      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2025"/>
-      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
-      <RQSFiles/>
-    </Run>
     <Run Id="npu_system_vid_out_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="npu_system_vid_out_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="npu_system_vid_out_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_vid_out_0_impl_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_vid_out_0_impl_1" ParallelReportGen="true">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2025"/>
@@ -486,6 +1239,74 @@
       <RQSFiles/>
     </Run>
     <Run Id="npu_system_vtc_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="npu_system_vtc_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="npu_system_vtc_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_vtc_0_impl_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_vtc_0_impl_1" ParallelReportGen="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2025"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2025"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="npu_system_axi_mem_intercon_imp_xbar_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="npu_system_axi_mem_intercon_imp_xbar_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="npu_system_axi_mem_intercon_imp_xbar_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_axi_mem_intercon_imp_xbar_0_impl_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_axi_mem_intercon_imp_xbar_0_impl_1" ParallelReportGen="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2025"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2025"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="npu_system_axi_mem_intercon_imp_s00_regslice_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="npu_system_axi_mem_intercon_imp_s00_regslice_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="npu_system_axi_mem_intercon_imp_s00_regslice_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_axi_mem_intercon_imp_s00_regslice_0_impl_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_axi_mem_intercon_imp_s00_regslice_0_impl_1" ParallelReportGen="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2025"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2025"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="npu_system_axi_mem_intercon_imp_auto_pc_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="npu_system_axi_mem_intercon_imp_auto_pc_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="npu_system_axi_mem_intercon_imp_auto_pc_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_axi_mem_intercon_imp_auto_pc_0_impl_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_axi_mem_intercon_imp_auto_pc_0_impl_1" ParallelReportGen="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2025"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2025"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="npu_system_axi_mem_intercon_imp_m00_regslice_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="npu_system_axi_mem_intercon_imp_m00_regslice_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="npu_system_axi_mem_intercon_imp_m00_regslice_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_axi_mem_intercon_imp_m00_regslice_0_impl_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_axi_mem_intercon_imp_m00_regslice_0_impl_1" ParallelReportGen="true">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2025"/>
         <Step Id="init_design"/>
@@ -553,7 +1374,90 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
+    <Run Id="npu_system_axis_subset_converter_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="npu_system_axis_subset_converter_0_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="npu_system_axis_subset_converter_0_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_axis_subset_converter_0_0_impl_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_axis_subset_converter_0_0_impl_1" ParallelReportGen="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2025"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2025"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
+    <Run Id="npu_system_axis_subset_converter_1_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="npu_system_axis_subset_converter_1_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="npu_system_axis_subset_converter_1_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/npu_system_axis_subset_converter_1_0_impl_1" AutoRQSDir="$PSRCDIR/utils_1/imports/npu_system_axis_subset_converter_1_0_impl_1" ParallelReportGen="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2025"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2025"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+      <RQSFiles/>
+    </Run>
   </Runs>
+  <MsgRule>
+    <MsgAttr Name="RuleType" Val="0"/>
+    <MsgAttr Name="Limit" Val="-1"/>
+    <MsgAttr Name="NewSeverity" Val="ANY"/>
+    <MsgAttr Name="Id" Val="Designutils 20-1280"/>
+    <MsgAttr Name="Severity" Val="ANY"/>
+    <MsgAttr Name="ShowRule" Val="1"/>
+    <MsgAttr Name="RuleSource" Val="2"/>
+    <MsgAttr Name="StringIsRegExp" Val="0"/>
+    <MsgAttr Name="RuleId" Val="1"/>
+    <MsgAttr Name="Note" Val=""/>
+    <MsgAttr Name="Author" Val=""/>
+    <MsgAttr Name="CreatedTimestamp" Val=""/>
+  </MsgRule>
+  <MsgRule>
+    <MsgAttr Name="RuleType" Val="0"/>
+    <MsgAttr Name="Limit" Val="-1"/>
+    <MsgAttr Name="NewSeverity" Val="ANY"/>
+    <MsgAttr Name="Id" Val="Vivado 12-4739"/>
+    <MsgAttr Name="Severity" Val="ANY"/>
+    <MsgAttr Name="ShowRule" Val="1"/>
+    <MsgAttr Name="RuleSource" Val="2"/>
+    <MsgAttr Name="StringIsRegExp" Val="0"/>
+    <MsgAttr Name="RuleId" Val="2"/>
+    <MsgAttr Name="Note" Val=""/>
+    <MsgAttr Name="Author" Val=""/>
+    <MsgAttr Name="CreatedTimestamp" Val=""/>
+  </MsgRule>
+  <MsgRule>
+    <MsgAttr Name="RuleType" Val="0"/>
+    <MsgAttr Name="Limit" Val="-1"/>
+    <MsgAttr Name="NewSeverity" Val="ANY"/>
+    <MsgAttr Name="Id" Val=""/>
+    <MsgAttr Name="Severity" Val="ANY"/>
+    <MsgAttr Name="ShowRule" Val="1"/>
+    <MsgAttr Name="RuleSource" Val="2"/>
+    <MsgAttr Name="StringIsRegExp" Val="0"/>
+    <MsgAttr Name="RuleId" Val="3"/>
+    <MsgAttr Name="Note" Val=""/>
+    <MsgAttr Name="Author" Val=""/>
+    <MsgAttr Name="CreatedTimestamp" Val=""/>
+    <MsgAttr Name="StringsToMatch" Val="uses"/>
+    <MsgAttr Name="StringsToMatch" Val="inefficient"/>
+    <MsgAttr Name="StringsToMatch" Val="query"/>
+    <MsgAttr Name="StringsToMatch" Val="to"/>
+    <MsgAttr Name="StringsToMatch" Val="find"/>
+    <MsgAttr Name="StringsToMatch" Val="pin"/>
+    <MsgAttr Name="StringsToMatch" Val="objects"/>
+  </MsgRule>
   <Board/>
   <DashboardSummary Version="1" Minor="0">
     <Dashboards>
