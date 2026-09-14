@@ -1,3 +1,0 @@
-@echo off
-echo Launching Vivado IP Packager (Edit IP Mode)...
-"D:\2025.1\Vivado\bin\vivado.bat" -source "D:\Final year project\open_edit_ip.tcl"

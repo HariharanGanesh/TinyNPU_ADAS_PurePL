@@ -1,3 +1,0 @@
-@echo off
-echo Launching Vivado GUI with the RISCV_ADAS_PURE_PL project...
-"D:\2025.1\Vivado\bin\vivado.bat" "D:\Final year project\RISCV_ADAS_PURE_PL\RISCV_ADAS_PURE_PL.xpr"

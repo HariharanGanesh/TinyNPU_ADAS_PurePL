@@ -1,77 +1,48 @@
-﻿# =============================================================================
-# TinyNPU200A - Vivado-Aware .gitignore
-# Copyright 2026 Hariharan Ganesh. All rights reserved.
-# =============================================================================
+# Ignore all scripts in the root directory by default (many are auto-generated or temporary)
+/*.tcl
+/*.py
+/*.bat
+/*.sh
 
-# Vivado Generated Caches & Temporary Directories
-.Xil/
-**/.Xil/
-**/*.cache/
-**/*.runs/
-**/*.gen/
-**/*.sim/
-**/*.hw/
-**/*.ip_user_files/
+# Exceptions (if you have standard ones, list them below)
+!run_adas_tb.bat
 
-# Xilinx Simulation Artifacts
-**/xsim.dir/
-**/*.wdb
-**/*.pb
-**/*.sdb
-**/*.rlx
-xvlog.log
-xelab.log
-xsim.log
+# Ignore old/irrelevant project workspaces and hackathon directories
+/ADAS_Zonal_Controller/
+/AI models/
+/cit hackathon/
+/Embrix Hackathon/
+/jagan/
+/ml/
+/npu200jb/
+/npu200jpmax/
+/Polarfire_FPGA_Design_Contest/
+/RISCV_ADAS_NPU300/
+/tinynpu200_ip_packager/
+/tinynpu_ip_viewer/
+/vivado_2k200j_proj/
+/vivado_hw_test_proj/
+/vivado_npu200j_green_proj/
+/vivado_npu200j_proj/
+/test_impl/
+/test_sim/
+/sim_test/
+/Project_Documents/
+/Repository_Index/
+/Versions/
+/Vivado/
 
-# Vivado Journals & Logs
-**/*.jou
-**/*.backup.jou
-**/*.log
-**/*.backup.log
-**/*.str
+# Ignore Vivado artifacts in root
+/*.log
+/*.jou
+/*.str
+/*.xpr
+/.Xil/
+/xsim.dir/
 
-# Bitstreams and huge archives (board-specific; user must build their own)
-**/*.bit
-**/*.bin
-**/*.mcs
-**/*.zip
-**/*.tar.gz
-**/*.7z
-**/*.rar
-
-# Timing & Debug Dumps (unless explicitly source controlled)
-synth_warnings.txt
-failed_path*.txt
-failing_paths.txt
-tight_setup_hold_pins.txt
-dma_pins.txt
-pin_dump.txt
-all_pins_dump.txt
-dfx_runtime.txt
-
-# Temp / Local scratchpad folders
-Temp/
-Unsorted/
-Logs/
-Deploy/
-Build/
-Exports/
-test_impl/
-test_sim/
-sim_test/
-riscv-toolchain/
-Cadence/
-
-# JVM / OS Crash Logs
-hs_err_pid*.log
-
-# Python Bytecode
-__pycache__/
-*.pyc
-
-# OS / Editor Artifacts
-Thumbs.db
-.DS_Store
-.vscode/
-.idea/
-*~
+# Ignore cache directories inside the main project
+/RISCV_ADAS_PURE_PL/.Xil/
+/RISCV_ADAS_PURE_PL/RISCV_ADAS_PURE_PL.cache/
+/RISCV_ADAS_PURE_PL/RISCV_ADAS_PURE_PL.hw/
+/RISCV_ADAS_PURE_PL/RISCV_ADAS_PURE_PL.sim/
+/RISCV_ADAS_PURE_PL/RISCV_ADAS_PURE_PL.runs/*/runme.log
