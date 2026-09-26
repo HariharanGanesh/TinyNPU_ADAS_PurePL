@@ -122,7 +122,7 @@ module axis_sink #(
                             bytes_received <= (AXIS_DATA_WIDTH/8);
                         end
 
-                        if ((TILE_SIZE == (AXIS_DATA_WIDTH/8) || s_axis_tlast) && in_crop_window) begin
+                        if (TILE_SIZE == 1 && in_crop_window) begin
                             tile_received <= 1'b1;
                             s_axis_tready <= 1'b0;
                             state         <= ST_FULL;
@@ -153,9 +153,8 @@ module axis_sink #(
                             wr_ptr         <= wr_ptr + 1'b1;
                             bytes_received <= bytes_received + (AXIS_DATA_WIDTH/8);
 
-                            // Tile boundary check on CROPPED byte count or End of Frame (tlast)
-                            if (bytes_received >= TILE_SIZE - (AXIS_DATA_WIDTH/8) || s_axis_tlast) begin
-                                tile_received <= 1'b1;
+                            // Tile boundary check on CROPPED byte count
+                            if (bytes_received >= TILE_SIZE - (AXIS_DATA_WIDTH/8)) begin
                                 s_axis_tready <= 1'b0;
                                 state         <= ST_FULL;
                             end
@@ -165,7 +164,7 @@ module axis_sink #(
 
                 ST_FULL: begin
                     s_axis_tready <= 1'b0;
-                    tile_received <= 1'b1;
+                    tile_received <= 1'b1; // HOLD HIGH while waiting
                     if (buf_swap_ack) begin
                         wr_ptr         <= 0;
                         bytes_received <= 0;

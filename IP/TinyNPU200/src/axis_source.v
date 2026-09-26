@@ -49,10 +49,9 @@ module axis_source #(
     input  wire [NUM_CHANNELS*DATA_WIDTH-1:0] buf_rd_data,  // Wide parallel word from FIFO
     output reg                                buf_rd_en,    // FIFO pop strobe (1-cycle pulse)
 
-    // Drain Control
+    // Control
     input  wire                               start_drain,  // Pulse: start transmitting tile
     input  wire                               buf_empty,
-    input  wire [31:0]                        drain_words,
     output reg                                drain_done    // Pulse: tile fully transmitted
 );
 
@@ -68,16 +67,15 @@ module axis_source #(
     localparam ST_IDLE  = 3'd0;
     localparam ST_SEND  = 3'd1;   // Serializing bytes of latch_word
     localparam ST_POP   = 3'd2;   // buf_rd_en just pulsed; waiting for rd_ptr to advance
-    localparam ST_WAIT  = 3'd3;   // rd_ptr advanced; waiting for BRAM to latch data
-    localparam ST_LATCH = 3'd4;   // buf_rd_data now valid; capture it
+    localparam ST_LATCH = 3'd3;   // rd_ptr settled; capture buf_rd_data into latch_word
 
     // =========================================================================
     // Registers
     // =========================================================================
     reg [2:0]            state;
     reg [WORD_BITS-1:0]  latch_word;   // Captured FIFO word being serialized
-    reg [15:0]           byte_idx;     // Index of byte currently on the AXI-Stream bus
-    reg [31:0]           word_cnt;     // FIFO word index
+    reg [3:0]            byte_idx;     // Index of byte currently on the AXI-Stream bus
+    reg [3:0]            word_cnt;     // FIFO word index (0 .. WORDS_PER_TILE-1)
 
     // =========================================================================
     // Combinatorial helpers
@@ -116,9 +114,9 @@ module axis_source #(
                 ST_IDLE: begin
                     m_axis_tvalid <= 1'b0;
                     m_axis_tlast  <= 1'b0;
-                    byte_idx      <= 16'd0;
-                    word_cnt      <= 32'd0;
-                    if (start_drain && !buf_empty && drain_words != 0) begin
+                    byte_idx      <= 4'd0;
+                    word_cnt      <= 4'd0;
+                      if (start_drain && !buf_empty) begin
                         latch_word <= buf_rd_data;   // Capture FIFO head (no pop yet)
                         state      <= ST_SEND;
                     end
@@ -165,18 +163,19 @@ module axis_source #(
                             m_axis_tdata <= latch_word[next_byte_idx * AXIS_DATA_WIDTH +: AXIS_DATA_WIDTH];
                             m_axis_tvalid <= 1'b1;
                             m_axis_tlast  <= (next_byte_idx == (NUM_CHANNELS * DATA_WIDTH / AXIS_DATA_WIDTH) - 1) &&
-                                             (word_cnt      == drain_words - 1);
+                                             (word_cnt      == WORDS_PER_TILE - 1);
                         end
 
                     end else if (!m_axis_tvalid) begin
                         // ---------------------------------------------------------
                         // No transfer pending yet: present byte 0 of latch_word.
+                        // This branch fires on the first cycle after entering
                         // ST_SEND (from ST_IDLE or ST_LATCH), when tvalid=0.
                         // ---------------------------------------------------------
                         m_axis_tdata  <= latch_word[byte_idx * AXIS_DATA_WIDTH +: AXIS_DATA_WIDTH];
                         m_axis_tvalid <= 1'b1;
                         m_axis_tlast  <= (byte_idx == (NUM_CHANNELS * DATA_WIDTH / AXIS_DATA_WIDTH) - 1) &&
-                                         (word_cnt  == drain_words - 1);
+                                         (word_cnt  == WORDS_PER_TILE - 1);
                     end
                     // else: tvalid=1 and tready=0 → backpressure; hold tdata/tvalid/tlast
                 end
@@ -190,20 +189,12 @@ module axis_source #(
                 // =============================================================
                 ST_POP: begin
                     m_axis_tvalid <= 1'b0;
-                    state         <= ST_WAIT;
-                end
-
-                // =============================================================
-                // ST_WAIT: rd_ptr has advanced (settled from the NB update
-                // in ST_POP). BRAM is now latching the new data at this posedge.
-                // =============================================================
-                ST_WAIT: begin
-                    m_axis_tvalid <= 1'b0;
                     state         <= ST_LATCH;
                 end
 
                 // =============================================================
-                // ST_LATCH: buf_rd_data now shows the next FIFO word from BRAM.
+                // ST_LATCH: rd_ptr has advanced (settled from the NB update
+                // in ST_POP). buf_rd_data now shows the next FIFO word.
                 // Latch it and proceed to ST_SEND.
                 // =============================================================
                 ST_LATCH: begin

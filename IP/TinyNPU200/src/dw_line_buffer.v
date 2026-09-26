@@ -69,12 +69,9 @@ module dw_line_buffer #(
 
     // Column pointer
     reg [7:0] col_ptr;
-    
-    // Explicit pipelined 8x8 LUT multipliers to break 9.1ns routing delay
-    wire signed [15:0] mult_out [0:NUM_CHANNELS-1][0:8];
-    
-    // Pipelined weights to break massive cross-die routing delay (7.1ns)
-    reg signed [DATA_WIDTH-1:0] w_reg [0:NUM_CHANNELS-1][0:8];
+
+    // Multiplier pipeline registers (8-bit x 8-bit = 16-bit signed product)
+    reg signed [15:0] mult_reg [0:NUM_CHANNELS-1][0:8];
 
     // Stage 3a: Three partial sums of 3 products each
     //   psum3 = mult[0]+mult[1]+mult[2]  (top row)
@@ -85,8 +82,10 @@ module dw_line_buffer #(
     reg signed [ACCUM_WIDTH-1:0] psum6 [0:NUM_CHANNELS-1];
     reg signed [ACCUM_WIDTH-1:0] psum9 [0:NUM_CHANNELS-1];
 
-    // Valid pipeline for 5-stage path: d1 -> d2 -> d3 -> d4 -> output
-    reg valid_d1, valid_d2, valid_d3, valid_d4;
+    // Valid pipeline for 4-stage path: d1 -> d2 -> d3 -> output
+    reg valid_d1;
+    reg valid_d2;
+    reg valid_d3;
 
 
     // ==========================================================================
@@ -99,7 +98,6 @@ module dw_line_buffer #(
             valid_d1       <= 1'b0;
             valid_d2       <= 1'b0;
             valid_d3       <= 1'b0;
-            valid_d4       <= 1'b0;
             psum_valid_out <= 1'b0;
 
             for (ch = 0; ch < NUM_CHANNELS; ch = ch + 1) begin
@@ -113,8 +111,7 @@ module dw_line_buffer #(
             valid_d1       <= act_valid_in;
             valid_d2       <= valid_d1;
             valid_d3       <= valid_d2;
-            valid_d4       <= valid_d3;
-            psum_valid_out <= valid_d4;
+            psum_valid_out <= valid_d3;  // now 4-cycle latency (was 3)
 
             if (act_valid_in) begin
                 // Advance column pointer
@@ -125,11 +122,6 @@ module dw_line_buffer #(
                 end
 
                 for (ch = 0; ch < NUM_CHANNELS; ch = ch + 1) begin
-                    // Pipeline the weights to break routing delay
-                    w_reg[ch][0] <= w[ch][0]; w_reg[ch][1] <= w[ch][1]; w_reg[ch][2] <= w[ch][2];
-                    w_reg[ch][3] <= w[ch][3]; w_reg[ch][4] <= w[ch][4]; w_reg[ch][5] <= w[ch][5];
-                    w_reg[ch][6] <= w[ch][6]; w_reg[ch][7] <= w[ch][7]; w_reg[ch][8] <= w[ch][8];
-
                     // Write to line buffers (shift register: d1 <- current, d2 <- d1)
                     row_d2[ch][col_ptr] <= row_d1[ch][col_ptr];
                     row_d1[ch][col_ptr] <= act_in[ch];
@@ -154,26 +146,44 @@ module dw_line_buffer #(
             // 9 x (8b * 8b -> 16b) products, each in DSP48 M-register.
             // Max cascade: 1 DSP per multiply. Timing: ~2.4 ns. OK.
             // -----------------------------------------------------------------
-            // Stage 3a: Partial sums — 3 groups of 3
-            // -----------------------------------------------------------------
-            if (valid_d3) begin
+            if (valid_d1) begin
                 for (ch = 0; ch < NUM_CHANNELS; ch = ch + 1) begin
-                    psum3[ch] <= {{16{mult_out[ch][0][15]}}, mult_out[ch][0]} +
-                                 {{16{mult_out[ch][1][15]}}, mult_out[ch][1]} +
-                                 {{16{mult_out[ch][2][15]}}, mult_out[ch][2]};
-                    psum6[ch] <= {{16{mult_out[ch][3][15]}}, mult_out[ch][3]} +
-                                 {{16{mult_out[ch][4][15]}}, mult_out[ch][4]} +
-                                 {{16{mult_out[ch][5][15]}}, mult_out[ch][5]};
-                    psum9[ch] <= {{16{mult_out[ch][6][15]}}, mult_out[ch][6]} +
-                                 {{16{mult_out[ch][7][15]}}, mult_out[ch][7]} +
-                                 {{16{mult_out[ch][8][15]}}, mult_out[ch][8]};
+                    mult_reg[ch][0] <= $signed(win[ch][0][0]) * $signed(w[ch][0]);
+                    mult_reg[ch][1] <= $signed(win[ch][0][1]) * $signed(w[ch][1]);
+                    mult_reg[ch][2] <= $signed(win[ch][0][2]) * $signed(w[ch][2]);
+                    mult_reg[ch][3] <= $signed(win[ch][1][0]) * $signed(w[ch][3]);
+                    mult_reg[ch][4] <= $signed(win[ch][1][1]) * $signed(w[ch][4]);
+                    mult_reg[ch][5] <= $signed(win[ch][1][2]) * $signed(w[ch][5]);
+                    mult_reg[ch][6] <= $signed(win[ch][2][0]) * $signed(w[ch][6]);
+                    mult_reg[ch][7] <= $signed(win[ch][2][1]) * $signed(w[ch][7]);
+                    mult_reg[ch][8] <= $signed(win[ch][2][2]) * $signed(w[ch][8]);
+                end
+            end
+
+            // -----------------------------------------------------------------
+            // Stage 3a: Partial sums — 3 groups of 3
+            // Each group maps to a 3-DSP PCIN chain = 3 × 1.713 ns = 5.14 ns.
+            // Well within 10 ns budget. Breaks the old 7-DSP cascade.
+            // -----------------------------------------------------------------
+            if (valid_d2) begin
+                for (ch = 0; ch < NUM_CHANNELS; ch = ch + 1) begin
+                    psum3[ch] <= {{16{mult_reg[ch][0][15]}}, mult_reg[ch][0]} +
+                                 {{16{mult_reg[ch][1][15]}}, mult_reg[ch][1]} +
+                                 {{16{mult_reg[ch][2][15]}}, mult_reg[ch][2]};
+                    psum6[ch] <= {{16{mult_reg[ch][3][15]}}, mult_reg[ch][3]} +
+                                 {{16{mult_reg[ch][4][15]}}, mult_reg[ch][4]} +
+                                 {{16{mult_reg[ch][5][15]}}, mult_reg[ch][5]};
+                    psum9[ch] <= {{16{mult_reg[ch][6][15]}}, mult_reg[ch][6]} +
+                                 {{16{mult_reg[ch][7][15]}}, mult_reg[ch][7]} +
+                                 {{16{mult_reg[ch][8][15]}}, mult_reg[ch][8]};
                 end
             end
 
             // -----------------------------------------------------------------
             // Stage 3b: Final accumulation — sum of three partial sums
+            // One 32-bit adder per channel = ~1.5 ns. Timing trivially met.
             // -----------------------------------------------------------------
-            if (valid_d4) begin
+            if (valid_d3) begin
                 for (ch = 0; ch < NUM_CHANNELS; ch = ch + 1) begin
                     psum_out_flat[ch*ACCUM_WIDTH +: ACCUM_WIDTH] <=
                         psum3[ch] + psum6[ch] + psum9[ch];
@@ -181,25 +191,5 @@ module dw_line_buffer #(
             end
         end
     end
-    
-    // ==========================================================================
-    // Explicit 2-Stage LUT Multipliers (Replaces inferred multipliers)
-    // ==========================================================================
-    genvar c_idx, k_idx;
-    generate
-        for (c_idx = 0; c_idx < NUM_CHANNELS; c_idx = c_idx + 1) begin : gen_mult_ch
-            for (k_idx = 0; k_idx < 9; k_idx = k_idx + 1) begin : gen_mult_k
-                pipelined_mult_8x8 u_mult (
-                    .clk(clk),
-                    .a(win[c_idx][k_idx/3][k_idx%3]),
-                    .b(w_reg[c_idx][k_idx]),
-                    .p(mult_out[c_idx][k_idx])
-                );
-            end
-        end
-    endgenerate
 
 endmodule
-`timescale 1ns / 1ps
-
-

@@ -45,9 +45,6 @@ module bbox_decoder #(
     // Raw confidence score
     input  wire [DATA_WIDTH-1:0]    conf_in,
 
-    // Raw class scores (e.g. 4 classes)
-    input  wire [DATA_WIDTH*4-1:0]  class_in,
-
     // Current Grid Cell (e.g. from a coordinate counter tracking output stream)
     input  wire [COORD_WIDTH-1:0]   grid_x,
     input  wire [COORD_WIDTH-1:0]   grid_y,
@@ -70,10 +67,7 @@ module bbox_decoder #(
     output reg  [COORD_WIDTH-1:0]   bbox_y2,
     
     // Decoded Confidence score (0..255)
-    output wire [DATA_WIDTH-1:0]    conf_out,
-
-    // Passed-through Class scores
-    output reg  [DATA_WIDTH*4-1:0]  class_out
+    output wire [DATA_WIDTH-1:0]    conf_out
 );
 
     // =========================================================================
@@ -92,7 +86,6 @@ module bbox_decoder #(
     reg [COORD_WIDTH-1:0] cx, cy;
     reg [COORD_WIDTH-1:0] px_l, px_t, px_r, px_b;
     reg                   stage1_valid;
-    reg [DATA_WIDTH*4-1:0] stage1_class;
     
     // Stride half = stride >> 1
     wire [7:0] stride_half = grid_stride >> 1;
@@ -102,10 +95,8 @@ module bbox_decoder #(
             cx <= 0; cy <= 0;
             px_l <= 0; px_t <= 0; px_r <= 0; px_b <= 0;
             stage1_valid <= 1'b0;
-            stage1_class <= 0;
         end else begin
             stage1_valid <= valid_in;
-            stage1_class <= class_in;
             
             // cx = (grid_x * stride) + (stride/2)
             cx <= (grid_x * grid_stride) + stride_half;
@@ -129,10 +120,8 @@ module bbox_decoder #(
             bbox_x2   <= 0;
             bbox_y2   <= 0;
             valid_out <= 1'b0;
-            class_out <= 0;
         end else begin
             valid_out <= stage1_valid;
-            class_out <= stage1_class;
 
             // x1 = max(0, cx - px_l)
             if (cx >= px_l) bbox_x1 <= cx - px_l;

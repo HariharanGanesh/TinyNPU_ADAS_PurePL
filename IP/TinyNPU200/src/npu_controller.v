@@ -62,7 +62,10 @@ module npu_controller #(
     output reg                          dma_start_load_wgt,
             output reg  [15:0]                  dma_transfer_size,
     input  wire                         dma_wgt_load_done,
-    input  wire                         stream_act_load_done,
+    output reg                          dma_start_load_act,
+    input  wire                         dma_act_load_done,
+    output reg                          dma_start_store_out,
+    input  wire                         dma_out_store_done,
     
     // Buffer Controls
     output reg                          wgt_buf_load_tile,
@@ -190,7 +193,9 @@ module npu_controller #(
             status_done         <= 1'b0;
             status_error        <= 1'b0;
             dma_start_load_wgt  <= 1'b0;
-                                    dma_transfer_size   <= 0;
+            dma_start_load_act  <= 1'b0;
+            dma_start_store_out <= 1'b0;
+            dma_transfer_size   <= 0;
             wgt_buf_load_tile   <= 1'b0;
             act_buf_rd_addr     <= 0;
             act_buf_rd_en       <= 1'b0;
@@ -209,7 +214,9 @@ module npu_controller #(
         end else begin
             // Default: deassert single-cycle pulses
             dma_start_load_wgt  <= 1'b0;
-                                    wgt_buf_load_tile   <= 1'b0;
+            dma_start_load_act  <= 1'b0;
+            dma_start_store_out <= 1'b0;
+            wgt_buf_load_tile   <= 1'b0;
             act_buf_swap        <= 1'b0;
             array_psum_clear    <= 1'b0;
             array_weight_load   <= 1'b0;
@@ -231,12 +238,13 @@ module npu_controller #(
 
                         if (csr_cosine_sim_mode) begin
                             // In cosine-sim mode: weights (face templates) already
-                            // loaded in weight bank. Skip DMA weight load — go
+                            // loaded in weight bank. Skip DMA weight load ??? go
                             // straight to loading the embedding activation vector.
                             dma_transfer_size  <= csr_in_channels; // embedding dimension
-                                                        state              <= STATE_LOAD_ACT;
+                            dma_start_load_act <= 1'b1;
+                            state              <= STATE_LOAD_ACT;
                         end else begin
-                            dma_transfer_size  <= ARRAY_ROWS * ARRAY_COLS;
+                            dma_transfer_size  <= (ARRAY_ROWS * ARRAY_COLS);
                             dma_start_load_wgt <= 1'b1;
                             state              <= STATE_LOAD_WGT;
                         end
@@ -246,14 +254,15 @@ module npu_controller #(
                 STATE_LOAD_WGT: begin
                     if (dma_wgt_load_done) begin
                         $display("[NPU_CTRL @ %0t] WGT load done. Starting ACT load (size=%0d)", $time, csr_input_width * csr_input_height);
-                        dma_transfer_size  <= csr_input_width * csr_input_height;
-                                                state              <= STATE_LOAD_ACT;
+                        dma_transfer_size  <= (csr_input_width * csr_input_height * csr_in_channels);
+                        dma_start_load_act <= 1'b1;
+                        state              <= STATE_LOAD_ACT;
                     end
                 end
 
 
                 STATE_LOAD_ACT: begin
-                    if (stream_act_load_done) begin
+                    if (dma_act_load_done) begin
                         act_buf_swap      <= 1'b1;
                         wgt_buf_load_tile <= 1'b1;
                         state             <= STATE_SETUP_WGT;
@@ -261,12 +270,14 @@ module npu_controller #(
                 end
 
                 STATE_SETUP_WGT: begin
+                    wgt_buf_load_tile <= 1'b0;
                     if (wgt_buf_load_complete) begin
-                        $display("[NPU_CTRL @ %0t] WGT buffer loaded → STATE_COMPUTE (steps=%0d)", $time, csr_kernel_size * csr_kernel_size);
+                        $display("[NPU_CTRL @ %0t] WGT buffer loaded ??? STATE_COMPUTE (steps=%0d)", $time, csr_input_width * csr_input_height);
+                        array_en            <= 1'b1;  // FIX: Array must be enabled to load weights
                         array_weight_load   <= 1'b1;
                         array_psum_clear    <= 1'b1;
                         compute_cycles      <= 0;
-                        total_compute_steps <= csr_kernel_size * csr_kernel_size;
+                        total_compute_steps <= csr_input_width * csr_input_height;
                         act_buf_rd_addr     <= 0;
                         act_buf_rd_en       <= 1'b1;
                         state               <= STATE_COMPUTE;
@@ -274,13 +285,15 @@ module npu_controller #(
                 end
 
                 STATE_COMPUTE: begin
+                    array_weight_load <= 1'b0;
+                    array_psum_clear  <= 1'b0;
                     array_en <= 1'b1;
                     if (compute_cycles + 1'b1 < total_compute_steps) begin
                         compute_cycles  <= compute_cycles + 1'b1;
                         act_buf_rd_addr <= act_buf_rd_addr + 1'b1;
                         act_buf_rd_en   <= 1'b1;
                     end else begin
-                        $display("[NPU_CTRL @ %0t] COMPUTE done → STATE_DRAIN", $time);
+                        $display("[NPU_CTRL @ %0t] COMPUTE done ??? STATE_DRAIN", $time);
                         act_buf_rd_en <= 1'b0;
                         drain_cycles  <= 0;
                         state         <= STATE_DRAIN;
@@ -289,7 +302,9 @@ module npu_controller #(
 
                 STATE_DRAIN: begin
                     array_en <= 1'b1;
-                    if (drain_cycles < (ARRAY_ROWS + ARRAY_COLS + 8)) begin
+                    // Drain must cover: ARRAY_ROWS * PE_LATENCY + ARRAY_COLS + pipeline margin
+                    // PE has 3-stage pipeline, so full propagation = 20*3 + 8 + 8 = 76 cycles.
+                    if (drain_cycles < (ARRAY_ROWS * 3 + ARRAY_COLS + 8)) begin
                         drain_cycles      <= drain_cycles + 1'b1;
                         requant_acc_valid <= 1'b1;
                         out_buf_wr_en     <= 1'b1;
@@ -298,13 +313,13 @@ module npu_controller #(
                         array_en            <= 1'b0;
                         requant_acc_valid   <= 1'b0;
                         dma_transfer_size   <= csr_out_channels;
-                        // dma_start_store_out removed
+                        dma_start_store_out <= 1'b1;
                         state               <= STATE_STORE_OUT;
                     end
                 end
 
                 STATE_STORE_OUT: begin
-                    if (1'b1) begin // dma_out_store_done removed
+                    if (dma_out_store_done) begin
                         $display("[NPU_CTRL @ %0t] STORE_OUT done. tile_x=%0d tile_y=%0d, num_tiles_x=%0d num_tiles_y=%0d", $time, tile_x, tile_y, csr_num_tiles_x, csr_num_tiles_y);
                         if (tile_x + 16'd1 == csr_num_tiles_x) begin
                             tile_x <= 0;
@@ -314,12 +329,12 @@ module npu_controller #(
                                 $display("[NPU_CTRL @ %0t] Transitioning to STATE_DONE", $time);
                             end else begin
                                 tile_y             <= tile_y + 16'd1;
-                                dma_transfer_size  <= csr_input_width * csr_input_height;
+                                dma_transfer_size  <= (csr_input_width * csr_input_height * csr_in_channels);
                                                                 state              <= STATE_LOAD_ACT;
                             end
                         end else begin
                             tile_x             <= tile_x + 16'd1;
-                            dma_transfer_size  <= csr_input_width * csr_input_height;
+                            dma_transfer_size  <= (csr_input_width * csr_input_height * csr_in_channels);
                                                         state              <= STATE_LOAD_ACT;
                         end
                     end
@@ -335,7 +350,7 @@ module npu_controller #(
                     // (Previously transitioned to STATE_IDLE immediately, making
                     //  status_done only 1-cycle wide and missed by the poll loop.)
                     if (csr_start) begin
-                        // New inference requested — clear done flag and restart
+                        // New inference requested ??? clear done flag and restart
                         status_done <= 1'b0;
                         state       <= STATE_IDLE;
                     end
@@ -348,3 +363,9 @@ module npu_controller #(
     end
 
 endmodule
+
+
+
+
+
+

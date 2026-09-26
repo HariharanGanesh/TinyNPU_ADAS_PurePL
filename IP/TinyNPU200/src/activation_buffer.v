@@ -34,7 +34,10 @@ module activation_buffer #(
 
     // Xilinx BRAM inference attribute
     (* ram_style = "block" *)
-    reg [DATA_WIDTH-1:0] act_mem [0:BUFFER_DEPTH*2-1];
+    reg [DATA_WIDTH-1:0] bank_a [0:BUFFER_DEPTH-1];
+
+    (* ram_style = "block" *)
+    reg [DATA_WIDTH-1:0] bank_b [0:BUFFER_DEPTH-1];
 
     // Ping-Pong Selection Register
     always @(posedge clk) begin
@@ -47,19 +50,25 @@ module activation_buffer #(
         end
     end
 
-    // Write Logic (Writes to the INACTIVE bank)
-    wire [ADDR_WIDTH:0] combined_wr_addr = {~ping_pong_sel, wr_addr};
+    // Write Logic
     always @(posedge clk) begin
         if (wr_en) begin
-            act_mem[combined_wr_addr] <= wr_data;
+            if (ping_pong_sel == 1'b0) begin
+                bank_b[wr_addr] <= wr_data;
+            end else begin
+                bank_a[wr_addr] <= wr_data;
+            end
         end
     end
 
-    // Read Logic (Reads from the ACTIVE bank)
-    wire [ADDR_WIDTH:0] combined_rd_addr = {ping_pong_sel, rd_addr};
+    // Read Logic
     always @(posedge clk) begin
         if (rd_en) begin
-            rd_data <= act_mem[combined_rd_addr];
+            if (ping_pong_sel == 1'b0) begin
+                rd_data <= bank_a[rd_addr];
+            end else begin
+                rd_data <= bank_b[rd_addr];
+            end
         end
     end
 

@@ -73,7 +73,18 @@ module systolic_array #(
             assign psum_w[0][c] = {ACCUM_WIDTH{1'b0}};
             assign col_psum_out = psum_w[ARRAY_ROWS][c];
             assign psum_out_flat[C_PSUM_BASE +: ACCUM_WIDTH] = col_psum_out;
-            assign psum_valid_out_flat[c] = act_valid_w[ARRAY_ROWS-1][c+1];
+            
+            // Fix valid signal: delay by vertical pipeline latency.
+            // Each PE has PE_LATENCY=3 stages. With ARRAY_ROWS=20 rows:
+            // Total delay = ARRAY_ROWS * PE_LATENCY = 20 * 3 = 60 cycles.
+            // Adding 1 extra cycle for safety => 61 cycles total.
+            localparam VALID_DELAY = ARRAY_ROWS * 3;  // 60 for ARRAY_ROWS=20
+            reg [VALID_DELAY:0] valid_sr;  // VALID_DELAY+1 bits = 61 bits
+            always @(posedge clk) begin
+                if (!reset_n) valid_sr <= {(VALID_DELAY+1){1'b0}};
+                else valid_sr <= {valid_sr[VALID_DELAY-1:0], act_valid_w[0][c]};
+            end
+            assign psum_valid_out_flat[c] = valid_sr[VALID_DELAY];
         end
 
         // 2D PE array instantiation

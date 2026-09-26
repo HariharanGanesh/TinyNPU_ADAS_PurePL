@@ -40,7 +40,7 @@ module tinynpu_top #(
     parameter AXIS_DATA_WIDTH = 32,
     parameter DATA_WIDTH      = 8,
     parameter ACCUM_WIDTH     = 32,
-    parameter SCALE_WIDTH     = 16,
+    parameter SCALE_WIDTH     = 32,
     parameter SHIFT_WIDTH     = 6,
     parameter ARRAY_ROWS      = 20,   // TinyNPU200: 20 rows (was 8)
     parameter ARRAY_COLS      = 8,
@@ -191,9 +191,13 @@ module tinynpu_top #(
     // Controller ??? DMA Wire Bundle
     // =========================================================================
     wire        dma_start_load_wgt;
-            wire [15:0] dma_transfer_size;
+    wire        dma_start_load_act;
+    wire        dma_start_store_out;
+    wire [15:0] dma_transfer_size;
     wire        dma_wgt_load_done;
-            wire [BUFFER_ADDR_WIDTH-1:0] dma_wgt_wr_addr;
+    wire        dma_act_load_done;
+    wire        dma_out_store_done;
+    wire [BUFFER_ADDR_WIDTH-1:0] dma_wgt_wr_addr;
     wire [DATA_WIDTH-1:0]        dma_wgt_wr_data;
     wire                         dma_wgt_wr_en;
 
@@ -236,9 +240,10 @@ module tinynpu_top #(
     wire clk_postproc;
     wire clk_dma;
 
-    wire cg_compute_en  = array_en | array_weight_load | array_psum_clear | ~rst_n;
-    wire cg_postproc_en = requant_acc_valid | pool_enable | ~rst_n;
-    wire cg_dma_en      = status_busy | ~rst_n;
+    wire cg_compute_en  = array_en | array_weight_load | array_psum_clear;
+    wire out_buf_empty_w;
+    wire cg_postproc_en = requant_acc_valid | pool_enable | ~out_buf_empty_w;
+    wire cg_dma_en      = status_busy;
 
     tinynpu_icg u_icg_compute (
         .clk_in  (clk),
@@ -301,12 +306,12 @@ module tinynpu_top #(
         .csr_stride_sel(csr_stride_sel),
         .csr_act_ext(csr_act_ext),
         .csr_pool_mode(csr_pool_mode),
+        .csr_num_tiles_x(csr_num_tiles_x),
+        .csr_num_tiles_y(csr_num_tiles_y),
         .csr_array_rows(csr_array_rows),
         .csr_input_fmt(csr_input_fmt),
         .csr_frame_w(csr_frame_w),
         .csr_frame_h(csr_frame_h),
-        .csr_num_tiles_x(csr_num_tiles_x),
-        .csr_num_tiles_y(csr_num_tiles_y),
         // Status inputs for new R/O registers
         .vid_locked(vid_locked_in),
         .tile_count(tile_count_in)
@@ -337,10 +342,10 @@ module tinynpu_top #(
         .m_axi_rlast(m_axi_rlast), .m_axi_rvalid(m_axi_rvalid),
         .m_axi_rready(m_axi_rready),
         .weight_base_addr(csr_weight_base),
-                        .transfer_size(dma_transfer_size),
+        .transfer_size(dma_transfer_size),
         .start_load_weights(dma_start_load_wgt),
-                        .weight_load_done(dma_wgt_load_done),
-                        .wgt_buf_wr_addr(dma_wgt_wr_addr),
+        .weight_load_done(dma_wgt_load_done),
+        .wgt_buf_wr_addr(dma_wgt_wr_addr),
         .wgt_buf_wr_data(dma_wgt_wr_data),
         .wgt_buf_wr_en(dma_wgt_wr_en)
     );
@@ -375,10 +380,11 @@ module tinynpu_top #(
         .perf_out_stall_count(perf_out_stall_count),
         // DMA control
         .dma_start_load_wgt(dma_start_load_wgt),
-                        .dma_transfer_size(dma_transfer_size),
-        .dma_wgt_load_done(dma_wgt_load_done),
-        .stream_act_load_done(stream_tile_received),
-                // Buffer control
+        .dma_transfer_size(dma_transfer_size),.dma_wgt_load_done(dma_wgt_load_done),
+        .dma_act_load_done(stream_tile_received),
+        .dma_start_store_out(dma_start_store_out),
+        .dma_out_store_done(dma_out_store_done),
+        // Buffer control
         .wgt_buf_load_tile(wgt_buf_load_tile),
         .wgt_buf_load_complete(wgt_buf_load_complete),
         .act_buf_rd_addr(act_buf_rd_addr),
@@ -437,6 +443,10 @@ module tinynpu_top #(
     localparam ACT_BUF_ADDR_W = 6;         // log2(64); matches BUFFER_ADDR_WIDTH-4
     localparam GEN_ROWS = ARRAY_ROWS;      // localparam required for generate loop bound
 
+    // Channel interleaving for 20 channels (5 beats of 4 bytes per pixel)
+    wire [2:0] ch_bank_sel = stream_act_wr_addr % 5;
+    wire [ACT_BUF_ADDR_W-1:0] act_pixel_addr = stream_act_wr_addr / 5;
+
     genvar ch;
     generate
         for (ch = 0; ch < GEN_ROWS; ch = ch + 1) begin : gen_act_buf
@@ -445,8 +455,7 @@ module tinynpu_top #(
             localparam CH_RBASE  = ch * DATA_WIDTH;
             
             wire ch_wr_en;
-            assign ch_wr_en = stream_act_wr_en &&
-                              ((stream_act_wr_addr[2:0]) == CH_BANK);
+            assign ch_wr_en = stream_act_wr_en && (ch_bank_sel == CH_BANK);
 
             wire [DATA_WIDTH-1:0] ch_wr_data;
             assign ch_wr_data = stream_act_wr_data[CH_OFFSET +: 8];
@@ -460,7 +469,7 @@ module tinynpu_top #(
                 .ADDR_WIDTH(ACT_BUF_ADDR_W)
             ) u_act_buf (
                 .clk(clk), .rst_n(rst_n),
-                .wr_addr(stream_act_wr_addr[ACT_BUF_ADDR_W+2:3]),
+                .wr_addr(act_pixel_addr),
                 .wr_data(ch_wr_data),
                 .wr_en(ch_wr_en),
                 .rd_addr(act_buf_rd_addr[ACT_BUF_ADDR_W-1:0]),
@@ -535,8 +544,18 @@ module tinynpu_top #(
         weight_data_flat
     };
 
-    /* dw_line_buffer disabled to save LUTs
-*/
+    dw_line_buffer #(
+        .DATA_WIDTH(DATA_WIDTH), .NUM_CHANNELS(ARRAY_ROWS),
+        .ACCUM_WIDTH(ACCUM_WIDTH), .MAX_WIDTH(MAX_WIDTH)
+    ) u_dw (
+        .clk(clk_compute), .rst_n(rst_n),
+        .image_width(csr_input_width[7:0]),
+        .act_in_flat(act_rd_data_flat),
+        .act_valid_in(act_buf_rd_en & csr_layer_type),
+        .weights_flat(dw_weights_flat),
+        .psum_out_flat(dw_psum_flat),
+        .psum_valid_out(dw_psum_valid)
+    );
 
     // Mux: select systolic or depthwise output based on layer type
     // Systolic: ARRAY_COLS=8 psums. DW: ARRAY_ROWS=20 psums (per-channel).
@@ -555,12 +574,13 @@ module tinynpu_top #(
             wire [ACCUM_WIDTH-1:0] mux_psum_out;
             assign sys_psum_ch = systolic_psum_flat[PC_COL_BASE +: ACCUM_WIDTH];
             assign dw_psum_ch  = dw_psum_flat[PC_PSUM_BASE +: ACCUM_WIDTH];
-            assign mux_psum_out = sys_psum_ch; // dw_engine disabled
+            assign mux_psum_out = csr_layer_type ? dw_psum_ch : sys_psum_ch;
             assign compute_psum_flat[PC_PSUM_BASE +: ACCUM_WIDTH] = mux_psum_out;
         end
     endgenerate
 
-    assign compute_psum_valid = |systolic_valid_flat; // dw_engine disabled
+    assign compute_psum_valid = csr_layer_type ? dw_psum_valid
+                                               : |systolic_valid_flat;
 
     // =========================================================================
     // Module 9: Requantization Unit
@@ -576,8 +596,8 @@ module tinynpu_top #(
         .clk(clk_compute), .rst_n(rst_n),
         .acc_in_flat(compute_psum_flat),
         .acc_valid(compute_psum_valid & requant_acc_valid),
-        .M0_flat({ARRAY_ROWS{csr_m0[SCALE_WIDTH-1:0]}}), 
-        .n_shift_flat({ARRAY_ROWS{csr_n_shift[SHIFT_WIDTH-1:0]}}), 
+        .M0_flat({ARRAY_ROWS{csr_m0}}), 
+        .n_shift_flat({ARRAY_ROWS{csr_n_shift}}), 
         .bias_flat({ARRAY_ROWS{csr_bias}}),
         .quant_out_flat(requant_out_flat),
         .quant_valid(requant_out_valid)
@@ -644,7 +664,6 @@ module tinynpu_top #(
         .dist_r_in(pool_out_flat[DATA_WIDTH*3-1 : DATA_WIDTH*2]),
         .dist_b_in(pool_out_flat[DATA_WIDTH*4-1 : DATA_WIDTH*3]),
         .conf_in(pool_out_flat[DATA_WIDTH*5-1 : DATA_WIDTH*4]),
-        .class_in(pool_out_flat[DATA_WIDTH*9-1 : DATA_WIDTH*5]),
         .grid_x(16'd0), .grid_y(16'd0),
         .grid_stride(8'd32),
         .frame_w(csr_frame_w), .frame_h(csr_frame_h),
@@ -654,12 +673,9 @@ module tinynpu_top #(
         .bbox_y1(bbox_out_flat[31:16]),
         .bbox_x2(bbox_out_flat[47:32]),
         .bbox_y2(bbox_out_flat[63:48]),
-        .conf_out(bbox_out_flat[71:64]),
-        .class_out(bbox_out_flat[103:72])
+        .conf_out(bbox_out_flat[71:64])
     );
-    // Allow the upper channels to pass through raw instead of being zeroed out!
-    // This prevents Vivado from aggressively optimizing away rows 13-19 of the systolic array.
-    assign bbox_out_flat[DATA_WIDTH*ARRAY_ROWS-1 : 104] = pool_out_flat[DATA_WIDTH*ARRAY_ROWS-1 : 104];
+    assign bbox_out_flat[DATA_WIDTH*ARRAY_ROWS-1 : 72] = 0;
 
     // =========================================================================
     // Module 13: Threshold Filter (Confidence Gate)
@@ -685,7 +701,7 @@ module tinynpu_top #(
     // =========================================================================
     wire [DATA_WIDTH*ARRAY_ROWS-1:0] out_buf_rd_data;
     wire out_buf_rd_en;
-    wire out_buf_empty_w;
+    
 
     output_buffer #(
         .DATA_WIDTH(DATA_WIDTH),
@@ -693,8 +709,8 @@ module tinynpu_top #(
         .FIFO_DEPTH(BUFFER_DEPTH)
     ) u_out_buf (
         .clk(clk_postproc), .rst_n(rst_n),
-        .wr_data(thresh_out_flat),
-        .wr_en(thresh_out_valid),
+        .wr_data(csr_layer_type == 0 ? pool_out_flat : thresh_out_flat),
+        .wr_en(out_buf_wr_en & (csr_layer_type == 0 ? pool_out_valid : thresh_out_valid)),
         .rd_data(out_buf_rd_data),
         .rd_en(out_buf_rd_en),
         .empty(out_buf_empty_w),
@@ -704,25 +720,6 @@ module tinynpu_top #(
     // =========================================================================
     // Module 15: AXI4-Stream Source (output to host)
     // =========================================================================
-    // Pipelined drain_words calculation to break 38-level critical path
-    (* use_dsp = "yes" *) reg [31:0] drain_mult_1;
-    (* use_dsp = "yes" *) reg [31:0] drain_mult_2;
-    (* use_dsp = "yes" *) reg [31:0] total_drain_words;
-    always @(posedge aclk) begin
-        if (!aresetn) begin
-            drain_mult_1      <= 32'd0;
-            drain_mult_2      <= 32'd0;
-            total_drain_words <= 32'd0;
-        end else begin
-            // Stage 1: 16-bit x 16-bit = 32-bit
-            drain_mult_1      <= {16'b0, csr_input_width} * {16'b0, csr_input_height};
-            // Stage 2: 32-bit x 16-bit = 32-bit
-            drain_mult_2      <= drain_mult_1 * {16'b0, csr_num_tiles_x};
-            // Stage 3: 32-bit x 16-bit = 32-bit
-            total_drain_words <= drain_mult_2 * {16'b0, csr_num_tiles_y};
-        end
-    end
-
     axis_source #(
         .AXIS_DATA_WIDTH(AXIS_DATA_WIDTH),
         .DATA_WIDTH(DATA_WIDTH),
@@ -733,17 +730,13 @@ module tinynpu_top #(
         .buf_rd_data(out_buf_rd_data),
         .buf_rd_en(out_buf_rd_en),
         .buf_empty(out_buf_empty_w),
-        .start_drain(status_done),
-        .drain_words(total_drain_words),
+        .start_drain(dma_start_store_out),
         .m_axis_tdata(m_axis_tdata),
         .m_axis_tvalid(m_axis_tvalid),
         .m_axis_tready(m_axis_tready),
         .m_axis_tlast(m_axis_tlast),
-        .drain_done()
+        .drain_done(dma_out_store_done)
     );
 
 endmodule
-
-
-
 

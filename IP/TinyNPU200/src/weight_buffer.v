@@ -18,10 +18,10 @@
 
 module weight_buffer #(
     parameter DATA_WIDTH   = 8,
-    parameter ARRAY_ROWS   = 20, // UPDATED
+    parameter ARRAY_ROWS   = 8,
     parameter ARRAY_COLS   = 8,
-    parameter BUFFER_DEPTH = 1024,
-    parameter ADDR_WIDTH   = 10
+    parameter BUFFER_DEPTH = 512,
+    parameter ADDR_WIDTH   = 9
 ) (
     input  wire                    clk,
     input  wire                    rst_n,
@@ -44,46 +44,52 @@ module weight_buffer #(
 );
 
     // =========================================================================
-    // Unified Dual-Port BRAM
+    // Dual BRAM Banks
     // =========================================================================
     (* ram_style = "block" *)
-    reg [DATA_WIDTH-1:0] weight_mem [0:BUFFER_DEPTH*2-1];
+    reg [DATA_WIDTH-1:0] weight_mem_bank0 [0:BUFFER_DEPTH-1];
+    (* ram_style = "block" *)
+    reg [DATA_WIDTH-1:0] weight_mem_bank1 [0:BUFFER_DEPTH-1];
 
     initial begin
-        $readmemh("dummy_weights.hex", weight_mem);
+        $readmemh("dummy_weights.hex", weight_mem_bank0);
+        $readmemh("dummy_weights.hex", weight_mem_bank1);
     end
 
     // =========================================================================
-    // Write Logic: DMA writes to the INACTIVE bank (MSB = ~bank_sel)
+    // Write Logic: DMA writes to the INACTIVE bank
     // =========================================================================
-    wire [ADDR_WIDTH:0] combined_wr_addr = {~bank_sel, wr_addr};
-
+    // Inactive bank = ~bank_sel
     always @(posedge clk) begin
         if (wr_en) begin
-            weight_mem[combined_wr_addr] <= wr_data;
+            if (bank_sel == 1'b0) begin weight_mem_bank0[wr_addr] <= wr_data; end else begin weight_mem_bank1[wr_addr] <= wr_data;
+            end
         end
     end
 
     // =========================================================================
-    // Tile Load Controller: reads from ACTIVE bank (MSB = bank_sel)
+    // Tile Load Controller: reads from ACTIVE bank
     // =========================================================================
-    reg [9:0] load_counter;
+    reg [7:0] load_counter;
     reg       loading;
 
-    wire [ADDR_WIDTH-1:0] rd_addr_mux = tile_base_addr + {{(ADDR_WIDTH-10){1'b0}}, load_counter};
-    wire [ADDR_WIDTH:0] combined_rd_addr = {bank_sel, rd_addr_mux};
-    
+    wire [ADDR_WIDTH-1:0] rd_addr_mux = tile_base_addr + load_counter;
     reg  [DATA_WIDTH-1:0] rd_data_reg;
 
+    // Synchronous read from active bank
     always @(posedge clk) begin
-        rd_data_reg <= weight_mem[combined_rd_addr];
+        if (bank_sel == 1'b0) begin
+            rd_data_reg <= weight_mem_bank0[rd_addr_mux];
+        end else begin
+            rd_data_reg <= weight_mem_bank1[rd_addr_mux];
+        end
     end
 
-    // Loading FSM
+    // Loading FSM (unchanged logic ??? now operates on active bank reads)
     always @(posedge clk) begin
         if (!rst_n) begin
             loading           <= 1'b0;
-            load_counter      <= 10'b0;
+            load_counter      <= 8'b0;
             weight_data_valid <= 1'b0;
             load_complete     <= 1'b0;
         end else begin
@@ -91,17 +97,17 @@ module weight_buffer #(
 
             if (load_tile && !loading) begin
                 loading           <= 1'b1;
-                load_counter      <= 10'b0;
+                load_counter      <= 8'b0;
                 weight_data_valid <= 1'b0;
             end else if (loading) begin
                 if (load_counter < (ARRAY_ROWS * ARRAY_COLS)) begin
                     load_counter      <= load_counter + 1'b1;
-                    weight_data_valid <= (load_counter >= 10'd1);
+                    weight_data_valid <= (load_counter >= 8'd1);
                 end else begin
                     loading           <= 1'b0;
                     load_complete     <= 1'b1;
                     weight_data_valid <= 1'b0;
-                    load_counter      <= 10'b0;
+                    load_counter      <= 8'b0;
                 end
             end
         end
@@ -112,17 +118,18 @@ module weight_buffer #(
     // =========================================================================
     reg signed [DATA_WIDTH-1:0] weight_data [0:ARRAY_ROWS-1][0:ARRAY_COLS-1];
 
-    wire [9:0] write_idx = (load_counter > 10'd0) ? (load_counter - 1'b1) : 10'd0;
+    wire [7:0] write_idx = (load_counter > 8'd0) ? (load_counter - 1'b1) : 8'd0;
     wire [4:0] write_row = write_idx / ARRAY_COLS;
     wire [3:0] write_col = write_idx % ARRAY_COLS;
 
     always @(posedge clk) begin
-        if (loading && load_counter > 10'd0) begin
+        if (loading && load_counter > 8'd0) begin
             weight_data[write_row][write_col] <= $signed(rd_data_reg);
         end
     end
 
     // Pack 2D weight_data -> flat output
+    // Use localparams for loop bounds (Vivado requires localparam, not parameter)
     localparam GEN_WB_ROWS = ARRAY_ROWS;
     localparam GEN_WB_COLS = ARRAY_COLS;
     genvar r_pk, c_pk;
@@ -138,3 +145,5 @@ module weight_buffer #(
     endgenerate
 
 endmodule
+
+
