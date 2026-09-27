@@ -7,7 +7,8 @@
       "name": "npu_system",
       "rev_ctrl_bd_flag": "RevCtrlBdOff",
       "synth_flow_mode": "Hierarchical",
-      "tool_version": "2025.1"
+      "tool_version": "2025.1",
+      "validated": "true"
     },
     "design_tree": {
       "tinynpu_0": "",
@@ -130,8 +131,24 @@
         "type": "clk",
         "direction": "I",
         "parameters": {
+          "CLK_DOMAIN": {
+            "value": "npu_system_sysclk",
+            "value_src": "default"
+          },
           "FREQ_HZ": {
             "value": "125000000"
+          },
+          "FREQ_TOLERANCE_HZ": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "INSERT_VIP": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "PHASE": {
+            "value": "0.0",
+            "value_src": "default"
           }
         }
       },
@@ -139,6 +156,10 @@
         "type": "rst",
         "direction": "I",
         "parameters": {
+          "INSERT_VIP": {
+            "value": "0",
+            "value_src": "default"
+          },
           "POLARITY": {
             "value": "ACTIVE_HIGH"
           }
@@ -166,7 +187,13 @@
         "type": "data",
         "direction": "O",
         "left": "0",
-        "right": "0"
+        "right": "0",
+        "parameters": {
+          "LAYERED_METADATA": {
+            "value": "undef",
+            "value_src": "default"
+          }
+        }
       }
     },
     "components": {
@@ -928,6 +955,10 @@
                 "value": "AXI4LITE",
                 "value_src": "constant"
               },
+              "FREQ_HZ": {
+                "value": "125000000",
+                "value_src": "ip_prop"
+              },
               "ID_WIDTH": {
                 "value": "0",
                 "value_src": "constant"
@@ -1011,6 +1042,14 @@
               "MAX_BURST_LENGTH": {
                 "value": "1",
                 "value_src": "auto"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
               }
             },
             "address_space_ref": "m_axi",
@@ -1119,6 +1158,18 @@
               "ASSOCIATED_BUSIF": {
                 "value": "m_axi",
                 "value_src": "constant"
+              },
+              "FREQ_HZ": {
+                "value": "125000000",
+                "value_src": "ip_prop"
+              },
+              "PHASE": {
+                "value": "0.0",
+                "value_src": "ip_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "/clk_wiz_0_clk_out1",
+                "value_src": "ip_prop"
               }
             }
           },
@@ -1467,7 +1518,8 @@
           "axi_mem_intercon/M01_ACLK",
           "axis_subset_converter_0/aclk",
           "axis_subset_converter_1/aclk",
-          "riscv_adas_0/clk"
+          "riscv_adas_0/clk",
+          "tinynpu_0/aclk"
         ]
       },
       "clk_wiz_0_locked": {
@@ -1525,7 +1577,8 @@
           "vid_out/aresetn",
           "dvi2rgb_0/aRst_n",
           "rgb2dvi_0/aRst_n",
-          "riscv_adas_0/rst_n"
+          "riscv_adas_0/rst_n",
+          "tinynpu_0/aresetn"
         ]
       },
       "reset_0_1": {
