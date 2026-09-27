@@ -199,7 +199,7 @@
     "components": {
       "tinynpu_0": {
         "vlnv": "HariharanGanesh:user:tinynpu_top:1.0",
-        "ip_revision": "1",
+        "ip_revision": "4",
         "xci_name": "npu_system_tinynpu_0_0",
         "xci_path": "ip\\npu_system_tinynpu_0_0\\npu_system_tinynpu_0_0.xci",
         "inst_hier_path": "tinynpu_0",

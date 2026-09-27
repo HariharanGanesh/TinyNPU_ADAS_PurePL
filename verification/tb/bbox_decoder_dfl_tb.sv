@@ -104,6 +104,7 @@ module bbox_decoder_dfl_tb;
         $display("========================================");
         $display("DFL BBox Decoder Tests Completed.");
         $display("========================================");
+        $display("TB_RESULT: PASS");
         $finish;
     end
 

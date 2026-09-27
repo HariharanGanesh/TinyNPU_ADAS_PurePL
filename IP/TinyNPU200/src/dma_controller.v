@@ -105,6 +105,8 @@ module dma_controller #(
     reg [2:0] state;
     reg [1:0] channel_select; // 0 = Weight, 1 = Activation
     reg [15:0] bytes_transferred;
+    reg [15:0] tsize_m1;
+    reg [15:0] tsize_m2;
 
     // FSM
     always @(posedge clk) begin
@@ -133,6 +135,8 @@ module dma_controller #(
             out_buf_rd_en     <= 1'b0;
             bytes_transferred <= 0;
             channel_select    <= 0;
+            tsize_m1          <= 0;
+            tsize_m2          <= 0;
         end else begin
             wgt_buf_wr_en  <= 1'b0;
             act_buf_wr_en  <= 1'b0;
@@ -144,21 +148,23 @@ module dma_controller #(
             case (state)
                 STATE_IDLE: begin
                     bytes_transferred <= 0;
+                    tsize_m1 <= transfer_size - 1'b1;
+                    tsize_m2 <= transfer_size - 2'd2;
                     if (start_load_weights) begin
                         m_axi_araddr   <= weight_base_addr;
-                        m_axi_arlen    <= transfer_size - 1'b1;
+                        m_axi_arlen    <= tsize_m1[7:0];
                         m_axi_arvalid  <= 1'b1;
                         channel_select <= 2'd0;
                         state          <= STATE_R_ADDR;
                     end else if (start_load_act) begin
                         m_axi_araddr   <= act_base_addr;
-                        m_axi_arlen    <= transfer_size - 1'b1;
+                        m_axi_arlen    <= tsize_m1[7:0];
                         m_axi_arvalid  <= 1'b1;
                         channel_select <= 2'd1;
                         state          <= STATE_R_ADDR;
                     end else if (start_store_out) begin
                         m_axi_awaddr   <= out_base_addr;
-                        m_axi_awlen    <= transfer_size - 1'b1;
+                        m_axi_awlen    <= tsize_m1[7:0];
                         m_axi_awvalid  <= 1'b1;
                         state          <= STATE_W_ADDR;
                         // Fetch first word from output buffer
@@ -188,7 +194,7 @@ module dma_controller #(
                             act_buf_wr_en   <= 1'b1;
                         end
 
-                        if (m_axi_rlast || (bytes_transferred == transfer_size - 1'b1)) begin
+                        if (m_axi_rlast || (bytes_transferred == tsize_m1)) begin
                             m_axi_rready <= 1'b0;
                             if (channel_select == 2'd0) begin
                                 weight_load_done <= 1'b1;
@@ -215,7 +221,7 @@ module dma_controller #(
                     if (m_axi_wready) begin
                         bytes_transferred <= bytes_transferred + 1'b1;
 
-                        if (bytes_transferred == transfer_size - 1'b1) begin
+                        if (bytes_transferred == tsize_m1) begin
                             m_axi_wvalid <= 1'b0;
                             m_axi_wlast  <= 1'b0;
                             m_axi_bready <= 1'b1;
@@ -224,7 +230,7 @@ module dma_controller #(
                             // Fetch next word
                             out_buf_rd_addr <= bytes_transferred + 1'b1;
                             out_buf_rd_en   <= 1'b1;
-                            if (bytes_transferred == transfer_size - 2'd2) begin
+                            if (bytes_transferred == tsize_m2) begin
                                 m_axi_wlast <= 1'b1;
                             end
                         end

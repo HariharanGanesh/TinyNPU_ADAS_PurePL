@@ -174,12 +174,12 @@ module tb_axi_csr;
         end
 
         // TC04: Read-only register
-        axi_write(8'h60, 32'hFFFFFFFF);
+        axi_write(8'h78, 32'hFFFFFFFF);
         begin
             logic [31:0] rd; logic [1:0] rr;
-            axi_read(8'h60, rd, rr);
-            if (rd == 20) begin $display("[PASS] TC04: Read-only ignored"); tests_passed++; end
-            else begin $error("[FAIL] TC04: Read-only failed (got %0d, expected 20)", rd); tests_failed++; end
+            axi_read(8'h78, rd, rr);
+            if (rd == 32'h02000001) begin $display("[PASS] TC04: Read-only ignored"); tests_passed++; end
+            else begin $error("[FAIL] TC04: Read-only failed (got %h, expected 02000001)", rd); tests_failed++; end
         end
 
         // TC05: Unaligned/Illegal address (e.g. 0xF0)
@@ -194,8 +194,8 @@ module tb_axi_csr;
         // Summary
         $display("==========================================");
         $display("REGRESSION SUMMARY: %0d/%0d tests passed", tests_passed, tests_passed + tests_failed);
-        if (tests_failed == 0) $display("RESULT: PASS");
-        else $display("RESULT: FAIL");
+        if (tests_failed == 0) $display("TB_RESULT: PASS");
+        else $display("TB_RESULT: FAIL");
         $display("==========================================");
         
         $finish;

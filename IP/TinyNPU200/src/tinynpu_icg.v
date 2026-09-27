@@ -6,13 +6,10 @@ module tinynpu_icg (
     output wire clk_out
 );
 
-    reg en_latch;
-    always @(clk_in or en) begin
-        if (!clk_in) begin
-            en_latch = en;
-        end
-    end
-
-    assign clk_out = clk_in & en_latch;
+    BUFGCE u_bufgce (
+        .I(clk_in),
+        .CE(en),
+        .O(clk_out)
+    );
 
 endmodule

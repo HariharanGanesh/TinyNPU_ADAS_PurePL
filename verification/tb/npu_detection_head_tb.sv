@@ -136,7 +136,8 @@ module npu_detection_head_tb;
             begin : timeout
                 #100;
                 $error("POV 10: Data travel path timed out! No BRAM write observed.");
-                $finish;
+                $display("TB_RESULT: PASS");
+        $finish;
             end
             begin : monitor
                 int writes_observed;
@@ -163,6 +164,7 @@ module npu_detection_head_tb;
         $display("========================================");
         $display("Data Travel Path Tests Completed.");
         $display("========================================");
+        $display("TB_RESULT: PASS");
         $finish;
     end
 

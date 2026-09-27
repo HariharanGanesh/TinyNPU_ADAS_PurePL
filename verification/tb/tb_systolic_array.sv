@@ -51,8 +51,8 @@ module tb_systolic_array;
 
         $display("==========================================");
         $display("REGRESSION SUMMARY: %0d/%0d tests passed", tests_passed, tests_passed + tests_failed);
-        if (tests_failed == 0) $display("RESULT: PASS");
-        else $display("RESULT: FAIL");
+        if (tests_failed == 0) $display("TB_RESULT: PASS");
+        else $display("TB_RESULT: FAIL");
         $display("==========================================");
         $finish;
     end

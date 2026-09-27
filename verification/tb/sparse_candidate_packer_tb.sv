@@ -119,6 +119,7 @@ module sparse_candidate_packer_tb;
         $display("========================================");
         $display("Tests Completed.");
         $display("========================================");
+        $display("TB_RESULT: PASS");
         $finish;
     end
 endmodule

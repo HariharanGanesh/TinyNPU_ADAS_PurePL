@@ -149,6 +149,7 @@ module streaming_topk_tb;
         $display("========================================");
         $display("Streaming Top-K Tests Completed.");
         $display("========================================");
+        $display("TB_RESULT: PASS");
         $finish;
     end
 

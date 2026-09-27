@@ -10,7 +10,7 @@ module tb_axis_source;
     axis_source dut (
         .clk(clk), .rst_n(reset_n),
         .m_axis_tdata(m_axis_tdata), .m_axis_tvalid(m_axis_tvalid), .m_axis_tready(m_axis_tready), .m_axis_tlast(m_axis_tlast),
-        .start_drain(start_drain), .drain_words(32'd4), 
+        .start_drain(start_drain), 
         .buf_empty(buf_empty), .buf_rd_data(buf_rdata), .buf_rd_en(buf_re), .buf_rd_addr(buf_raddr),
         .drain_done(drain_done)
     );
@@ -48,8 +48,8 @@ module tb_axis_source;
         
         $display("==========================================");
         $display("REGRESSION SUMMARY: %0d/%0d tests passed", tests_passed, tests_passed + tests_failed);
-        if (tests_failed == 0) $display("RESULT: PASS");
-        else $display("RESULT: FAIL");
+        if (tests_failed == 0) $display("TB_RESULT: PASS");
+        else $display("TB_RESULT: FAIL");
         $display("==========================================");
         $finish;
     end
