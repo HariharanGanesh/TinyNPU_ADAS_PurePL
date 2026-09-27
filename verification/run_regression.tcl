@@ -4,15 +4,13 @@
 
 set PROJ_ROOT [file normalize [file dirname [info script]]/..]
 set RTL_DIR_1 [file join $PROJ_ROOT IP/TinyNPU200/src]
-set RTL_DIR_2 [file join $PROJ_ROOT IP/NPU300PMADAS/src]
 set VERIF_DIR [file join $PROJ_ROOT verification/tb]
 set LOG_DIR   [file join $PROJ_ROOT verification/regression_logs]
 
 file mkdir $LOG_DIR
 
 # 1. Compile all RTL
-set RTL_FILES [glob -nocomplain [file join $RTL_DIR_1 *.v] [file join $RTL_DIR_1 *.sv] [file join $RTL_DIR_2 *.v] [file join $RTL_DIR_2 *.sv]]
-set RTL_FILES [lsearch -all -inline -not -exact $RTL_FILES [file join $RTL_DIR_2 tinynpu_top_adas.v]]
+set RTL_FILES [glob -nocomplain [file join $RTL_DIR_1 *.v] [file join $RTL_DIR_1 *.sv]]
 set compile_ok 1
 foreach f $RTL_FILES {
     puts "Compiling RTL: $f"
