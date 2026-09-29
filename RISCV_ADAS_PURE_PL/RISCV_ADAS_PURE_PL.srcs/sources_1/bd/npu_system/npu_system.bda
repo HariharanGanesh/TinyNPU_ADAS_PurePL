@@ -223,6 +223,24 @@
                 "SV": "HariharanGanesh:user:tinynpu_top:1.0",
                 "TM": "both",
                 "TU": "register"
+            },
+            "V5": {
+                "VT": "AC",
+                "BA": "0xC0000000",
+                "HA": "0xC0003FFF",
+                "BP": "C_S_AXI_BASEADDR",
+                "HP": "C_S_AXI_HIGHADDR",
+                "MA": "m_axi",
+                "MX": "/riscv_adas_0",
+                "MI": "m_axi",
+                "MS": "SEG_axi_bram_ctrl_0_Mem0",
+                "MV": "xilinx.com:module_ref:riscv_adas_subsystem:1.0",
+                "SX": "/axi_bram_ctrl_0",
+                "SI": "S_AXI",
+                "SS": "Mem0",
+                "SV": "xilinx.com:ip:axi_bram_ctrl:4.1",
+                "TM": "both",
+                "TU": "memory"
             }
         },
         "edges": [
@@ -241,6 +259,11 @@
             },
             {
                 "src": "V4",
+                "trg": "V2",
+                "EH": "2"
+            },
+            {
+                "src": "V5",
                 "trg": "V2",
                 "EH": "2"
             }
