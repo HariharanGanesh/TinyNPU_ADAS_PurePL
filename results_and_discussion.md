@@ -20,7 +20,7 @@ The utilization report confirms that the Depthwise Engine consumes 84 DSP blocks
 
 The standalone NPU was constrained with an 8.0 ns clock period (125 MHz target). Post-route timing analysis reported a Worst Negative Slack (WNS) of just -0.051 ns, yielding an effective Maximum Operating Frequency ({max}$) of **124.2 MHz**. At this frequency, the design meets all setup and hold timing requirements with zero failing endpoints, ensuring stable physical operation.
 
-At 124.2 MHz, the 112-PE systolic array paired with the depthwise and requantization engines provides high-throughput inference for quantized INT8 neural networks. The total on-chip power consumption is estimated at approximately 0.55 W, demonstrating excellent energy efficiency suitable for edge-deployed ADAS applications.
+At 124.2 MHz, the 112-PE systolic array paired with the depthwise and requantization engines provides high-throughput inference for quantized INT8 neural networks. The total on-chip power consumption is estimated at approximately 0.93 W, demonstrating excellent energy efficiency suitable for edge-deployed ADAS applications.
 
 ## 3. Hardware Verification
 

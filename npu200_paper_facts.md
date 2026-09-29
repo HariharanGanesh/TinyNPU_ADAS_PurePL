@@ -21,7 +21,7 @@
 - **BRAM (RAMB36)**: 2 (1.4% of 140)
 
 ## 3. Power Estimation
-- **Dynamic + Static Power**: ~0.550 W (estimated at 124.2 MHz)
+- **Dynamic + Static Power**: ~0.926 W (Dynamic: 0.810 W, Static: 0.116 W at 124.2 MHz)
 
 ## 4. Testbench Validation
 - The 	b_tinynpu_top verification suite achieves a 100% PASS rate across all hardware tests.
