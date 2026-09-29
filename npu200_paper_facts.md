@@ -13,11 +13,11 @@
   - AXI stream reads only 8-bits per 32-bit beat (sparse mapping used).
 
 ## 2. Resource Utilization (Standalone TinyNPU200 on Zynq-7020)
-- **Total LUTs**: ~35,465 (66.6% of 53,200)
+- **Total LUTs**: 37,148 (69.8% of 53,200)
 - **DSP Blocks**: 150 (68.18% of 220)
   - *Breakdown*: Depthwise Engine (84), Requantization Unit (56), Controllers (4). 
   - *Note*: Systolic array multipliers are intentionally mapped to LUTs to fit the design perfectly within the Zynq-7020 constraints.
-- **Flip-Flops (FFs)**: 46,497 (43.70% of 106,400)
+- **Flip-Flops (FFs)**: 54,219 (50.9% of 106,400)
 - **BRAM (RAMB36)**: 2 (1.4% of 140)
 
 ## 3. Power Estimation

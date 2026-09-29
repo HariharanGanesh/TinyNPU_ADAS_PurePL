@@ -1,0 +1,254 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
+| Date         : Wed Sep 30 01:39:57 2026
+| Host         : TMP215-54 running 64-bit major release  (build 9200)
+| Command      : report_utilization -hierarchical -file util_14x14.rpt
+| Design       : tinynpu_top
+| Device       : xc7z020clg400-1
+| Speed File   : -1
+| Design State : Synthesized
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Utilization Design Information
+
+Table of Contents
+-----------------
+1. Utilization by Hierarchy
+
+1. Utilization by Hierarchy
+---------------------------
+
++-----------------------------+------------------------+------------+------------+---------+------+-------+--------+--------+------------+
+|           Instance          |         Module         | Total LUTs | Logic LUTs | LUTRAMs | SRLs |  FFs  | RAMB36 | RAMB18 | DSP Blocks |
++-----------------------------+------------------------+------------+------------+---------+------+-------+--------+--------+------------+
+| tinynpu_top                 |                  (top) |      37148 |      36687 |     432 |   29 | 54219 |      2 |      0 |        150 |
+|   (tinynpu_top)             |                  (top) |       1820 |       1820 |       0 |    0 |     1 |      0 |      0 |          0 |
+|   gen_act_buf[0].u_act_buf  |      activation_buffer |         75 |         51 |      24 |    0 |    11 |      0 |      0 |          0 |
+|   gen_act_buf[10].u_act_buf |    activation_buffer_0 |         75 |         51 |      24 |    0 |    11 |      0 |      0 |          0 |
+|   gen_act_buf[11].u_act_buf |    activation_buffer_1 |         75 |         51 |      24 |    0 |    11 |      0 |      0 |          0 |
+|   gen_act_buf[12].u_act_buf |    activation_buffer_2 |         75 |         51 |      24 |    0 |    11 |      0 |      0 |          0 |
+|   gen_act_buf[13].u_act_buf |    activation_buffer_3 |         75 |         51 |      24 |    0 |    11 |      0 |      0 |          0 |
+|   gen_act_buf[1].u_act_buf  |    activation_buffer_4 |         75 |         51 |      24 |    0 |    11 |      0 |      0 |          0 |
+|   gen_act_buf[2].u_act_buf  |    activation_buffer_5 |         75 |         51 |      24 |    0 |    11 |      0 |      0 |          0 |
+|   gen_act_buf[3].u_act_buf  |    activation_buffer_6 |         75 |         51 |      24 |    0 |    11 |      0 |      0 |          0 |
+|   gen_act_buf[4].u_act_buf  |    activation_buffer_7 |         75 |         51 |      24 |    0 |    11 |      0 |      0 |          0 |
+|   gen_act_buf[5].u_act_buf  |    activation_buffer_8 |         75 |         51 |      24 |    0 |    11 |      0 |      0 |          0 |
+|   gen_act_buf[6].u_act_buf  |    activation_buffer_9 |         75 |         51 |      24 |    0 |    11 |      0 |      0 |          0 |
+|   gen_act_buf[7].u_act_buf  |   activation_buffer_10 |         75 |         51 |      24 |    0 |    11 |      0 |      0 |          0 |
+|   gen_act_buf[8].u_act_buf  |   activation_buffer_11 |         75 |         51 |      24 |    0 |    11 |      0 |      0 |          0 |
+|   gen_act_buf[9].u_act_buf  |   activation_buffer_12 |         75 |         51 |      24 |    0 |    11 |      0 |      0 |          0 |
+|   u_act                     |        activation_unit |          1 |          1 |       0 |    0 |   113 |      0 |      0 |          0 |
+|   u_axis_sink               |              axis_sink |        159 |        159 |       0 |    0 |    99 |      0 |      0 |          0 |
+|   u_bbox                    |           bbox_decoder |         76 |         76 |       0 |    0 |    98 |      0 |      0 |          2 |
+|     (u_bbox)                |           bbox_decoder |         72 |         72 |       0 |    0 |    98 |      0 |      0 |          2 |
+|   u_csr                     |        axi4_lite_slave |       1197 |       1197 |       0 |    0 |   873 |      0 |      0 |          0 |
+|   u_ctrl                    |         npu_controller |        198 |        198 |       0 |    0 |  1138 |      0 |      0 |          2 |
+|   u_dma                     |         dma_controller |         46 |         46 |       0 |    0 |   115 |      0 |      0 |          0 |
+|   u_dw                      |         dw_line_buffer |      10340 |      10340 |       0 |    0 | 31285 |      0 |      0 |         84 |
+|   u_out_buf                 |          output_buffer |         56 |         56 |       0 |    0 |    28 |      2 |      0 |          0 |
+|   u_pool                    |           pooling_unit |         82 |         82 |       0 |    0 |   113 |      0 |      0 |          0 |
+|   u_requant                 |    requantization_unit |       4701 |       4700 |       0 |    1 |  2993 |      0 |      0 |         56 |
+|   u_systolic                |         systolic_array |      15735 |      15707 |       0 |   28 | 15427 |      0 |      0 |          0 |
+|     (u_systolic)            |         systolic_array |         39 |         11 |       0 |   28 |    70 |      0 |      0 |          0 |
+|     row[0].col[0].pe_inst   |     processing_element |         51 |         51 |       0 |    0 |    65 |      0 |      0 |          0 |
+|     row[0].col[10].pe_inst  |  processing_element_13 |         74 |         74 |       0 |    0 |    65 |      0 |      0 |          0 |
+|     row[0].col[11].pe_inst  |  processing_element_14 |         74 |         74 |       0 |    0 |    65 |      0 |      0 |          0 |
+|     row[0].col[12].pe_inst  |  processing_element_15 |         73 |         73 |       0 |    0 |    65 |      0 |      0 |          0 |
+|     row[0].col[13].pe_inst  |  processing_element_16 |         52 |         52 |       0 |    0 |    56 |      0 |      0 |          0 |
+|     row[0].col[1].pe_inst   |  processing_element_17 |         74 |         74 |       0 |    0 |    65 |      0 |      0 |          0 |
+|     row[0].col[2].pe_inst   |  processing_element_18 |         73 |         73 |       0 |    0 |    65 |      0 |      0 |          0 |
+|     row[0].col[3].pe_inst   |  processing_element_19 |         81 |         81 |       0 |    0 |    65 |      0 |      0 |          0 |
+|     row[0].col[4].pe_inst   |  processing_element_20 |         81 |         81 |       0 |    0 |    65 |      0 |      0 |          0 |
+|     row[0].col[5].pe_inst   |  processing_element_21 |         74 |         74 |       0 |    0 |    65 |      0 |      0 |          0 |
+|     row[0].col[6].pe_inst   |  processing_element_22 |         75 |         75 |       0 |    0 |    65 |      0 |      0 |          0 |
+|     row[0].col[7].pe_inst   |  processing_element_23 |         75 |         75 |       0 |    0 |    65 |      0 |      0 |          0 |
+|     row[0].col[8].pe_inst   |  processing_element_24 |         74 |         74 |       0 |    0 |    65 |      0 |      0 |          0 |
+|     row[0].col[9].pe_inst   |  processing_element_25 |         74 |         74 |       0 |    0 |    65 |      0 |      0 |          0 |
+|     row[10].col[0].pe_inst  |  processing_element_26 |         73 |         73 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[10].col[10].pe_inst |  processing_element_27 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[10].col[11].pe_inst |  processing_element_28 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[10].col[12].pe_inst |  processing_element_29 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[10].col[13].pe_inst |  processing_element_30 |         75 |         75 |       0 |    0 |    72 |      0 |      0 |          0 |
+|     row[10].col[1].pe_inst  |  processing_element_31 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[10].col[2].pe_inst  |  processing_element_32 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[10].col[3].pe_inst  |  processing_element_33 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[10].col[4].pe_inst  |  processing_element_34 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[10].col[5].pe_inst  |  processing_element_35 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[10].col[6].pe_inst  |  processing_element_36 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[10].col[7].pe_inst  |  processing_element_37 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[10].col[8].pe_inst  |  processing_element_38 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[10].col[9].pe_inst  |  processing_element_39 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[11].col[0].pe_inst  |  processing_element_40 |         73 |         73 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[11].col[10].pe_inst |  processing_element_41 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[11].col[11].pe_inst |  processing_element_42 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[11].col[12].pe_inst |  processing_element_43 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[11].col[13].pe_inst |  processing_element_44 |         75 |         75 |       0 |    0 |    72 |      0 |      0 |          0 |
+|     row[11].col[1].pe_inst  |  processing_element_45 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[11].col[2].pe_inst  |  processing_element_46 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[11].col[3].pe_inst  |  processing_element_47 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[11].col[4].pe_inst  |  processing_element_48 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[11].col[5].pe_inst  |  processing_element_49 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[11].col[6].pe_inst  |  processing_element_50 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[11].col[7].pe_inst  |  processing_element_51 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[11].col[8].pe_inst  |  processing_element_52 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[11].col[9].pe_inst  |  processing_element_53 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[12].col[0].pe_inst  |  processing_element_54 |         73 |         73 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[12].col[10].pe_inst |  processing_element_55 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[12].col[11].pe_inst |  processing_element_56 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[12].col[12].pe_inst |  processing_element_57 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[12].col[13].pe_inst |  processing_element_58 |         75 |         75 |       0 |    0 |    72 |      0 |      0 |          0 |
+|     row[12].col[1].pe_inst  |  processing_element_59 |         98 |         98 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[12].col[2].pe_inst  |  processing_element_60 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[12].col[3].pe_inst  |  processing_element_61 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[12].col[4].pe_inst  |  processing_element_62 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[12].col[5].pe_inst  |  processing_element_63 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[12].col[6].pe_inst  |  processing_element_64 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[12].col[7].pe_inst  |  processing_element_65 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[12].col[8].pe_inst  |  processing_element_66 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[12].col[9].pe_inst  |  processing_element_67 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[13].col[0].pe_inst  |  processing_element_68 |         73 |         73 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[13].col[10].pe_inst |  processing_element_69 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[13].col[11].pe_inst |  processing_element_70 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[13].col[12].pe_inst |  processing_element_71 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[13].col[13].pe_inst |  processing_element_72 |         75 |         75 |       0 |    0 |    72 |      0 |      0 |          0 |
+|     row[13].col[1].pe_inst  |  processing_element_73 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[13].col[2].pe_inst  |  processing_element_74 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[13].col[3].pe_inst  |  processing_element_75 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[13].col[4].pe_inst  |  processing_element_76 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[13].col[5].pe_inst  |  processing_element_77 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[13].col[6].pe_inst  |  processing_element_78 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[13].col[7].pe_inst  |  processing_element_79 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[13].col[8].pe_inst  |  processing_element_80 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[13].col[9].pe_inst  |  processing_element_81 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[1].col[0].pe_inst   |  processing_element_82 |         73 |         73 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[1].col[10].pe_inst  |  processing_element_83 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[1].col[11].pe_inst  |  processing_element_84 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[1].col[12].pe_inst  |  processing_element_85 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[1].col[13].pe_inst  |  processing_element_86 |         75 |         75 |       0 |    0 |    72 |      0 |      0 |          0 |
+|     row[1].col[1].pe_inst   |  processing_element_87 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[1].col[2].pe_inst   |  processing_element_88 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[1].col[3].pe_inst   |  processing_element_89 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[1].col[4].pe_inst   |  processing_element_90 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[1].col[5].pe_inst   |  processing_element_91 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[1].col[6].pe_inst   |  processing_element_92 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[1].col[7].pe_inst   |  processing_element_93 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[1].col[8].pe_inst   |  processing_element_94 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[1].col[9].pe_inst   |  processing_element_95 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[2].col[0].pe_inst   |  processing_element_96 |         73 |         73 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[2].col[10].pe_inst  |  processing_element_97 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[2].col[11].pe_inst  |  processing_element_98 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[2].col[12].pe_inst  |  processing_element_99 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[2].col[13].pe_inst  | processing_element_100 |         75 |         75 |       0 |    0 |    72 |      0 |      0 |          0 |
+|     row[2].col[1].pe_inst   | processing_element_101 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[2].col[2].pe_inst   | processing_element_102 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[2].col[3].pe_inst   | processing_element_103 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[2].col[4].pe_inst   | processing_element_104 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[2].col[5].pe_inst   | processing_element_105 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[2].col[6].pe_inst   | processing_element_106 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[2].col[7].pe_inst   | processing_element_107 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[2].col[8].pe_inst   | processing_element_108 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[2].col[9].pe_inst   | processing_element_109 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[3].col[0].pe_inst   | processing_element_110 |         73 |         73 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[3].col[10].pe_inst  | processing_element_111 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[3].col[11].pe_inst  | processing_element_112 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[3].col[12].pe_inst  | processing_element_113 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[3].col[13].pe_inst  | processing_element_114 |         75 |         75 |       0 |    0 |    72 |      0 |      0 |          0 |
+|     row[3].col[1].pe_inst   | processing_element_115 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[3].col[2].pe_inst   | processing_element_116 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[3].col[3].pe_inst   | processing_element_117 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[3].col[4].pe_inst   | processing_element_118 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[3].col[5].pe_inst   | processing_element_119 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[3].col[6].pe_inst   | processing_element_120 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[3].col[7].pe_inst   | processing_element_121 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[3].col[8].pe_inst   | processing_element_122 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[3].col[9].pe_inst   | processing_element_123 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[4].col[0].pe_inst   | processing_element_124 |         73 |         73 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[4].col[10].pe_inst  | processing_element_125 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[4].col[11].pe_inst  | processing_element_126 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[4].col[12].pe_inst  | processing_element_127 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[4].col[13].pe_inst  | processing_element_128 |         75 |         75 |       0 |    0 |    72 |      0 |      0 |          0 |
+|     row[4].col[1].pe_inst   | processing_element_129 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[4].col[2].pe_inst   | processing_element_130 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[4].col[3].pe_inst   | processing_element_131 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[4].col[4].pe_inst   | processing_element_132 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[4].col[5].pe_inst   | processing_element_133 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[4].col[6].pe_inst   | processing_element_134 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[4].col[7].pe_inst   | processing_element_135 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[4].col[8].pe_inst   | processing_element_136 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[4].col[9].pe_inst   | processing_element_137 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[5].col[0].pe_inst   | processing_element_138 |         73 |         73 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[5].col[10].pe_inst  | processing_element_139 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[5].col[11].pe_inst  | processing_element_140 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[5].col[12].pe_inst  | processing_element_141 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[5].col[13].pe_inst  | processing_element_142 |         75 |         75 |       0 |    0 |    72 |      0 |      0 |          0 |
+|     row[5].col[1].pe_inst   | processing_element_143 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[5].col[2].pe_inst   | processing_element_144 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[5].col[3].pe_inst   | processing_element_145 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[5].col[4].pe_inst   | processing_element_146 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[5].col[5].pe_inst   | processing_element_147 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[5].col[6].pe_inst   | processing_element_148 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[5].col[7].pe_inst   | processing_element_149 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[5].col[8].pe_inst   | processing_element_150 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[5].col[9].pe_inst   | processing_element_151 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[6].col[0].pe_inst   | processing_element_152 |         73 |         73 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[6].col[10].pe_inst  | processing_element_153 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[6].col[11].pe_inst  | processing_element_154 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[6].col[12].pe_inst  | processing_element_155 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[6].col[13].pe_inst  | processing_element_156 |         75 |         75 |       0 |    0 |    72 |      0 |      0 |          0 |
+|     row[6].col[1].pe_inst   | processing_element_157 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[6].col[2].pe_inst   | processing_element_158 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[6].col[3].pe_inst   | processing_element_159 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[6].col[4].pe_inst   | processing_element_160 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[6].col[5].pe_inst   | processing_element_161 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[6].col[6].pe_inst   | processing_element_162 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[6].col[7].pe_inst   | processing_element_163 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[6].col[8].pe_inst   | processing_element_164 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[6].col[9].pe_inst   | processing_element_165 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[7].col[0].pe_inst   | processing_element_166 |         73 |         73 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[7].col[10].pe_inst  | processing_element_167 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[7].col[11].pe_inst  | processing_element_168 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[7].col[12].pe_inst  | processing_element_169 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[7].col[13].pe_inst  | processing_element_170 |         75 |         75 |       0 |    0 |    72 |      0 |      0 |          0 |
+|     row[7].col[1].pe_inst   | processing_element_171 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[7].col[2].pe_inst   | processing_element_172 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[7].col[3].pe_inst   | processing_element_173 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[7].col[4].pe_inst   | processing_element_174 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[7].col[5].pe_inst   | processing_element_175 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[7].col[6].pe_inst   | processing_element_176 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[7].col[7].pe_inst   | processing_element_177 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[7].col[8].pe_inst   | processing_element_178 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[7].col[9].pe_inst   | processing_element_179 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[8].col[0].pe_inst   | processing_element_180 |         73 |         73 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[8].col[10].pe_inst  | processing_element_181 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[8].col[11].pe_inst  | processing_element_182 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[8].col[12].pe_inst  | processing_element_183 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[8].col[13].pe_inst  | processing_element_184 |         75 |         75 |       0 |    0 |    72 |      0 |      0 |          0 |
+|     row[8].col[1].pe_inst   | processing_element_185 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[8].col[2].pe_inst   | processing_element_186 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[8].col[3].pe_inst   | processing_element_187 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[8].col[4].pe_inst   | processing_element_188 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[8].col[5].pe_inst   | processing_element_189 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[8].col[6].pe_inst   | processing_element_190 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[8].col[7].pe_inst   | processing_element_191 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[8].col[8].pe_inst   | processing_element_192 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[8].col[9].pe_inst   | processing_element_193 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[9].col[0].pe_inst   | processing_element_194 |         73 |         73 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[9].col[10].pe_inst  | processing_element_195 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[9].col[11].pe_inst  | processing_element_196 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[9].col[12].pe_inst  | processing_element_197 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[9].col[13].pe_inst  | processing_element_198 |         75 |         75 |       0 |    0 |    72 |      0 |      0 |          0 |
+|     row[9].col[1].pe_inst   | processing_element_199 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[9].col[2].pe_inst   | processing_element_200 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[9].col[3].pe_inst   | processing_element_201 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[9].col[4].pe_inst   | processing_element_202 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[9].col[5].pe_inst   | processing_element_203 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[9].col[6].pe_inst   | processing_element_204 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[9].col[7].pe_inst   | processing_element_205 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[9].col[8].pe_inst   | processing_element_206 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|     row[9].col[9].pe_inst   | processing_element_207 |         97 |         97 |       0 |    0 |    80 |      0 |      0 |          0 |
+|   u_threshold_filter        |       threshold_filter |         74 |         74 |       0 |    0 |   147 |      0 |      0 |          0 |
+|   u_weight_buf              |          weight_buffer |       2346 |       2250 |      96 |    0 |  1589 |      0 |      0 |          0 |
++-----------------------------+------------------------+------------+------------+---------+------+-------+--------+--------+------------+
+
+

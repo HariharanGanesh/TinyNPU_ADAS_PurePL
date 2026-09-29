@@ -9,9 +9,9 @@ To achieve an optimal balance of resources on the constrained Zynq-7020, the syn
 **Table 1: Post-Implementation Resource Utilization**
 | Resource | Used | Available | Utilization |
 |---|---|---|---|
-| LUTs | 35,465 | 53,200 | 66.66% |
+| LUTs | 37,148 | 53,200 | 69.82% |
 | DSP Blocks | 150 | 220 | 68.18% |
-| Flip-Flops | 46,497 | 106,400 | 43.70% |
+| Flip-Flops | 54,219 | 106,400 | 50.95% |
 | BRAM (RAMB36) | 2 | 140 | 1.42% |
 
 The utilization report confirms that the Depthwise Engine consumes 84 DSP blocks and the Requantization Unit consumes 56 DSP blocks, with the remainder used for control logic. 
