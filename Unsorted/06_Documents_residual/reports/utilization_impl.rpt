@@ -1,0 +1,51 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
+| Date         : Wed Aug  5 23:33:57 2026
+| Host         : TMP215-54 running 64-bit major release  (build 9200)
+| Command      : report_utilization -hierarchical -file ./synth_out/utilization_impl.rpt
+| Design       : tinynpu_top
+| Device       : xc7z020clg400-1
+| Speed File   : -1
+| Design State : Routed
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Utilization Design Information
+
+Table of Contents
+-----------------
+1. Utilization by Hierarchy
+
+1. Utilization by Hierarchy
+---------------------------
+
++----------------------------+---------------------+------------+------------+---------+------+-------+--------+--------+------------+
+|          Instance          |        Module       | Total LUTs | Logic LUTs | LUTRAMs | SRLs |  FFs  | RAMB36 | RAMB18 | DSP Blocks |
++----------------------------+---------------------+------------+------------+---------+------+-------+--------+--------+------------+
+| tinynpu_top                |               (top) |       9095 |       7846 |    1120 |  129 | 16535 |      0 |      0 |        136 |
+|   (tinynpu_top)            |               (top) |          0 |          0 |       0 |    0 |    25 |      0 |      0 |          0 |
+|   gen_act_buf[0].u_act_buf |   activation_buffer |         64 |         16 |      48 |    0 |    11 |      0 |      0 |          0 |
+|   gen_act_buf[1].u_act_buf | activation_buffer_0 |         63 |         15 |      48 |    0 |    11 |      0 |      0 |          0 |
+|   gen_act_buf[2].u_act_buf | activation_buffer_1 |         63 |         15 |      48 |    0 |    11 |      0 |      0 |          0 |
+|   gen_act_buf[3].u_act_buf | activation_buffer_2 |         63 |         15 |      48 |    0 |    11 |      0 |      0 |          0 |
+|   gen_act_buf[4].u_act_buf | activation_buffer_3 |         63 |         15 |      48 |    0 |    11 |      0 |      0 |          0 |
+|   gen_act_buf[5].u_act_buf | activation_buffer_4 |         61 |         13 |      48 |    0 |     9 |      0 |      0 |          0 |
+|   gen_act_buf[6].u_act_buf | activation_buffer_5 |         61 |         13 |      48 |    0 |     9 |      0 |      0 |          0 |
+|   gen_act_buf[7].u_act_buf | activation_buffer_6 |         63 |         15 |      48 |    0 |    11 |      0 |      0 |          0 |
+|   u_axis_sink              |           axis_sink |        142 |        142 |       0 |    0 |    76 |      0 |      0 |          0 |
+|   u_axis_src               |         axis_source |         48 |         48 |       0 |    0 |    84 |      0 |      0 |          0 |
+|   u_csr                    |     axi4_lite_slave |        699 |        699 |       0 |    0 |   493 |      0 |      0 |          0 |
+|   u_ctrl                   |      npu_controller |        207 |        207 |       0 |    0 |   290 |      0 |      0 |          2 |
+|   u_dma                    |      dma_controller |         32 |         32 |       0 |    0 |   128 |      0 |      0 |          0 |
+|   u_dw                     |      dw_line_buffer |       3644 |       3644 |       0 |    0 | 12421 |      0 |      0 |         54 |
+|   u_out_buf                |       output_buffer |        867 |        179 |     688 |    0 |    54 |      0 |      0 |          0 |
+|   u_pooling                |        pooling_unit |        103 |        103 |       0 |    0 |    49 |      0 |      0 |          0 |
+|   u_requant                | requantization_unit |       1834 |       1834 |       0 |    0 |   464 |      0 |      0 |         24 |
+|   u_systolic               |      systolic_array |       1083 |        954 |       0 |  129 |  1746 |      0 |      0 |         48 |
+|     (u_systolic)           |      systolic_array |        194 |         65 |       0 |  129 |   392 |      0 |      0 |          0 |
+|   u_threshold_filter       |    threshold_filter |          0 |          0 |       0 |    0 |    65 |      0 |      0 |          0 |
+|   u_weight_buf             |       weight_buffer |        101 |         53 |      48 |    0 |   481 |      0 |      0 |          0 |
++----------------------------+---------------------+------------+------------+---------+------+-------+--------+--------+------------+
+* Note: The sum of lower-level cells may be larger than their parent cells total, due to cross-hierarchy LUT combining
+
+

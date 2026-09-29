@@ -1,48 +1,21 @@
-# Ignore all scripts in the root directory by default (many are auto-generated or temporary)
-/*.tcl
-/*.py
-/*.bat
-/*.sh
-
-# Exceptions (if you have standard ones, list them below)
-!run_adas_tb.bat
-
-# Ignore old/irrelevant project workspaces and hackathon directories
-/ADAS_Zonal_Controller/
-/AI models/
-/cit hackathon/
-/Embrix Hackathon/
-/jagan/
-/ml/
-/npu200jb/
-/npu200jpmax/
-/Polarfire_FPGA_Design_Contest/
-/RISCV_ADAS_NPU300/
-/tinynpu200_ip_packager/
-/tinynpu_ip_viewer/
-/vivado_2k200j_proj/
-/vivado_hw_test_proj/
-/vivado_npu200j_green_proj/
-/vivado_npu200j_proj/
-/test_impl/
-/test_sim/
-/sim_test/
-/Project_Documents/
-/Repository_Index/
-/Versions/
-/Vivado/
-
-# Ignore Vivado artifacts in root
-/*.log
-/*.jou
-/*.str
-/*.xpr
-/.Xil/
-/xsim.dir/
-
-# Ignore cache directories inside the main project
-/RISCV_ADAS_PURE_PL/.Xil/
-/RISCV_ADAS_PURE_PL/RISCV_ADAS_PURE_PL.cache/
-/RISCV_ADAS_PURE_PL/RISCV_ADAS_PURE_PL.hw/
-/RISCV_ADAS_PURE_PL/RISCV_ADAS_PURE_PL.sim/
-/RISCV_ADAS_PURE_PL/RISCV_ADAS_PURE_PL.runs/*/runme.log
+*.runs/
+*.gen/
+*.sim/
+*.cache/
+*.hw/
+*.ip_user_files/
+*.jou
+*.log
+*.pb
+*.wdb
+*.dir/
+*.str
+.Xil/
+temp_sim*/
+temp_*/
+riscv-toolchain/
+Temp/
+Build/
+Deploy/
+Exports/
+Logs/

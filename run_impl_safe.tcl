@@ -1,0 +1,5 @@
+open_project RISCV_ADAS_PURE_PL/RISCV_ADAS_PURE_PL.xpr
+reset_run npu_system_axi_bram_ctrl_0_0_synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+wait_on_run impl_1
+exit

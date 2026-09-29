@@ -1241,7 +1241,7 @@
             "value": "0"
           },
           "M_TDATA_NUM_BYTES": {
-            "value": "4"
+            "value": "3"
           },
           "M_TDEST_WIDTH": {
             "value": "0"
@@ -1326,7 +1326,7 @@
             "value": "0"
           },
           "M_TDATA_NUM_BYTES": {
-            "value": "3"
+            "value": "4"
           },
           "M_TDEST_WIDTH": {
             "value": "0"

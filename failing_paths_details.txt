@@ -1,0 +1,271 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
+| Date         : Sun Sep 27 12:45:03 2026
+| Host         : TMP215-54 running 64-bit major release  (build 9200)
+| Command      : report_timing -max_paths 3 -file {D:/Final year project/failing_paths_details.txt}
+| Design       : npu_system_wrapper
+| Device       : 7z020-clg400
+| Speed File   : -1  PRODUCTION 1.12 2019-11-22
+| Design State : Routed
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (VIOLATED) :        -0.650ns  (required time - arrival time)
+  Source:                 npu_system_i/tinynpu_0/inst/u_dma/bytes_transferred_reg[3]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_npu_system_clk_wiz_0_0  {rise@0.000ns fall@4.000ns period=8.000ns})
+  Destination:            npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state_reg[1]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_npu_system_clk_wiz_0_0_1  {rise@0.000ns fall@4.000ns period=8.000ns})
+  Path Group:             clk_out1_npu_system_clk_wiz_0_0_1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            8.000ns  (clk_out1_npu_system_clk_wiz_0_0_1 rise@8.000ns - clk_out1_npu_system_clk_wiz_0_0 rise@0.000ns)
+  Data Path Delay:        8.483ns  (logic 2.123ns (25.027%)  route 6.360ns (74.973%))
+  Logic Levels:           7  (CARRY4=2 LUT2=1 LUT5=1 LUT6=3)
+  Clock Path Skew:        -0.127ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    1.112ns = ( 9.112 - 8.000 ) 
+    Source Clock Delay      (SCD):    2.205ns
+    Clock Pessimism Removal (CPR):    0.966ns
+  Clock Uncertainty:      0.069ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.119ns
+    Phase Error              (PE):    0.000ns
+  Clock Domain Crossing:  Inter clock paths are considered valid unless explicitly excluded by timing constraints such as set_clock_groups or set_false_path.
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_npu_system_clk_wiz_0_0 rise edge)
+                                                      0.000     0.000 r  
+    H16                                               0.000     0.000 r  sysclk (IN)
+                         net (fo=0)                   0.000     0.000    npu_system_i/clk_wiz_0/inst/clk_in1
+    H16                  IBUF (Prop_ibuf_I_O)         1.451     1.451 r  npu_system_i/clk_wiz_0/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.285     2.736    npu_system_i/clk_wiz_0/inst/clk_in1_npu_system_clk_wiz_0_0
+    MMCME2_ADV_X1Y2      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.759    -5.023 r  npu_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           2.206    -2.817    npu_system_i/clk_wiz_0/inst/clk_out1_npu_system_clk_wiz_0_0
+    BUFGCTRL_X0Y17       BUFG (Prop_bufg_I_O)         0.101    -2.716 r  npu_system_i/clk_wiz_0/inst/clkout1_buf/O
+                         net (fo=5305, routed)        2.197    -0.519    npu_system_i/tinynpu_0/inst/u_icg_dma/aclk
+    SLICE_X50Y46         LUT2 (Prop_lut2_I0_O)        0.124    -0.395 r  npu_system_i/tinynpu_0/inst/u_icg_dma/m_axi_wlast_i_2/O
+                         net (fo=1, routed)           0.716     0.321    npu_system_i/tinynpu_0/inst/u_icg_dma/CLK
+    BUFGCTRL_X0Y4        BUFG (Prop_bufg_I_O)         0.101     0.422 r  npu_system_i/tinynpu_0/inst/u_icg_dma/CLK_BUFG_inst/O
+                         net (fo=42, routed)          1.783     2.205    npu_system_i/tinynpu_0/inst/u_dma/CLK
+    SLICE_X95Y62         FDRE                                         r  npu_system_i/tinynpu_0/inst/u_dma/bytes_transferred_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X95Y62         FDRE (Prop_fdre_C_Q)         0.419     2.624 r  npu_system_i/tinynpu_0/inst/u_dma/bytes_transferred_reg[3]/Q
+                         net (fo=3, routed)           0.793     3.417    npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_wlast_reg_i_4_0[3]
+    SLICE_X97Y62         LUT6 (Prop_lut6_I4_O)        0.296     3.713 r  npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_wlast_i_23/O
+                         net (fo=1, routed)           0.000     3.713    npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_wlast_i_23_n_0
+    SLICE_X97Y62         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     4.263 r  npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_wlast_reg_i_13/CO[3]
+                         net (fo=1, routed)           0.000     4.263    npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_wlast_reg_i_13_n_0
+    SLICE_X97Y63         CARRY4 (Prop_carry4_CI_CO[1])
+                                                      0.157     4.420 r  npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_wlast_reg_i_7/CO[1]
+                         net (fo=6, routed)           1.112     5.532    npu_system_i/tinynpu_0/inst/u_ctrl/CO[0]
+    SLICE_X88Y66         LUT2 (Prop_lut2_I1_O)        0.329     5.861 r  npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_rready_i_3/O
+                         net (fo=1, routed)           1.027     6.888    npu_system_i/tinynpu_0/inst/u_dma/m_axi_rready_reg_0
+    SLICE_X88Y66         LUT6 (Prop_lut6_I4_O)        0.124     7.012 r  npu_system_i/tinynpu_0/inst/u_dma/m_axi_rready_i_2/O
+                         net (fo=2, routed)           1.448     8.459    npu_system_i/tinynpu_0/inst/u_dma/m_axi_rready_i_2_n_0
+    SLICE_X88Y66         LUT6 (Prop_lut6_I5_O)        0.124     8.583 r  npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state[2]_i_2/O
+                         net (fo=3, routed)           1.981    10.564    npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state[2]_i_2_n_0
+    SLICE_X87Y66         LUT5 (Prop_lut5_I0_O)        0.124    10.688 r  npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state[1]_i_1__1/O
+                         net (fo=1, routed)           0.000    10.688    npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state[1]_i_1__1_n_0
+    SLICE_X87Y66         FDRE                                         r  npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state_reg[1]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_npu_system_clk_wiz_0_0_1 rise edge)
+                                                      8.000     8.000 r  
+    H16                                               0.000     8.000 r  sysclk (IN)
+                         net (fo=0)                   0.000     8.000    npu_system_i/clk_wiz_0/inst/clk_in1
+    H16                  IBUF (Prop_ibuf_I_O)         1.380     9.380 r  npu_system_i/clk_wiz_0/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.162    10.542    npu_system_i/clk_wiz_0/inst/clk_in1_npu_system_clk_wiz_0_0
+    MMCME2_ADV_X1Y2      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.814     2.728 r  npu_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           2.012     4.740    npu_system_i/clk_wiz_0/inst/clk_out1_npu_system_clk_wiz_0_0
+    BUFGCTRL_X0Y17       BUFG (Prop_bufg_I_O)         0.091     4.831 r  npu_system_i/clk_wiz_0/inst/clkout1_buf/O
+                         net (fo=5305, routed)        1.921     6.752    npu_system_i/tinynpu_0/inst/u_icg_dma/aclk
+    SLICE_X50Y46         LUT2 (Prop_lut2_I0_O)        0.100     6.852 r  npu_system_i/tinynpu_0/inst/u_icg_dma/m_axi_wlast_i_2/O
+                         net (fo=1, routed)           0.627     7.479    npu_system_i/tinynpu_0/inst/u_icg_dma/CLK
+    BUFGCTRL_X0Y4        BUFG (Prop_bufg_I_O)         0.091     7.570 r  npu_system_i/tinynpu_0/inst/u_icg_dma/CLK_BUFG_inst/O
+                         net (fo=42, routed)          1.542     9.112    npu_system_i/tinynpu_0/inst/u_dma/CLK
+    SLICE_X87Y66         FDRE                                         r  npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state_reg[1]/C
+                         clock pessimism              0.966    10.078    
+                         clock uncertainty           -0.069    10.009    
+    SLICE_X87Y66         FDRE (Setup_fdre_C_D)        0.029    10.038    npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state_reg[1]
+  -------------------------------------------------------------------
+                         required time                         10.038    
+                         arrival time                         -10.688    
+  -------------------------------------------------------------------
+                         slack                                 -0.650    
+
+Slack (VIOLATED) :        -0.650ns  (required time - arrival time)
+  Source:                 npu_system_i/tinynpu_0/inst/u_dma/bytes_transferred_reg[3]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_npu_system_clk_wiz_0_0  {rise@0.000ns fall@4.000ns period=8.000ns})
+  Destination:            npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state_reg[1]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_npu_system_clk_wiz_0_0  {rise@0.000ns fall@4.000ns period=8.000ns})
+  Path Group:             clk_out1_npu_system_clk_wiz_0_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            8.000ns  (clk_out1_npu_system_clk_wiz_0_0 rise@8.000ns - clk_out1_npu_system_clk_wiz_0_0 rise@0.000ns)
+  Data Path Delay:        8.483ns  (logic 2.123ns (25.027%)  route 6.360ns (74.973%))
+  Logic Levels:           7  (CARRY4=2 LUT2=1 LUT5=1 LUT6=3)
+  Clock Path Skew:        -0.127ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    1.112ns = ( 9.112 - 8.000 ) 
+    Source Clock Delay      (SCD):    2.205ns
+    Clock Pessimism Removal (CPR):    0.966ns
+  Clock Uncertainty:      0.069ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.119ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_npu_system_clk_wiz_0_0 rise edge)
+                                                      0.000     0.000 r  
+    H16                                               0.000     0.000 r  sysclk (IN)
+                         net (fo=0)                   0.000     0.000    npu_system_i/clk_wiz_0/inst/clk_in1
+    H16                  IBUF (Prop_ibuf_I_O)         1.451     1.451 r  npu_system_i/clk_wiz_0/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.285     2.736    npu_system_i/clk_wiz_0/inst/clk_in1_npu_system_clk_wiz_0_0
+    MMCME2_ADV_X1Y2      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.759    -5.023 r  npu_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           2.206    -2.817    npu_system_i/clk_wiz_0/inst/clk_out1_npu_system_clk_wiz_0_0
+    BUFGCTRL_X0Y17       BUFG (Prop_bufg_I_O)         0.101    -2.716 r  npu_system_i/clk_wiz_0/inst/clkout1_buf/O
+                         net (fo=5305, routed)        2.197    -0.519    npu_system_i/tinynpu_0/inst/u_icg_dma/aclk
+    SLICE_X50Y46         LUT2 (Prop_lut2_I0_O)        0.124    -0.395 r  npu_system_i/tinynpu_0/inst/u_icg_dma/m_axi_wlast_i_2/O
+                         net (fo=1, routed)           0.716     0.321    npu_system_i/tinynpu_0/inst/u_icg_dma/CLK
+    BUFGCTRL_X0Y4        BUFG (Prop_bufg_I_O)         0.101     0.422 r  npu_system_i/tinynpu_0/inst/u_icg_dma/CLK_BUFG_inst/O
+                         net (fo=42, routed)          1.783     2.205    npu_system_i/tinynpu_0/inst/u_dma/CLK
+    SLICE_X95Y62         FDRE                                         r  npu_system_i/tinynpu_0/inst/u_dma/bytes_transferred_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X95Y62         FDRE (Prop_fdre_C_Q)         0.419     2.624 r  npu_system_i/tinynpu_0/inst/u_dma/bytes_transferred_reg[3]/Q
+                         net (fo=3, routed)           0.793     3.417    npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_wlast_reg_i_4_0[3]
+    SLICE_X97Y62         LUT6 (Prop_lut6_I4_O)        0.296     3.713 r  npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_wlast_i_23/O
+                         net (fo=1, routed)           0.000     3.713    npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_wlast_i_23_n_0
+    SLICE_X97Y62         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     4.263 r  npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_wlast_reg_i_13/CO[3]
+                         net (fo=1, routed)           0.000     4.263    npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_wlast_reg_i_13_n_0
+    SLICE_X97Y63         CARRY4 (Prop_carry4_CI_CO[1])
+                                                      0.157     4.420 r  npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_wlast_reg_i_7/CO[1]
+                         net (fo=6, routed)           1.112     5.532    npu_system_i/tinynpu_0/inst/u_ctrl/CO[0]
+    SLICE_X88Y66         LUT2 (Prop_lut2_I1_O)        0.329     5.861 r  npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_rready_i_3/O
+                         net (fo=1, routed)           1.027     6.888    npu_system_i/tinynpu_0/inst/u_dma/m_axi_rready_reg_0
+    SLICE_X88Y66         LUT6 (Prop_lut6_I4_O)        0.124     7.012 r  npu_system_i/tinynpu_0/inst/u_dma/m_axi_rready_i_2/O
+                         net (fo=2, routed)           1.448     8.459    npu_system_i/tinynpu_0/inst/u_dma/m_axi_rready_i_2_n_0
+    SLICE_X88Y66         LUT6 (Prop_lut6_I5_O)        0.124     8.583 r  npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state[2]_i_2/O
+                         net (fo=3, routed)           1.981    10.564    npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state[2]_i_2_n_0
+    SLICE_X87Y66         LUT5 (Prop_lut5_I0_O)        0.124    10.688 r  npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state[1]_i_1__1/O
+                         net (fo=1, routed)           0.000    10.688    npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state[1]_i_1__1_n_0
+    SLICE_X87Y66         FDRE                                         r  npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state_reg[1]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_npu_system_clk_wiz_0_0 rise edge)
+                                                      8.000     8.000 r  
+    H16                                               0.000     8.000 r  sysclk (IN)
+                         net (fo=0)                   0.000     8.000    npu_system_i/clk_wiz_0/inst/clk_in1
+    H16                  IBUF (Prop_ibuf_I_O)         1.380     9.380 r  npu_system_i/clk_wiz_0/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.162    10.542    npu_system_i/clk_wiz_0/inst/clk_in1_npu_system_clk_wiz_0_0
+    MMCME2_ADV_X1Y2      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.814     2.728 r  npu_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           2.012     4.740    npu_system_i/clk_wiz_0/inst/clk_out1_npu_system_clk_wiz_0_0
+    BUFGCTRL_X0Y17       BUFG (Prop_bufg_I_O)         0.091     4.831 r  npu_system_i/clk_wiz_0/inst/clkout1_buf/O
+                         net (fo=5305, routed)        1.921     6.752    npu_system_i/tinynpu_0/inst/u_icg_dma/aclk
+    SLICE_X50Y46         LUT2 (Prop_lut2_I0_O)        0.100     6.852 r  npu_system_i/tinynpu_0/inst/u_icg_dma/m_axi_wlast_i_2/O
+                         net (fo=1, routed)           0.627     7.479    npu_system_i/tinynpu_0/inst/u_icg_dma/CLK
+    BUFGCTRL_X0Y4        BUFG (Prop_bufg_I_O)         0.091     7.570 r  npu_system_i/tinynpu_0/inst/u_icg_dma/CLK_BUFG_inst/O
+                         net (fo=42, routed)          1.542     9.112    npu_system_i/tinynpu_0/inst/u_dma/CLK
+    SLICE_X87Y66         FDRE                                         r  npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state_reg[1]/C
+                         clock pessimism              0.966    10.078    
+                         clock uncertainty           -0.069    10.009    
+    SLICE_X87Y66         FDRE (Setup_fdre_C_D)        0.029    10.038    npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state_reg[1]
+  -------------------------------------------------------------------
+                         required time                         10.038    
+                         arrival time                         -10.688    
+  -------------------------------------------------------------------
+                         slack                                 -0.650    
+
+Slack (VIOLATED) :        -0.553ns  (required time - arrival time)
+  Source:                 npu_system_i/tinynpu_0/inst/u_dma/bytes_transferred_reg[3]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_npu_system_clk_wiz_0_0  {rise@0.000ns fall@4.000ns period=8.000ns})
+  Destination:            npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state_reg[0]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_npu_system_clk_wiz_0_0_1  {rise@0.000ns fall@4.000ns period=8.000ns})
+  Path Group:             clk_out1_npu_system_clk_wiz_0_0_1
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            8.000ns  (clk_out1_npu_system_clk_wiz_0_0_1 rise@8.000ns - clk_out1_npu_system_clk_wiz_0_0 rise@0.000ns)
+  Data Path Delay:        8.386ns  (logic 2.123ns (25.318%)  route 6.263ns (74.682%))
+  Logic Levels:           7  (CARRY4=2 LUT2=1 LUT5=1 LUT6=3)
+  Clock Path Skew:        -0.127ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    1.112ns = ( 9.112 - 8.000 ) 
+    Source Clock Delay      (SCD):    2.205ns
+    Clock Pessimism Removal (CPR):    0.966ns
+  Clock Uncertainty:      0.069ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.119ns
+    Phase Error              (PE):    0.000ns
+  Clock Domain Crossing:  Inter clock paths are considered valid unless explicitly excluded by timing constraints such as set_clock_groups or set_false_path.
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_npu_system_clk_wiz_0_0 rise edge)
+                                                      0.000     0.000 r  
+    H16                                               0.000     0.000 r  sysclk (IN)
+                         net (fo=0)                   0.000     0.000    npu_system_i/clk_wiz_0/inst/clk_in1
+    H16                  IBUF (Prop_ibuf_I_O)         1.451     1.451 r  npu_system_i/clk_wiz_0/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.285     2.736    npu_system_i/clk_wiz_0/inst/clk_in1_npu_system_clk_wiz_0_0
+    MMCME2_ADV_X1Y2      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.759    -5.023 r  npu_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           2.206    -2.817    npu_system_i/clk_wiz_0/inst/clk_out1_npu_system_clk_wiz_0_0
+    BUFGCTRL_X0Y17       BUFG (Prop_bufg_I_O)         0.101    -2.716 r  npu_system_i/clk_wiz_0/inst/clkout1_buf/O
+                         net (fo=5305, routed)        2.197    -0.519    npu_system_i/tinynpu_0/inst/u_icg_dma/aclk
+    SLICE_X50Y46         LUT2 (Prop_lut2_I0_O)        0.124    -0.395 r  npu_system_i/tinynpu_0/inst/u_icg_dma/m_axi_wlast_i_2/O
+                         net (fo=1, routed)           0.716     0.321    npu_system_i/tinynpu_0/inst/u_icg_dma/CLK
+    BUFGCTRL_X0Y4        BUFG (Prop_bufg_I_O)         0.101     0.422 r  npu_system_i/tinynpu_0/inst/u_icg_dma/CLK_BUFG_inst/O
+                         net (fo=42, routed)          1.783     2.205    npu_system_i/tinynpu_0/inst/u_dma/CLK
+    SLICE_X95Y62         FDRE                                         r  npu_system_i/tinynpu_0/inst/u_dma/bytes_transferred_reg[3]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X95Y62         FDRE (Prop_fdre_C_Q)         0.419     2.624 r  npu_system_i/tinynpu_0/inst/u_dma/bytes_transferred_reg[3]/Q
+                         net (fo=3, routed)           0.793     3.417    npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_wlast_reg_i_4_0[3]
+    SLICE_X97Y62         LUT6 (Prop_lut6_I4_O)        0.296     3.713 r  npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_wlast_i_23/O
+                         net (fo=1, routed)           0.000     3.713    npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_wlast_i_23_n_0
+    SLICE_X97Y62         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     4.263 r  npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_wlast_reg_i_13/CO[3]
+                         net (fo=1, routed)           0.000     4.263    npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_wlast_reg_i_13_n_0
+    SLICE_X97Y63         CARRY4 (Prop_carry4_CI_CO[1])
+                                                      0.157     4.420 r  npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_wlast_reg_i_7/CO[1]
+                         net (fo=6, routed)           1.112     5.532    npu_system_i/tinynpu_0/inst/u_ctrl/CO[0]
+    SLICE_X88Y66         LUT2 (Prop_lut2_I1_O)        0.329     5.861 r  npu_system_i/tinynpu_0/inst/u_ctrl/m_axi_rready_i_3/O
+                         net (fo=1, routed)           1.027     6.888    npu_system_i/tinynpu_0/inst/u_dma/m_axi_rready_reg_0
+    SLICE_X88Y66         LUT6 (Prop_lut6_I4_O)        0.124     7.012 r  npu_system_i/tinynpu_0/inst/u_dma/m_axi_rready_i_2/O
+                         net (fo=2, routed)           1.448     8.459    npu_system_i/tinynpu_0/inst/u_dma/m_axi_rready_i_2_n_0
+    SLICE_X88Y66         LUT6 (Prop_lut6_I5_O)        0.124     8.583 r  npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state[2]_i_2/O
+                         net (fo=3, routed)           1.884    10.467    npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state[2]_i_2_n_0
+    SLICE_X88Y66         LUT5 (Prop_lut5_I0_O)        0.124    10.591 r  npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state[0]_i_1__1/O
+                         net (fo=1, routed)           0.000    10.591    npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state[0]_i_1__1_n_0
+    SLICE_X88Y66         FDRE                                         r  npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state_reg[0]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_npu_system_clk_wiz_0_0_1 rise edge)
+                                                      8.000     8.000 r  
+    H16                                               0.000     8.000 r  sysclk (IN)
+                         net (fo=0)                   0.000     8.000    npu_system_i/clk_wiz_0/inst/clk_in1
+    H16                  IBUF (Prop_ibuf_I_O)         1.380     9.380 r  npu_system_i/clk_wiz_0/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.162    10.542    npu_system_i/clk_wiz_0/inst/clk_in1_npu_system_clk_wiz_0_0
+    MMCME2_ADV_X1Y2      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.814     2.728 r  npu_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           2.012     4.740    npu_system_i/clk_wiz_0/inst/clk_out1_npu_system_clk_wiz_0_0
+    BUFGCTRL_X0Y17       BUFG (Prop_bufg_I_O)         0.091     4.831 r  npu_system_i/clk_wiz_0/inst/clkout1_buf/O
+                         net (fo=5305, routed)        1.921     6.752    npu_system_i/tinynpu_0/inst/u_icg_dma/aclk
+    SLICE_X50Y46         LUT2 (Prop_lut2_I0_O)        0.100     6.852 r  npu_system_i/tinynpu_0/inst/u_icg_dma/m_axi_wlast_i_2/O
+                         net (fo=1, routed)           0.627     7.479    npu_system_i/tinynpu_0/inst/u_icg_dma/CLK
+    BUFGCTRL_X0Y4        BUFG (Prop_bufg_I_O)         0.091     7.570 r  npu_system_i/tinynpu_0/inst/u_icg_dma/CLK_BUFG_inst/O
+                         net (fo=42, routed)          1.542     9.112    npu_system_i/tinynpu_0/inst/u_dma/CLK
+    SLICE_X88Y66         FDRE                                         r  npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state_reg[0]/C
+                         clock pessimism              0.966    10.078    
+                         clock uncertainty           -0.069    10.009    
+    SLICE_X88Y66         FDRE (Setup_fdre_C_D)        0.029    10.038    npu_system_i/tinynpu_0/inst/u_dma/FSM_sequential_state_reg[0]
+  -------------------------------------------------------------------
+                         required time                         10.038    
+                         arrival time                         -10.591    
+  -------------------------------------------------------------------
+                         slack                                 -0.553    
+
+
+
+

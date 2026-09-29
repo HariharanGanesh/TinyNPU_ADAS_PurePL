@@ -1,0 +1,6 @@
+open_project RISCV_ADAS_PURE_PL/RISCV_ADAS_PURE_PL.xpr
+open_run impl_1
+report_utilization -file current_utilization.txt
+report_timing_summary -file current_timing.txt
+report_power -file current_power.txt
+close_project

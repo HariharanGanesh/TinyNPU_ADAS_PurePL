@@ -64,8 +64,8 @@ module dw_line_buffer #(
 
     // Line buffers: two rows deep, MAX_WIDTH wide, NUM_CHANNELS parallel
     // row_d1 = delayed by 1 row, row_d2 = delayed by 2 rows
-    reg signed [DATA_WIDTH-1:0] row_d1 [0:NUM_CHANNELS-1][0:MAX_WIDTH-1];
-    reg signed [DATA_WIDTH-1:0] row_d2 [0:NUM_CHANNELS-1][0:MAX_WIDTH-1];
+    (* ram_style = "block" *) reg signed [DATA_WIDTH-1:0] row_d1 [0:NUM_CHANNELS-1][0:MAX_WIDTH-1];
+    (* ram_style = "block" *) reg signed [DATA_WIDTH-1:0] row_d2 [0:NUM_CHANNELS-1][0:MAX_WIDTH-1];
 
     // Column pointer
     reg [7:0] col_ptr;

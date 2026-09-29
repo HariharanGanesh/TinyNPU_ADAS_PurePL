@@ -76,9 +76,9 @@ module npu_controller #(
     output reg                          act_buf_swap,
 
     // Systolic Array Control
-    output reg                          array_en,
-    output reg                          array_psum_clear,
-    output reg                          array_weight_load,
+    (* max_fanout = 32 *) output reg                          array_en,
+    (* max_fanout = 32 *) output reg                          array_psum_clear,
+    (* max_fanout = 32 *) output reg                          array_weight_load,
 
     // Zero-Padding: forces array inputs to zero when asserted
     output reg                          pad_active,

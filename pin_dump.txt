@@ -1,0 +1,2 @@
+/clk_wiz_0/clk_out2
+/dvi2rgb_0/RefClk

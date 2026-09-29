@@ -6,10 +6,8 @@ module tinynpu_icg (
     output wire clk_out
 );
 
-    BUFGCE u_bufgce (
-        .I(clk_in),
-        .CE(en),
-        .O(clk_out)
-    );
+    // BUFGCE removed to fix hold timing violations caused by clock skew.
+    // In FPGAs, clock gating is best handled by CE pins on registers.
+    assign clk_out = clk_in;
 
 endmodule

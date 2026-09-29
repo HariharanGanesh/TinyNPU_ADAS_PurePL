@@ -1,0 +1,47 @@
+--- src/npu_controller.v
++++ src/npu_controller.v
+@@ -107,6 +107,7 @@
+                     tile_y      <= 0;
+                     if (csr_start) begin
++                        $display("DEBUG_NPU: STARTING INFERENCE");
+                         status_idle       <= 1'b0;
+                         status_busy       <= 1'b1;
+@@ -126,6 +127,7 @@
+                 STATE_LOAD_WGT: begin
+                     if (dma_wgt_load_done) begin
++                        $display("DEBUG_NPU: WGT LOAD DONE");
+                         dma_transfer_size  <= csr_input_width * csr_input_height;
+                         dma_start_load_act <= 1'b1;
+@@ -134,6 +136,7 @@
+                 STATE_LOAD_ACT: begin
+                     if (dma_act_load_done) begin
++                        $display("DEBUG_NPU: ACT LOAD DONE");
+                         act_buf_swap      <= 1'b1;
+                         wgt_buf_load_tile <= 1'b1;
+@@ -155,6 +158,7 @@
+                     if (compute_cycles + 1'b1 < total_compute_steps) begin
+                         compute_cycles  <= compute_cycles + 1'b1;
+                         act_buf_rd_addr <= act_buf_rd_addr + 1'b1;
+                         act_buf_rd_en   <= 1'b1;
+                     end else begin
++                        $display("DEBUG_NPU: COMPUTE DONE");
+                         act_buf_rd_en <= 1'b0;
+                         drain_cycles  <= 0;
+@@ -172,6 +176,7 @@
+                         dma_transfer_size   <= csr_out_channels;
+                         dma_start_store_out <= 1'b1;
+                         state               <= STATE_STORE_OUT;
++                        $display("DEBUG_NPU: DRAIN DONE, STARTING OUT STORE");
+                     end
+                 end
+ 
+                 STATE_STORE_OUT: begin
+                     if (dma_out_store_done) begin
++                        $display("DEBUG_NPU: OUT STORE DONE");
+                         if (tile_x + 16'd1 == csr_num_tiles_x) begin
+                             tile_x <= 0;
+@@ -194,6 +199,7 @@
+                 STATE_DONE: begin
++                    $display("DEBUG_NPU: ALL TILES DONE");
+                     status_busy <= 1'b0;
+                     status_done <= 1'b1;

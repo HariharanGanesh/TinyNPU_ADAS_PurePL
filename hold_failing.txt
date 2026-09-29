@@ -1,0 +1,212 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
+| Date         : Sun Sep 27 14:16:55 2026
+| Host         : TMP215-54 running 64-bit major release  (build 9200)
+| Command      : report_timing -delay_type min -max_paths 3 -file {D:/Final year project/hold_failing.txt}
+| Design       : npu_system_wrapper
+| Device       : 7z020-clg400
+| Speed File   : -1  PRODUCTION 1.12 2019-11-22
+| Design State : Physopt postRoute
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (VIOLATED) :        -0.297ns  (arrival time - required time)
+  Source:                 npu_system_i/tinynpu_0/inst/u_weight_buf/weight_data_reg[13][5][5]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_npu_system_clk_wiz_0_0  {rise@0.000ns fall@4.000ns period=8.000ns})
+  Destination:            npu_system_i/tinynpu_0/inst/u_systolic/row[13].col[5].pe_inst/weight_reg_reg[5]/D
+                            (rising edge-triggered cell FDCE clocked by clk_out1_npu_system_clk_wiz_0_0_1  {rise@0.000ns fall@4.000ns period=8.000ns})
+  Path Group:             clk_out1_npu_system_clk_wiz_0_0_1
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (clk_out1_npu_system_clk_wiz_0_0_1 rise@0.000ns - clk_out1_npu_system_clk_wiz_0_0 rise@0.000ns)
+  Data Path Delay:        3.094ns  (logic 0.367ns (11.862%)  route 2.727ns (88.138%))
+  Logic Levels:           0  
+  Clock Path Skew:        3.126ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.106ns
+    Source Clock Delay      (SCD):    -1.473ns
+    Clock Pessimism Removal (CPR):    0.452ns
+  Clock Uncertainty:      0.069ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.119ns
+    Phase Error              (PE):    0.000ns
+  Clock Domain Crossing:  Inter clock paths are considered valid unless explicitly excluded by timing constraints such as set_clock_groups or set_false_path.
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_npu_system_clk_wiz_0_0 rise edge)
+                                                      0.000     0.000 r  
+    H16                                               0.000     0.000 r  sysclk (IN)
+                         net (fo=0)                   0.000     0.000    npu_system_i/clk_wiz_0/inst/clk_in1
+    H16                  IBUF (Prop_ibuf_I_O)         1.380     1.380 r  npu_system_i/clk_wiz_0/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.162     2.542    npu_system_i/clk_wiz_0/inst/clk_in1_npu_system_clk_wiz_0_0
+    MMCME2_ADV_X1Y2      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.814    -5.272 r  npu_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           2.012    -3.260    npu_system_i/clk_wiz_0/inst/clk_out1_npu_system_clk_wiz_0_0
+    BUFGCTRL_X0Y17       BUFG (Prop_bufg_I_O)         0.091    -3.169 r  npu_system_i/clk_wiz_0/inst/clkout1_buf/O
+                         net (fo=5308, routed)        1.696    -1.473    npu_system_i/tinynpu_0/inst/u_weight_buf/aclk
+    SLICE_X57Y126        FDRE                                         r  npu_system_i/tinynpu_0/inst/u_weight_buf/weight_data_reg[13][5][5]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X57Y126        FDRE (Prop_fdre_C_Q)         0.367    -1.106 r  npu_system_i/tinynpu_0/inst/u_weight_buf/weight_data_reg[13][5][5]/Q
+                         net (fo=1, routed)           2.727     1.621    npu_system_i/tinynpu_0/inst/u_systolic/row[13].col[5].pe_inst/weight_data_flat[5]
+    SLICE_X56Y126        FDCE                                         r  npu_system_i/tinynpu_0/inst/u_systolic/row[13].col[5].pe_inst/weight_reg_reg[5]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_npu_system_clk_wiz_0_0_1 rise edge)
+                                                      0.000     0.000 r  
+    H16                                               0.000     0.000 r  sysclk (IN)
+                         net (fo=0)                   0.000     0.000    npu_system_i/clk_wiz_0/inst/clk_in1
+    H16                  IBUF (Prop_ibuf_I_O)         1.451     1.451 r  npu_system_i/clk_wiz_0/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.285     2.736    npu_system_i/clk_wiz_0/inst/clk_in1_npu_system_clk_wiz_0_0
+    MMCME2_ADV_X1Y2      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.759    -5.023 r  npu_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           2.206    -2.817    npu_system_i/clk_wiz_0/inst/clk_out1_npu_system_clk_wiz_0_0
+    BUFGCTRL_X0Y17       BUFG (Prop_bufg_I_O)         0.101    -2.716 r  npu_system_i/clk_wiz_0/inst/clkout1_buf/O
+                         net (fo=5308, routed)        2.130    -0.586    npu_system_i/tinynpu_0/inst/u_icg_compute/aclk
+    SLICE_X50Y46         LUT2 (Prop_lut2_I0_O)        0.124    -0.462 r  npu_system_i/tinynpu_0/inst/u_icg_compute/act_out[7]_i_2/O
+                         net (fo=1, routed)           0.578     0.116    npu_system_i/tinynpu_0/inst/u_icg_compute/clk_compute
+    BUFGCTRL_X0Y2        BUFG (Prop_bufg_I_O)         0.101     0.217 r  npu_system_i/tinynpu_0/inst/u_icg_compute/clk_compute_BUFG_inst/O
+                         net (fo=14854, routed)       1.889     2.106    npu_system_i/tinynpu_0/inst/u_systolic/row[13].col[5].pe_inst/clk_compute
+    SLICE_X56Y126        FDCE                                         r  npu_system_i/tinynpu_0/inst/u_systolic/row[13].col[5].pe_inst/weight_reg_reg[5]/C
+                         clock pessimism             -0.452     1.653    
+                         clock uncertainty            0.069     1.723    
+    SLICE_X56Y126        FDCE (Hold_fdce_C_D)         0.196     1.919    npu_system_i/tinynpu_0/inst/u_systolic/row[13].col[5].pe_inst/weight_reg_reg[5]
+  -------------------------------------------------------------------
+                         required time                         -1.919    
+                         arrival time                           1.621    
+  -------------------------------------------------------------------
+                         slack                                 -0.297    
+
+Slack (VIOLATED) :        -0.297ns  (arrival time - required time)
+  Source:                 npu_system_i/tinynpu_0/inst/u_weight_buf/weight_data_reg[13][5][5]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_npu_system_clk_wiz_0_0_1  {rise@0.000ns fall@4.000ns period=8.000ns})
+  Destination:            npu_system_i/tinynpu_0/inst/u_systolic/row[13].col[5].pe_inst/weight_reg_reg[5]/D
+                            (rising edge-triggered cell FDCE clocked by clk_out1_npu_system_clk_wiz_0_0  {rise@0.000ns fall@4.000ns period=8.000ns})
+  Path Group:             clk_out1_npu_system_clk_wiz_0_0
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (clk_out1_npu_system_clk_wiz_0_0 rise@0.000ns - clk_out1_npu_system_clk_wiz_0_0_1 rise@0.000ns)
+  Data Path Delay:        3.094ns  (logic 0.367ns (11.862%)  route 2.727ns (88.138%))
+  Logic Levels:           0  
+  Clock Path Skew:        3.126ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.106ns
+    Source Clock Delay      (SCD):    -1.473ns
+    Clock Pessimism Removal (CPR):    0.452ns
+  Clock Uncertainty:      0.069ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.119ns
+    Phase Error              (PE):    0.000ns
+  Clock Domain Crossing:  Inter clock paths are considered valid unless explicitly excluded by timing constraints such as set_clock_groups or set_false_path.
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_npu_system_clk_wiz_0_0_1 rise edge)
+                                                      0.000     0.000 r  
+    H16                                               0.000     0.000 r  sysclk (IN)
+                         net (fo=0)                   0.000     0.000    npu_system_i/clk_wiz_0/inst/clk_in1
+    H16                  IBUF (Prop_ibuf_I_O)         1.380     1.380 r  npu_system_i/clk_wiz_0/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.162     2.542    npu_system_i/clk_wiz_0/inst/clk_in1_npu_system_clk_wiz_0_0
+    MMCME2_ADV_X1Y2      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.814    -5.272 r  npu_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           2.012    -3.260    npu_system_i/clk_wiz_0/inst/clk_out1_npu_system_clk_wiz_0_0
+    BUFGCTRL_X0Y17       BUFG (Prop_bufg_I_O)         0.091    -3.169 r  npu_system_i/clk_wiz_0/inst/clkout1_buf/O
+                         net (fo=5308, routed)        1.696    -1.473    npu_system_i/tinynpu_0/inst/u_weight_buf/aclk
+    SLICE_X57Y126        FDRE                                         r  npu_system_i/tinynpu_0/inst/u_weight_buf/weight_data_reg[13][5][5]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X57Y126        FDRE (Prop_fdre_C_Q)         0.367    -1.106 r  npu_system_i/tinynpu_0/inst/u_weight_buf/weight_data_reg[13][5][5]/Q
+                         net (fo=1, routed)           2.727     1.621    npu_system_i/tinynpu_0/inst/u_systolic/row[13].col[5].pe_inst/weight_data_flat[5]
+    SLICE_X56Y126        FDCE                                         r  npu_system_i/tinynpu_0/inst/u_systolic/row[13].col[5].pe_inst/weight_reg_reg[5]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_npu_system_clk_wiz_0_0 rise edge)
+                                                      0.000     0.000 r  
+    H16                                               0.000     0.000 r  sysclk (IN)
+                         net (fo=0)                   0.000     0.000    npu_system_i/clk_wiz_0/inst/clk_in1
+    H16                  IBUF (Prop_ibuf_I_O)         1.451     1.451 r  npu_system_i/clk_wiz_0/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.285     2.736    npu_system_i/clk_wiz_0/inst/clk_in1_npu_system_clk_wiz_0_0
+    MMCME2_ADV_X1Y2      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.759    -5.023 r  npu_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           2.206    -2.817    npu_system_i/clk_wiz_0/inst/clk_out1_npu_system_clk_wiz_0_0
+    BUFGCTRL_X0Y17       BUFG (Prop_bufg_I_O)         0.101    -2.716 r  npu_system_i/clk_wiz_0/inst/clkout1_buf/O
+                         net (fo=5308, routed)        2.130    -0.586    npu_system_i/tinynpu_0/inst/u_icg_compute/aclk
+    SLICE_X50Y46         LUT2 (Prop_lut2_I0_O)        0.124    -0.462 r  npu_system_i/tinynpu_0/inst/u_icg_compute/act_out[7]_i_2/O
+                         net (fo=1, routed)           0.578     0.116    npu_system_i/tinynpu_0/inst/u_icg_compute/clk_compute
+    BUFGCTRL_X0Y2        BUFG (Prop_bufg_I_O)         0.101     0.217 r  npu_system_i/tinynpu_0/inst/u_icg_compute/clk_compute_BUFG_inst/O
+                         net (fo=14854, routed)       1.889     2.106    npu_system_i/tinynpu_0/inst/u_systolic/row[13].col[5].pe_inst/clk_compute
+    SLICE_X56Y126        FDCE                                         r  npu_system_i/tinynpu_0/inst/u_systolic/row[13].col[5].pe_inst/weight_reg_reg[5]/C
+                         clock pessimism             -0.452     1.653    
+                         clock uncertainty            0.069     1.723    
+    SLICE_X56Y126        FDCE (Hold_fdce_C_D)         0.196     1.919    npu_system_i/tinynpu_0/inst/u_systolic/row[13].col[5].pe_inst/weight_reg_reg[5]
+  -------------------------------------------------------------------
+                         required time                         -1.919    
+                         arrival time                           1.621    
+  -------------------------------------------------------------------
+                         slack                                 -0.297    
+
+Slack (VIOLATED) :        -0.297ns  (arrival time - required time)
+  Source:                 npu_system_i/tinynpu_0/inst/u_weight_buf/weight_data_reg[8][7][2]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_npu_system_clk_wiz_0_0  {rise@0.000ns fall@4.000ns period=8.000ns})
+  Destination:            npu_system_i/tinynpu_0/inst/u_systolic/row[8].col[7].pe_inst/weight_reg_reg[2]/D
+                            (rising edge-triggered cell FDCE clocked by clk_out1_npu_system_clk_wiz_0_0_1  {rise@0.000ns fall@4.000ns period=8.000ns})
+  Path Group:             clk_out1_npu_system_clk_wiz_0_0_1
+  Path Type:              Hold (Min at Slow Process Corner)
+  Requirement:            0.000ns  (clk_out1_npu_system_clk_wiz_0_0_1 rise@0.000ns - clk_out1_npu_system_clk_wiz_0_0 rise@0.000ns)
+  Data Path Delay:        3.098ns  (logic 0.367ns (11.846%)  route 2.731ns (88.154%))
+  Logic Levels:           0  
+  Clock Path Skew:        3.129ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    2.133ns
+    Source Clock Delay      (SCD):    -1.449ns
+    Clock Pessimism Removal (CPR):    0.452ns
+  Clock Uncertainty:      0.069ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.119ns
+    Phase Error              (PE):    0.000ns
+  Clock Domain Crossing:  Inter clock paths are considered valid unless explicitly excluded by timing constraints such as set_clock_groups or set_false_path.
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_npu_system_clk_wiz_0_0 rise edge)
+                                                      0.000     0.000 r  
+    H16                                               0.000     0.000 r  sysclk (IN)
+                         net (fo=0)                   0.000     0.000    npu_system_i/clk_wiz_0/inst/clk_in1
+    H16                  IBUF (Prop_ibuf_I_O)         1.380     1.380 r  npu_system_i/clk_wiz_0/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.162     2.542    npu_system_i/clk_wiz_0/inst/clk_in1_npu_system_clk_wiz_0_0
+    MMCME2_ADV_X1Y2      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.814    -5.272 r  npu_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           2.012    -3.260    npu_system_i/clk_wiz_0/inst/clk_out1_npu_system_clk_wiz_0_0
+    BUFGCTRL_X0Y17       BUFG (Prop_bufg_I_O)         0.091    -3.169 r  npu_system_i/clk_wiz_0/inst/clkout1_buf/O
+                         net (fo=5308, routed)        1.720    -1.449    npu_system_i/tinynpu_0/inst/u_weight_buf/aclk
+    SLICE_X85Y143        FDRE                                         r  npu_system_i/tinynpu_0/inst/u_weight_buf/weight_data_reg[8][7][2]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X85Y143        FDRE (Prop_fdre_C_Q)         0.367    -1.082 r  npu_system_i/tinynpu_0/inst/u_weight_buf/weight_data_reg[8][7][2]/Q
+                         net (fo=1, routed)           2.731     1.649    npu_system_i/tinynpu_0/inst/u_systolic/row[8].col[7].pe_inst/weight_data_flat[2]
+    SLICE_X84Y143        FDCE                                         r  npu_system_i/tinynpu_0/inst/u_systolic/row[8].col[7].pe_inst/weight_reg_reg[2]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_npu_system_clk_wiz_0_0_1 rise edge)
+                                                      0.000     0.000 r  
+    H16                                               0.000     0.000 r  sysclk (IN)
+                         net (fo=0)                   0.000     0.000    npu_system_i/clk_wiz_0/inst/clk_in1
+    H16                  IBUF (Prop_ibuf_I_O)         1.451     1.451 r  npu_system_i/clk_wiz_0/inst/clkin1_ibufg/O
+                         net (fo=1, routed)           1.285     2.736    npu_system_i/clk_wiz_0/inst/clk_in1_npu_system_clk_wiz_0_0
+    MMCME2_ADV_X1Y2      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
+                                                     -7.759    -5.023 r  npu_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
+                         net (fo=1, routed)           2.206    -2.817    npu_system_i/clk_wiz_0/inst/clk_out1_npu_system_clk_wiz_0_0
+    BUFGCTRL_X0Y17       BUFG (Prop_bufg_I_O)         0.101    -2.716 r  npu_system_i/clk_wiz_0/inst/clkout1_buf/O
+                         net (fo=5308, routed)        2.130    -0.586    npu_system_i/tinynpu_0/inst/u_icg_compute/aclk
+    SLICE_X50Y46         LUT2 (Prop_lut2_I0_O)        0.124    -0.462 r  npu_system_i/tinynpu_0/inst/u_icg_compute/act_out[7]_i_2/O
+                         net (fo=1, routed)           0.578     0.116    npu_system_i/tinynpu_0/inst/u_icg_compute/clk_compute
+    BUFGCTRL_X0Y2        BUFG (Prop_bufg_I_O)         0.101     0.217 r  npu_system_i/tinynpu_0/inst/u_icg_compute/clk_compute_BUFG_inst/O
+                         net (fo=14854, routed)       1.916     2.133    npu_system_i/tinynpu_0/inst/u_systolic/row[8].col[7].pe_inst/clk_compute
+    SLICE_X84Y143        FDCE                                         r  npu_system_i/tinynpu_0/inst/u_systolic/row[8].col[7].pe_inst/weight_reg_reg[2]/C
+                         clock pessimism             -0.452     1.680    
+                         clock uncertainty            0.069     1.750    
+    SLICE_X84Y143        FDCE (Hold_fdce_C_D)         0.196     1.946    npu_system_i/tinynpu_0/inst/u_systolic/row[8].col[7].pe_inst/weight_reg_reg[2]
+  -------------------------------------------------------------------
+                         required time                         -1.946    
+                         arrival time                           1.649    
+  -------------------------------------------------------------------
+                         slack                                 -0.297    
+
+
+
+

@@ -1,0 +1,2 @@
+open_project RISCV_ADAS_PURE_PL/RISCV_ADAS_PURE_PL.xpr
+report_ip_status -file ip_status_debug.txt

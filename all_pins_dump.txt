@@ -1,0 +1,44 @@
+
+-------------------------------
+Clock Pin: /clk_wiz_0/clk_in1
+ Net: /clk_in1_0_1
+   -> /clk_wiz_0/clk_in1
+
+-------------------------------
+Clock Pin: /clk_wiz_0/clk_out1
+ Net: /clk_wiz_0_clk_out1
+   -> /clk_wiz_0/clk_out1
+   -> /proc_sys_reset_0/slowest_sync_clk
+   -> /axi_mem_intercon/ACLK
+   -> /axi_mem_intercon/S00_ACLK
+   -> /axi_mem_intercon/M00_ACLK
+   -> /axi_csr_intercon/ACLK
+   -> /axi_csr_intercon/S00_ACLK
+   -> /axi_csr_intercon/M00_ACLK
+   -> /vid_in/aclk
+   -> /vid_out/aclk
+   -> /vtc_0/s_axi_aclk
+   -> /axi_mem_intercon/S01_ACLK
+   -> /axi_mem_intercon/S02_ACLK
+   -> /axi_csr_intercon/M01_ACLK
+   -> /axi_csr_intercon/M02_ACLK
+   -> /subconv_in/aclk
+   -> /subconv_out/aclk
+   -> /axi_dma_0/s_axi_lite_aclk
+   -> /axi_mem_intercon_1/M00_ACLK
+   -> /axi_dma_0/m_axi_s2mm_aclk
+   -> /axi_mem_intercon_1/S00_ACLK
+   -> /axi_mem_intercon_1/ACLK
+   -> /axis_broadcaster_0/aclk
+   -> /tinynpu_0/aclk
+   -> /jtag_axi_0/aclk
+   -> /axi_bram_ctrl_0/s_axi_aclk
+   -> /axi_bram_ctrl_1/s_axi_aclk
+   -> /axi_csr_intercon/M03_ACLK
+   -> /axi_mem_intercon_1/S01_ACLK
+
+-------------------------------
+Clock Pin: /clk_wiz_0/clk_out2
+ Net: /clk_wiz_0_clk_out2
+   -> /clk_wiz_0/clk_out2
+   -> /dvi2rgb_0/RefClk

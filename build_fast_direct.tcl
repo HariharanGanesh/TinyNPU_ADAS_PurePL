@@ -1,0 +1,8 @@
+open_project RISCV_ADAS_PURE_PL/RISCV_ADAS_PURE_PL.xpr
+synth_design -top npu_system_wrapper -part xc7z020clg400-1
+opt_design
+place_design
+phys_opt_design
+route_design
+write_bitstream -force npu_system_wrapper.bit
+exit

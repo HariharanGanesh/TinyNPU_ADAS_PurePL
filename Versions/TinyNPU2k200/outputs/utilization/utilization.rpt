@@ -1,0 +1,42 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
+| Date         : Wed Aug  5 22:48:32 2026
+| Host         : TMP215-54 running 64-bit major release  (build 9200)
+| Command      : report_utilization -hierarchical -file ./synth_out/utilization.rpt
+| Design       : tinynpu_top
+| Device       : xc7z020clg400-1
+| Speed File   : -1
+| Design State : Synthesized
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Utilization Design Information
+
+Table of Contents
+-----------------
+1. Utilization by Hierarchy
+
+1. Utilization by Hierarchy
+---------------------------
+
++----------------------+---------------------+------------+------------+---------+------+-------+--------+--------+------------+
+|       Instance       |        Module       | Total LUTs | Logic LUTs | LUTRAMs | SRLs |  FFs  | RAMB36 | RAMB18 | DSP Blocks |
++----------------------+---------------------+------------+------------+---------+------+-------+--------+--------+------------+
+| tinynpu_top          |               (top) |       8904 |       7847 |     928 |  129 | 16504 |      0 |      0 |        136 |
+|   (tinynpu_top)      |               (top) |          0 |          0 |       0 |    0 |    25 |      0 |      0 |          0 |
+|   u_axis_sink        |           axis_sink |        126 |        126 |       0 |    0 |    74 |      0 |      0 |          0 |
+|   u_axis_src         |         axis_source |         49 |         49 |       0 |    0 |    84 |      0 |      0 |          0 |
+|   u_csr              |     axi4_lite_slave |        723 |        723 |       0 |    0 |   493 |      0 |      0 |          0 |
+|   u_ctrl             |      npu_controller |        209 |        209 |       0 |    0 |   283 |      0 |      0 |          2 |
+|   u_dma              |      dma_controller |         38 |         38 |       0 |    0 |   129 |      0 |      0 |          0 |
+|   u_dw               |      dw_line_buffer |       3708 |       3708 |       0 |    0 | 12398 |      0 |      0 |         54 |
+|   u_out_buf          |       output_buffer |        875 |        187 |     688 |    0 |    54 |      0 |      0 |          0 |
+|   u_pooling          |        pooling_unit |         94 |         94 |       0 |    0 |    49 |      0 |      0 |          0 |
+|   u_requant          | requantization_unit |       1757 |       1757 |       0 |    0 |   464 |      0 |      0 |         24 |
+|   u_systolic         |      systolic_array |       1083 |        954 |       0 |  129 |  1746 |      0 |      0 |         48 |
+|     (u_systolic)     |      systolic_array |        194 |         65 |       0 |  129 |   392 |      0 |      0 |          0 |
+|   u_threshold_filter |    threshold_filter |          0 |          0 |       0 |    0 |    65 |      0 |      0 |          0 |
+|   u_weight_buf       |       weight_buffer |        123 |         75 |      48 |    0 |   481 |      0 |      0 |          0 |
++----------------------+---------------------+------------+------------+---------+------+-------+--------+--------+------------+
+
+

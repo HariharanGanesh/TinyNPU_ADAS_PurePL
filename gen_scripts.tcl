@@ -1,0 +1,5 @@
+open_project RISCV_ADAS_PURE_PL/RISCV_ADAS_PURE_PL.xpr
+reset_run synth_1
+launch_runs synth_1 -scripts_only
+launch_runs impl_1 -to_step write_bitstream -scripts_only
+exit
