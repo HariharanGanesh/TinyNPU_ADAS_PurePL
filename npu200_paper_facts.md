@@ -1,8 +1,8 @@
 # TinyNPU200 Verified Data for IEEE Papers
 
 ## 1. Architecture Details
-- **Systolic Array Dimensions**: 14 (Rows) x 8 (Cols) = 112 Processing Elements (PEs)
-- **Output Channels per Cycle**: 14 (computed spatially by duplicating 8-column psums across the 14 rows, allowing hardware-efficient mapping of Depthwise Convolution)
+- **Systolic Array Dimensions**: 14 (Rows) x 14 (Cols) = 196 Processing Elements (PEs)
+- **Output Channels per Cycle**: 14 (computed in a single pass with exact 1-to-1 spatial mapping to the Depthwise Convolution engine)
 - **Quantization**: INT8/INT32 precision natively supported.
 - **Clock Frequency**:
   - Target: 125 MHz (8.000 ns period)
@@ -13,7 +13,7 @@
   - AXI stream reads only 8-bits per 32-bit beat (sparse mapping used).
 
 ## 2. Resource Utilization (Standalone TinyNPU200 on Zynq-7020)
-- **Total LUTs**: 28,913 (54.34% of 53,200)
+- **Total LUTs**: ~35,465 (66.6% of 53,200)
 - **DSP Blocks**: 150 (68.18% of 220)
   - *Breakdown*: Depthwise Engine (84), Requantization Unit (56), Controllers (4). 
   - *Note*: Systolic array multipliers are intentionally mapped to LUTs to fit the design perfectly within the Zynq-7020 constraints.

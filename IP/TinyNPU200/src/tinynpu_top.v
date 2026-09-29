@@ -43,7 +43,7 @@ module tinynpu_top #(
     parameter SCALE_WIDTH     = 32,
     parameter SHIFT_WIDTH     = 6,
     parameter ARRAY_ROWS      = 14,   // 14 rows (balances DSP usage perfectly with DW and requant for Zynq-7020)
-    parameter ARRAY_COLS      = 8,
+    parameter ARRAY_COLS      = 14,
     parameter BUFFER_DEPTH    = 1024,
     parameter BUFFER_ADDR_WIDTH = 10,
     parameter MAX_WIDTH       = 128,
@@ -557,10 +557,27 @@ module tinynpu_top #(
     wire                              dw_psum_valid;
     wire [DATA_WIDTH*9*ARRAY_ROWS-1:0] dw_weights_flat;
 
-    assign dw_weights_flat = {
-        {(DATA_WIDTH*9*ARRAY_ROWS - DATA_WIDTH*ARRAY_ROWS*ARRAY_COLS){1'b0}},
-        weight_data_flat
-    };
+    // Dynamically pad or truncate weight_data_flat to match the 9 weights per channel needed for DW
+    generate
+        if (ARRAY_COLS >= 9) begin
+            // Extract the first 9 elements of each row. 
+            // weight_data_flat is arranged as [row][col]. We need to unpack and repack.
+            genvar r;
+            for (r = 0; r < ARRAY_ROWS; r = r + 1) begin : gen_dw_weights
+                assign dw_weights_flat[r*9*DATA_WIDTH +: 9*DATA_WIDTH] = 
+                       weight_data_flat[r*ARRAY_COLS*DATA_WIDTH +: 9*DATA_WIDTH];
+            end
+        end else begin
+            genvar r;
+            for (r = 0; r < ARRAY_ROWS; r = r + 1) begin : gen_dw_weights_pad
+                assign dw_weights_flat[r*9*DATA_WIDTH +: 9*DATA_WIDTH] = {
+                    {(9 - ARRAY_COLS)*DATA_WIDTH{1'b0}},
+                    weight_data_flat[r*ARRAY_COLS*DATA_WIDTH +: ARRAY_COLS*DATA_WIDTH]
+                };
+            end
+        end
+    endgenerate
+
 
     dw_line_buffer #(
         .DATA_WIDTH(DATA_WIDTH), .NUM_CHANNELS(ARRAY_ROWS),
