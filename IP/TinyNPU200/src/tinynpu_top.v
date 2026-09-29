@@ -129,7 +129,7 @@ module tinynpu_top #(
 
     // ADAS Detection Head BRAM Interface
     output wire                         bram_wr_en,
-    output wire [9:0]                   bram_wr_addr,
+    output wire [31:0] bram_wr_addr,
     output wire [127:0]                 bram_wr_data,
     output wire                         bram_clk,
     output wire                         bram_rst
@@ -763,6 +763,9 @@ module tinynpu_top #(
     wire        adas_valid;
     wire [2143:0] adas_data;
 
+    wire [9:0] bram_wr_addr_10bit;
+    assign bram_wr_addr = {22'd0, bram_wr_addr_10bit};
+
     adas_stream_aggregator u_adas_agg (
         .clk(clk_postproc),
         .rst_n(rst_n),
@@ -799,7 +802,7 @@ module tinynpu_top #(
         .grid_y(16'd0),
         .stride(csr_stride),
         .bram_wr_en(bram_wr_en),
-        .bram_wr_addr(bram_wr_addr),
+        .bram_wr_addr(bram_wr_addr_10bit),
         .bram_wr_data(bram_wr_data),
         .candidate_count(),
         .overflow_flag()
