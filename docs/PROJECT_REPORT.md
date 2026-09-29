@@ -323,7 +323,7 @@ Note: Full synthesis resource utilization and timing closure results are pending
 
 ## 15. Future Work
 
-- NPU300PM variant: 26x8 array (208 PEs) for higher throughput
+- NPU300PM variant: 20x8 array (160 PEs) for higher throughput
 - RISC-V + NPU integrated SoC design
 - Python/PYNQ driver for PS-side control
 - Hardware demonstration results on PYNQ-Z2

@@ -1,4 +1,4 @@
-﻿# IP Integration Guide â€” TinyNPU200
+# IP Integration Guide — TinyNPU200
 
 > Copyright (C) 2026 Hariharan Ganesh. All rights reserved.
 > **Authorization required before integration. See [ACCESS.md](../ACCESS.md).**
@@ -33,7 +33,7 @@ The following files must be present on your system:
 
 ## Step-by-Step Integration
 
-### Step 1 â€” Add IP Repository in Vivado
+### Step 1 — Add IP Repository in Vivado
 
 1. Open Vivado 2025.1
 2. In the Tools menu, select **Settings**
@@ -44,7 +44,7 @@ The following files must be present on your system:
 6. Click **OK**
 7. Vivado will detect `tinynpu_top v1.0` and add it to the catalog
 
-### Step 2 â€” Add IP to Block Design
+### Step 2 — Add IP to Block Design
 
 1. Open your Block Design
 2. Click **+** to add IP
@@ -53,7 +53,7 @@ The following files must be present on your system:
 
 Alternatively, instantiate directly in RTL (see Step 3).
 
-### Step 3 â€” RTL Instantiation
+### Step 3 — RTL Instantiation
 
 Add the following to your top-level Verilog file:
 
@@ -144,17 +144,17 @@ tinynpu_top #(
 );
 ```
 
-### Step 4 â€” Clock Connection
+### Step 4 — Clock Connection
 
 Connect `aclk` to a 125 MHz clock source.
 On PYNQ-Z2, this is typically the PS7 FCLK_CLK0 configured for 125 MHz.
 
-### Step 5 â€” Reset Connection
+### Step 5 — Reset Connection
 
 Connect `aresetn` to an active-low synchronous reset.
 On Zynq systems, use the Processor System Reset IP output `peripheral_aresetn`.
 
-### Step 6 â€” AXI Connection in Block Design
+### Step 6 — AXI Connection in Block Design
 
 Typical connections for a Zynq-based system:
 
@@ -165,18 +165,18 @@ Typical connections for a Zynq-based system:
 | `S_AXIS` | AXI4-Stream source (e.g., HDMI RX or DMA output) |
 | `M_AXIS` | AXI4-Stream sink (e.g., HDMI TX or DMA input) |
 
-### Step 7 â€” Address Map
+### Step 7 — Address Map
 
 Assign a base address to the `S_AXI` interface in Vivado Address Editor.
 The IP requires 256 bytes (32 CSR registers x 4 bytes) of address space.
 
 **Recommended base address:** `0x43C00000` (Zynq PL AXI range)
 
-### Step 8 â€” Generate Output Products
+### Step 8 — Generate Output Products
 
 Right-click the IP in Sources and select **Generate Output Products**.
 
-### Step 9 â€” Synthesize and Implement
+### Step 9 — Synthesize and Implement
 
 Run synthesis and implementation as normal. The IP uses only behavioral RTL
 with no FPGA-specific primitives in `tinynpu_top.v` or its submodules.

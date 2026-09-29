@@ -1,4 +1,4 @@
-﻿# TinyNPU200 IP Core Specification
+# TinyNPU200 IP Core Specification
 
 ## Architecture Overview
 The TinyNPU200 is an FPGA-optimized Neural Processing Unit utilizing a 2D Systolic Array (20 rows x 8 cols) for accelerating quantized neural network inference. It is designed to operate on an AXI4 memory-mapped interface for weights and configuration, and AXI4-Stream interfaces for activations and outputs.
