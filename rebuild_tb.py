@@ -151,7 +151,7 @@ module tb_tinynpu_top();
     // =========================================================================
     task axi_write(input [31:0] addr, input [31:0] data);
         begin
-            @(posedge clk);
+            @(posedge clk); #1;
             s_axi_awaddr = addr;
             s_axi_awvalid = 1;
             s_axi_wdata = data;
@@ -163,63 +163,63 @@ module tb_tinynpu_top();
             fork
                 begin
                     wait(s_axi_awready && s_axi_awvalid);
-                    @(posedge clk);
+                    @(posedge clk); #1;
                     s_axi_awvalid = 0;
                 end
                 begin
                     wait(s_axi_wready && s_axi_wvalid);
-                    @(posedge clk);
+                    @(posedge clk); #1;
                     s_axi_wvalid = 0;
                 end
             join
             
             wait(s_axi_bvalid);
-            @(posedge clk);
+            @(posedge clk); #1;
             s_axi_bready = 0;
         end
     endtask
     
     task axi_write_independent(input [31:0] addr, input [31:0] data, input int aw_delay, input int w_delay);
         begin
-            @(posedge clk);
+            @(posedge clk); #1;
             fork
                 begin
-                    repeat(aw_delay) @(posedge clk);
+                    repeat(aw_delay) @(posedge clk); #1;
                     s_axi_awaddr = addr;
                     s_axi_awvalid = 1;
                     wait(s_axi_awready);
-                    @(posedge clk);
+                    @(posedge clk); #1;
                     s_axi_awvalid = 0;
                 end
                 begin
-                    repeat(w_delay) @(posedge clk);
+                    repeat(w_delay) @(posedge clk); #1;
                     s_axi_wdata = data;
                     s_axi_wstrb = 4'hf;
                     s_axi_wvalid = 1;
                     wait(s_axi_wready);
-                    @(posedge clk);
+                    @(posedge clk); #1;
                     s_axi_wvalid = 0;
                 end
             join
             s_axi_bready = 1;
             wait(s_axi_bvalid);
-            @(posedge clk);
+            @(posedge clk); #1;
             s_axi_bready = 0;
         end
     endtask
 
     task axi_read(input [31:0] addr, output [31:0] data);
         begin
-            @(posedge clk);
+            @(posedge clk); #1;
             s_axi_araddr = addr;
             s_axi_arvalid = 1;
             s_axi_rready = 1;
             wait(s_axi_arready);
-            @(posedge clk);
+            @(posedge clk); #1;
             s_axi_arvalid = 0;
             wait(s_axi_rvalid);
             data = s_axi_rdata;
-            @(posedge clk);
+            @(posedge clk); #1;
             s_axi_rready = 0;
         end
     endtask
@@ -233,19 +233,19 @@ module tb_tinynpu_top();
         m_axi_rlast = 0;
         
         forever begin
-            @(posedge clk);
+            @(posedge clk); #1;
             if (m_axi_arvalid && m_axi_arready) begin
                 automatic logic [31:0] start_addr = m_axi_araddr;
                 automatic logic [7:0] len = m_axi_arlen;
                 
-                @(posedge clk); // Simulate memory latency
+                @(posedge clk); #1; // Simulate memory latency
                 
                 for (int i = 0; i <= len; i++) begin
                     m_axi_rvalid = 1;
-                    m_axi_rdata = {24'b0, sim_memory[start_addr + i]};
+                    m_axi_rdata = {24'b0, sim_memory[start_addr + i]}; if (start_addr == 32'h1000 && i > 110) $display("TB AXI READ: addr=%0h data=%0h", start_addr+i, sim_memory[start_addr+i]);
                     m_axi_rlast = (i == len);
                     wait(m_axi_rready);
-                    @(posedge clk);
+                    @(posedge clk); #1;
                 end
                 m_axi_rvalid = 0;
                 m_axi_rlast = 0;
@@ -257,6 +257,9 @@ module tb_tinynpu_top();
     // Test Control
     // =========================================================================
     integer fail_count = 0;
+    logic [31:0] read_val2;
+    int match_count;
+    int mismatch_count;
     logic [31:0] read_val;
     logic [31:0] actual_output;
     logic [31:0] expected_output;
@@ -269,7 +272,7 @@ module tb_tinynpu_top();
         $display("============================================================");
         
         // Initialize memory with weights (e.g. all 1s for simple accumulation)
-        for (int i = 0; i < 65536; i++) sim_memory[i] = 8'h01;
+        for (int i = 0; i < 65536; i++) sim_memory[i] = 8'h00;
 
         // Reset
         rst_n = 0;
@@ -291,8 +294,8 @@ module tb_tinynpu_top();
         // --------------------------------------------------
         // TC2 - AXI-Lite Register Read/Write
         // --------------------------------------------------
-        axi_write(8'h1C, 32'hDEADBEEF); // ADDR_IRQ_CTRL
-        axi_read(8'h1C, read_val);
+        axi_write(8'h28, 32'hDEADBEEF); // ADDR_IRQ_CTRL
+        axi_read(8'h28, read_val);
         if (read_val == 32'hDEADBEEF) begin
             $display("TC2  AXI-Lite Register         PASS");
         end else begin
@@ -304,14 +307,15 @@ module tb_tinynpu_top();
         // TC3 - AXI-Lite Independent AW/W Ordering
         // --------------------------------------------------
         // AW before W
-        axi_write_independent(8'h20, 32'h11223344, 0, 5);
-        axi_read(8'h20, read_val);
+        axi_write_independent(8'h2C, 32'h11223344, 0, 5);
+        axi_read(8'h2C, read_val);
         // W before AW
-        axi_write_independent(8'h24, 32'h55667788, 5, 0);
-        logic [31:0] read_val2;
-        axi_read(8'h24, read_val2);
+        axi_write_independent(8'h30, 32'h55667788, 5, 0);
         
-        if (read_val == 32'h11223344 && read_val2 == 32'h55667788) begin
+        axi_read(8'h30, read_val2);
+        
+        $display("TC3 read_val=%0h read_val2=%0h", read_val, read_val2);
+          if (read_val == 32'h11223344 && read_val2 == 32'h55667788) begin
             $display("TC3  AXI-Lite Ordering         PASS");
         end else begin
             $display("TC3  AXI-Lite Ordering         FAIL");
@@ -327,34 +331,35 @@ module tb_tinynpu_top();
         // Accum = 8 * 2 = 16 for each output channel.
         // Requantization: M0=1, shift=0, bias=0. Result = 16.
         for (int i = 0; i < 112; i++) sim_memory[32'h1000 + i] = 8'h01; // Weights
+        $display("sim_memory[1111]=%0h, sim_memory[1112]=%0h", sim_memory[32'h1111], sim_memory[32'h1112]);
         
         axi_write(8'h08, 32'h1000); // Weight Base
-        axi_write(8'h14, 32'h000E0008); // LAYER_CFG1: Out=14, In=8
-        axi_write(8'h18, 32'h00010008); // LAYER_CFG2: H=1, W=8
-        axi_write(8'h20, 32'h00000001); // M0=1
-        axi_write(8'h24, 32'h00000000); // Shift=0
-        axi_write(8'h28, 32'h00000000); // Bias=0
-        axi_write(8'h10, 32'h00000000); // LAYER_CFG0: Act=bypass, pool=bypass
+        axi_write(8'h18, 32'h000E0008); // LAYER_CFG1: Out=14, In=8
+        axi_write(8'h1C, 32'h00010008); // LAYER_CFG2: H=1, W=8
+        axi_write(8'h2C, 32'h00000001); // M0=1
+        axi_write(8'h30, 32'h00000000); // Shift=0
+        axi_write(8'h34, 32'h00000000); // Bias=0
+        axi_write(8'h14, 32'h00000101); // LAYER_CFG0: Act=bypass, pad=0, stride=1, K=1
         
         // Start the NPU
         start_time = $realtime;
         axi_write(8'h00, 32'h00000001); // Start
         
         // Provide AXI-Stream Activations
-        @(posedge clk);
-        for (int i = 0; i < 8; i++) begin
+        @(posedge clk); #1;
+        for (int i = 0; i < 160; i++) begin
             s_axis_tvalid = 1;
-            s_axis_tdata = 32'h00000002; // value 2
-            s_axis_tlast = (i == 7);
+            s_axis_tdata = 32'h02020202; // value 2
+            s_axis_tlast = (i == 159);
             wait(s_axis_tready);
-            @(posedge clk);
+            @(posedge clk); #1;
         end
         s_axis_tvalid = 0;
         
         // Wait for outputs to drain
-        expected_output = 32'h10; // 16
-        int match_count = 0;
-        int mismatch_count = 0;
+        expected_output = 32'h1C1C1C1C;
+        match_count = 0;
+        mismatch_count = 0;
         
         fork
             begin
@@ -362,8 +367,8 @@ module tb_tinynpu_top();
                 repeat(14) begin
                     wait(m_axis_tvalid);
                     if (m_axis_tdata == expected_output) match_count++;
-                    else mismatch_count++;
-                    @(posedge clk);
+                    else begin mismatch_count++; $display("Got output: %h", m_axis_tdata); end
+                    @(posedge clk); #1;
                 end
             end
             begin
@@ -401,3 +406,5 @@ with open(tb_path, "w", encoding="utf-8") as f:
     f.write(tb_code)
 
 print("Testbench rebuilt successfully.")
+
+

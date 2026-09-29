@@ -6,9 +6,9 @@ synth_design -top tinynpu_top -part xc7z020clg400-1 -mode out_of_context
 create_clock -period 8.000 -name clk -waveform {0.000 4.000} [get_ports aclk]
 
 opt_design
-place_design
+place_design -directive Explore
 phys_opt_design
-route_design
+route_design -directive Explore
 
 report_utilization -hierarchical -file "util_fixed.rpt"
 report_timing_summary -file "timing_fixed.rpt"

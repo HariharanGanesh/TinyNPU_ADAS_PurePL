@@ -124,7 +124,7 @@ module weight_buffer #(
 
     always @(posedge clk) begin
         if (loading && load_counter > 8'd0) begin
-            weight_data[write_row][write_col] <= $signed(rd_data_reg);
+            weight_data[write_row][write_col] <= $signed(rd_data_reg); if (rd_data_reg != 0) $display("WGT_LOAD: row=%0d col=%0d data=%0d", write_row, write_col, rd_data_reg); if (rd_data_reg != 0) $display("WB_LOAD: idx=%0d row=%0d col=%0d data=%0d", write_idx, write_row, write_col, rd_data_reg);
         end
     end
 

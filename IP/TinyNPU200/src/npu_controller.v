@@ -110,6 +110,22 @@ module npu_controller #(
     reg [15:0] total_compute_steps;
     reg [15:0] drain_cycles;
 
+    // Pipelined CSR multiplications to fix setup timing violation
+    reg [31:0] hw_size_stage1;
+    reg [31:0] hw_size_stage2;
+    reg [31:0] act_transfer_size;
+    always @(posedge clk) begin
+        if (~rst_n) begin
+            hw_size_stage1 <= 0;
+            hw_size_stage2 <= 0;
+            act_transfer_size <= 0;
+        end else begin
+            hw_size_stage1 <= csr_input_width * csr_input_height;
+            hw_size_stage2 <= hw_size_stage1;
+            act_transfer_size <= hw_size_stage2 * csr_in_channels;
+        end
+    end
+
     // Spatial coordinate tracking for zero-padding
     reg [15:0] curr_x;
     reg [15:0] curr_y;
@@ -254,7 +270,7 @@ module npu_controller #(
                 STATE_LOAD_WGT: begin
                     if (dma_wgt_load_done) begin
                         $display("[NPU_CTRL @ %0t] WGT load done. Starting ACT load (size=%0d)", $time, csr_input_width * csr_input_height);
-                        dma_transfer_size  <= (csr_input_width * csr_input_height * csr_in_channels);
+                        dma_transfer_size  <= act_transfer_size;
                         dma_start_load_act <= 1'b1;
                         state              <= STATE_LOAD_ACT;
                     end
@@ -277,7 +293,7 @@ module npu_controller #(
                         array_weight_load   <= 1'b1;
                         array_psum_clear    <= 1'b1;
                         compute_cycles      <= 0;
-                        total_compute_steps <= csr_input_width * csr_input_height;
+                        total_compute_steps <= hw_size_stage2;
                         act_buf_rd_addr     <= 0;
                         act_buf_rd_en       <= 1'b1;
                         state               <= STATE_COMPUTE;
@@ -329,12 +345,12 @@ module npu_controller #(
                                 $display("[NPU_CTRL @ %0t] Transitioning to STATE_DONE", $time);
                             end else begin
                                 tile_y             <= tile_y + 16'd1;
-                                dma_transfer_size  <= (csr_input_width * csr_input_height * csr_in_channels);
+                                dma_transfer_size  <= act_transfer_size;
                                                                 state              <= STATE_LOAD_ACT;
                             end
                         end else begin
                             tile_x             <= tile_x + 16'd1;
-                            dma_transfer_size  <= (csr_input_width * csr_input_height * csr_in_channels);
+                            dma_transfer_size  <= act_transfer_size;
                                                         state              <= STATE_LOAD_ACT;
                         end
                     end
