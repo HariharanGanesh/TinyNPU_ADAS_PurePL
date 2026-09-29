@@ -99,7 +99,12 @@ module axi4_lite_slave #(
     output wire [1:0]              csr_pool_mode,     // 0=bypass,1=MaxPool,2=AvgPool
     output wire [4:0]              csr_array_rows,    // Runtime row count (max 20 for TinyNPU200)
     output wire [15:0]             csr_num_tiles_x,   // Number of spatial tiles in X
-    output wire [15:0]             csr_num_tiles_y,   // Number of spatial tiles in Y
+        output wire [15:0]             csr_num_tiles_y,
+    // ADAS Detection Head CSRs
+    output wire signed [7:0]       csr_thresh_logit,
+    output wire [9:0]              csr_max_candidates,
+    output wire                    csr_clear_frame,
+    output wire [15:0]             csr_scale_id,   // Number of spatial tiles in Y
     output wire [1:0]              csr_input_fmt,     // 0=gray,1=RGB,2=YUV422,3=custom
     output wire [15:0]             csr_frame_w,       // Frame width for HDMI crop
     output wire [15:0]             csr_frame_h,       // Frame height
@@ -146,7 +151,11 @@ module axi4_lite_slave #(
     localparam ADDR_TILE_COUNT      = 10'h074;
     localparam ADDR_VERSION         = 10'h078;
     localparam ADDR_FEATURE_FLAGS   = 10'h07C;
-    localparam ADDR_NUM_TILES       = 10'h080;
+        localparam ADDR_NUM_TILES       = 10'h080;
+    localparam [7:0] ADDR_THRESH_LOGIT   = 8'h84;
+    localparam [7:0] ADDR_MAX_CANDIDATES = 8'h88;
+    localparam [7:0] ADDR_CLEAR_FRAME    = 8'h8C;
+    localparam [7:0] ADDR_SCALE_ID       = 8'h90;
 
     // =========================================================================
     // Internal Registers
@@ -175,6 +184,10 @@ module axi4_lite_slave #(
     reg [DATA_WIDTH-1:0] reg_frame_w;
     reg [DATA_WIDTH-1:0] reg_frame_h;
     reg [DATA_WIDTH-1:0] reg_num_tiles;
+    reg [DATA_WIDTH-1:0] reg_thresh_logit;
+    reg [DATA_WIDTH-1:0] reg_max_candidates;
+    reg [DATA_WIDTH-1:0] reg_clear_frame;
+    reg [DATA_WIDTH-1:0] reg_scale_id;
 
     // State registers
     reg axi_awready;
@@ -246,7 +259,11 @@ module axi4_lite_slave #(
             reg_array_rows     <= 32'd20; // reset = 20 for TinyNPU200
             reg_frame_w        <= 16'd1280;
             reg_frame_h        <= 16'd720;
-            reg_num_tiles      <= 32'd0; 
+            reg_num_tiles      <= 32'd0;
+            reg_thresh_logit   <= 32'd0;
+            reg_max_candidates <= 32'd0;
+            reg_clear_frame    <= 32'd0;
+            reg_scale_id       <= 32'd0;
         end else begin
             // START and SOFT_RESET are self-clearing single-cycle pulses
             reg_ctrl[0] <= 1'b0;
@@ -279,6 +296,10 @@ module axi4_lite_slave #(
                             ADDR_FRAME_W:        reg_frame_w[b*8 +: 8]        <= s_wdata[b*8 +: 8];
                             ADDR_FRAME_H:        reg_frame_h[b*8 +: 8]        <= s_wdata[b*8 +: 8];
                             ADDR_NUM_TILES:      reg_num_tiles[b*8 +: 8]      <= s_wdata[b*8 +: 8];
+                            ADDR_THRESH_LOGIT:   reg_thresh_logit[b*8 +: 8]   <= s_wdata[b*8 +: 8];
+                            ADDR_MAX_CANDIDATES: reg_max_candidates[b*8 +: 8] <= s_wdata[b*8 +: 8];
+                            ADDR_CLEAR_FRAME:    reg_clear_frame[b*8 +: 8]    <= s_wdata[b*8 +: 8];
+                            ADDR_SCALE_ID:       reg_scale_id[b*8 +: 8]       <= s_wdata[b*8 +: 8];
                             default: ; // Read-only or unmapped
                         endcase
                     end
@@ -327,6 +348,10 @@ module axi4_lite_slave #(
                 ADDR_FRAME_W:         s_rdata <= reg_frame_w;
                 ADDR_FRAME_H:         s_rdata <= reg_frame_h;
                 ADDR_NUM_TILES:       s_rdata <= reg_num_tiles;
+                ADDR_THRESH_LOGIT:    s_rdata <= reg_thresh_logit;
+                ADDR_MAX_CANDIDATES:  s_rdata <= reg_max_candidates;
+                ADDR_CLEAR_FRAME:     s_rdata <= reg_clear_frame;
+                ADDR_SCALE_ID:        s_rdata <= reg_scale_id;
                 ADDR_VID_LOCKED:      s_rdata <= {31'b0, vid_locked};
                 ADDR_TILE_COUNT:      s_rdata <= tile_count;
                 ADDR_VERSION:         s_rdata <= 32'h02000001; // TinyNPU v2.0.1
@@ -383,5 +408,10 @@ module axi4_lite_slave #(
     assign csr_frame_h         = reg_frame_h[15:0];
     assign csr_num_tiles_x     = reg_num_tiles[15:0];
     assign csr_num_tiles_y     = reg_num_tiles[31:16];
+
+    assign csr_thresh_logit   = reg_thresh_logit[7:0];
+    assign csr_max_candidates = reg_max_candidates[9:0];
+    assign csr_clear_frame    = reg_clear_frame[0];
+    assign csr_scale_id       = reg_scale_id[15:0];
 
 endmodule
