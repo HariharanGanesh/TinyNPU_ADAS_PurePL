@@ -328,7 +328,7 @@ module tb_tinynpu_top();
         // Let's set weights to 1, inputs to 2.
         // Accum = 8 * 2 = 16 for each output channel.
         // Requantization: M0=1, shift=0, bias=0. Result = 16.
-        for (int i = 0; i < 196; i++) sim_memory[32'h1000 + i] = 8'h01; // Weights (14x14)
+        for (int i = 0; i < 112; i++) sim_memory[32'h1000 + i] = 8'h01; // Weights
         $display("sim_memory[1111]=%0h, sim_memory[1112]=%0h", sim_memory[32'h1111], sim_memory[32'h1112]);
         
         axi_write(8'h08, 32'h1000); // Weight Base

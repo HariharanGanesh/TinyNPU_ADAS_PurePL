@@ -427,8 +427,8 @@
           "xbar": {
             "vlnv": "xilinx.com:ip:axi_crossbar:2.1",
             "ip_revision": "37",
-            "xci_name": "npu_system_axi_mem_intercon_imp_xbar_0",
-            "xci_path": "ip\\npu_system_axi_mem_intercon_imp_xbar_0\\npu_system_axi_mem_intercon_imp_xbar_0.xci",
+            "xci_name": "npu_system_axi_mem_intercon_upgraded_ipi_imp_xbar_0",
+            "xci_path": "ip\\npu_system_axi_mem_intercon_upgraded_ipi_imp_xbar_0\\npu_system_axi_mem_intercon_upgraded_ipi_imp_xbar_0.xci",
             "inst_hier_path": "axi_mem_intercon/xbar",
             "has_run_ip_tcl": "true",
             "parameters": {
@@ -1895,19 +1895,19 @@
           "vid_in/aclk",
           "vid_out/aclk",
           "vtc/s_axi_aclk",
-          "axi_mem_intercon/ACLK",
-          "axi_mem_intercon/S00_ACLK",
-          "axi_mem_intercon/M00_ACLK",
           "vtc/clk",
-          "axi_mem_intercon/M01_ACLK",
           "axis_subset_converter_0/aclk",
           "axis_subset_converter_1/aclk",
           "riscv_adas_0/clk",
-          "axi_mem_intercon_1/S00_ACLK",
           "axi_bram_ctrl_0/s_axi_aclk",
-          "axi_mem_intercon_1/M00_ACLK",
+          "tinynpu_0/aclk",
+          "axi_mem_intercon/ACLK",
+          "axi_mem_intercon/S00_ACLK",
+          "axi_mem_intercon/M00_ACLK",
+          "axi_mem_intercon/M01_ACLK",
           "axi_mem_intercon_1/ACLK",
-          "tinynpu_0/aclk"
+          "axi_mem_intercon_1/S00_ACLK",
+          "axi_mem_intercon_1/M00_ACLK"
         ]
       },
       "clk_wiz_0_locked": {
@@ -1954,11 +1954,8 @@
       "ps7_FCLK_RESET0_N": {
         "ports": [
           "proc_sys_reset_0/peripheral_aresetn",
-          "axi_mem_intercon/S00_ARESETN",
-          "axi_mem_intercon/M00_ARESETN",
           "vtc/resetn",
           "vtc/s_axi_aresetn",
-          "axi_mem_intercon/M01_ARESETN",
           "axis_subset_converter_0/aresetn",
           "axis_subset_converter_1/aresetn",
           "vid_in/aresetn",
@@ -1966,11 +1963,14 @@
           "dvi2rgb_0/aRst_n",
           "rgb2dvi_0/aRst_n",
           "riscv_adas_0/rst_n",
-          "axi_mem_intercon_1/S00_ARESETN",
           "axi_bram_ctrl_0/s_axi_aresetn",
-          "axi_mem_intercon_1/M00_ARESETN",
+          "tinynpu_0/aresetn",
+          "axi_mem_intercon/S00_ARESETN",
+          "axi_mem_intercon/M00_ARESETN",
+          "axi_mem_intercon/M01_ARESETN",
           "axi_mem_intercon_1/ARESETN",
-          "tinynpu_0/aresetn"
+          "axi_mem_intercon_1/S00_ARESETN",
+          "axi_mem_intercon_1/M00_ARESETN"
         ]
       },
       "reset_0_1": {

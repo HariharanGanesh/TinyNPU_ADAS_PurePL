@@ -43,7 +43,7 @@ module tinynpu_top #(
     parameter SCALE_WIDTH     = 32,
     parameter SHIFT_WIDTH     = 6,
     parameter ARRAY_ROWS      = 14,   // 14 rows (balances DSP usage perfectly with DW and requant for Zynq-7020)
-    parameter ARRAY_COLS      = 14,
+    parameter ARRAY_COLS      = 8,
     parameter BUFFER_DEPTH    = 1024,
     parameter BUFFER_ADDR_WIDTH = 10,
     parameter MAX_WIDTH       = 128,
