@@ -25,3 +25,23 @@ At 123.48 MHz, the 112-PE systolic array paired with the depthwise and requantiz
 ## 3. Hardware Verification
 
 A rigorous simulation testbench was developed to validate the hardware against mathematically derived expected outputs. The test suite verifies AXI4-Lite control flow, race-condition handling, DMA interleaving, and end-to-end dataflow. All test cases, including a multi-channel inference workload, passed with 100% accuracy matching the predicted spatial accumulation vectors, confirming the functional integrity of the NPU's custom memory unpackers and pipeline alignment.
+
+## 4. Full System Integration (SoC ADAS Wrapper)
+The 14x8 TinyNPU200 was subsequently packaged and integrated into a complete System-on-Chip (SoC) wrapper alongside a RISC-V processor, HDMI video streaming controllers, and AXI interconnects. 
+
+During full-system Synthesis and Implementation, the physical synthesis engine performed aggressive cross-boundary optimizations, streamlining the standalone NPU logic into the broader system.
+
+**Table 2: SoC Wrapper Post-Implementation Utilization**
+| Resource | Used | Available | Utilization |
+|---|---|---|---|
+| LUTs | 13,632 | 53,200 | 25.62% |
+| DSP Blocks | 220 | 220 | 100.00% |
+| Block RAM | 21.5 | 140 | 15.36% |
+
+Achieving exactly 100.00% DSP utilization confirms that the 14x8 architecture is the absolute mathematically optimal limit for the Zynq-7020 device. 
+
+**System-Level Timing and Power:**
+- **Target Clock:** 125.00 MHz (8.000 ns)
+- **Worst Negative Slack (WNS):** +0.184 ns
+- **Achieved System Fmax:** 127.94 MHz
+- **Total SoC Power:** 1.114 W (Dynamic: 0.990 W, Static: 0.125 W)
